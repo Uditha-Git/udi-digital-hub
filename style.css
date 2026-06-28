@@ -1,37 +1,65 @@
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  background: #f5f7fb;
-  color: #333;
+/* =========================
+   BRAND COLORS
+========================= */
+:root {
+  --primary-red: #e63946;
+  --primary-blue: #1d4ed8;
+  --primary-white: #ffffff;
+
+  --text-dark: #1f2937;
+  --bg-light: #f5f7fb;
 }
 
-/* HEADER */
+/* =========================
+   GLOBAL
+========================= */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: var(--bg-light);
+  color: var(--text-dark);
+}
+
+/* =========================
+   HEADER
+========================= */
 .header {
-  background: #1e88e5;
+  background: linear-gradient(90deg, var(--primary-red), var(--primary-blue));
   color: white;
   text-align: center;
-  padding: 30px 10px;
+  padding: 25px;
 }
 
-/* NAV */
+.header h1 {
+  margin: 0;
+}
+
+/* =========================
+   NAVIGATION
+========================= */
 .nav {
-  background: #0d47a1;
+  background: white;
   display: flex;
   justify-content: center;
-  flex-wrap: wrap;
+  gap: 25px;
+  padding: 12px;
+  border-bottom: 2px solid var(--primary-blue);
 }
 
 .nav a {
-  color: white;
-  padding: 12px 15px;
   text-decoration: none;
+  color: var(--primary-blue);
+  font-weight: bold;
+  transition: 0.3s;
 }
 
 .nav a:hover {
-  background: #1565c0;
+  color: var(--primary-red);
 }
 
-/* HERO */
+/* =========================
+   HERO
+========================= */
 .hero {
   text-align: center;
   padding: 40px 20px;
@@ -41,36 +69,61 @@ body {
   padding: 10px;
   width: 60%;
   max-width: 400px;
-  margin-top: 15px;
+  border: 2px solid var(--primary-blue);
+  border-radius: 8px;
 }
 
-/* SECTION */
+/* =========================
+   SECTIONS
+========================= */
 .section {
-  padding: 20px;
+  padding: 30px;
   text-align: center;
 }
 
-/* GRID */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 15px;
-  padding: 10px;
+.section h2 {
+  color: var(--primary-blue);
 }
 
-/* CARD */
+/* =========================
+   GRID
+========================= */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 15px;
+  margin-top: 20px;
+}
+
+/* =========================
+   CARDS
+========================= */
 .card {
   background: white;
   padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  border-radius: 12px;
+  border: 2px solid #e5e7eb;
+  text-align: center;
+  cursor: pointer;
+  transition: 0.3s;
+  text-decoration: none;
+  color: var(--text-dark);
+  font-weight: bold;
 }
 
-/* FOOTER */
+.card:hover {
+  transform: translateY(-5px);
+  border-color: var(--primary-red);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+/* =========================
+   FOOTER
+========================= */
 .footer {
   text-align: center;
-  padding: 15px;
-  background: #222;
-  color: white;
-  margin-top: 20px;
+  padding: 20px;
+  margin-top: 40px;
+  background: white;
+  border-top: 2px solid var(--primary-blue);
 }

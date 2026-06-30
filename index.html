@@ -1,80 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>UDI Digital Hub</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>UDI Digital Hub</title>
+
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-  <!-- HEADER -->
-  <header class="header">
+<!-- HEADER -->
+<header class="header">
     <h1>UDI Digital Hub</h1>
     <p>Free Online Tools • Apps • Networking Knowledge</p>
-  </header>
+</header>
 
-  <!-- NAVIGATION -->
-  <nav class="nav">
+<!-- NAVIGATION -->
+<nav class="nav">
     <a href="./index.html">Home</a>
     <a href="./tools/">Tools</a>
     <a href="./apps/">Apps</a>
     <a href="./notes/">Notes</a>
     <a href="./about.html">About</a>
-  </nav>
+</nav>
 
-  <!-- HERO -->
-  <section class="hero">
+<!-- HERO -->
+<section class="hero">
     <h2>Everything you need in one place</h2>
     <p>Fast • Free • Simple tools for everyday use</p>
 
-    <input type="text" placeholder="Search tools..." class="search-box">
-  </section>
+    <input
+        type="text"
+        id="searchBox"
+        class="search-box"
+        placeholder="Search tools..."
+    >
+</section>
 
-  <!-- CATEGORIES -->
-  <section class="section">
+<!-- CATEGORIES -->
+<section class="section">
     <h2>Popular Categories</h2>
 
     <div class="grid">
-      <div class="card">🧮 Calculators</div>
-      <div class="card">🌐 Network Tools</div>
-      <div class="card">🖼 Image Tools</div>
-      <div class="card">📄 PDF Tools</div>
-      <div class="card">🔐 Security Tools</div>
-      <div class="card">📱 Apps</div>
+        <div class="card">🧮 Calculators</div>
+        <div class="card">🌐 Network Tools</div>
+        <div class="card">🖼 Image Tools</div>
+        <div class="card">📄 PDF Tools</div>
+        <div class="card">🔐 Security Tools</div>
+        <div class="card">📱 Apps</div>
     </div>
-  </section>
+</section>
 
-  <!-- FEATURED TOOLS -->
-  <section class="section">
+<!-- DYNAMIC TOOLS -->
+<section class="section">
     <h2>Featured Tools</h2>
 
-    <div class="grid">
-
-      <a class="card" href="./tools/password-generator.html">
-        🔐 Password Generator
-      </a>
-
-      <a class="card" href="./tools/qr-generator.html">
-        📱 QR Generator
-      </a>
-
-      <a class="card" href="./tools/subnet-calculator.html">
-        🌐 Subnet Calculator
-      </a>
-
-      <a class="card" href="./tools/word-counter.html">
-        📝 Word Counter
-      </a>
-
+    <div id="toolsGrid" class="grid">
+        <!-- Loaded automatically from tools.json -->
     </div>
-  </section>
+</section>
 
-  <!-- FOOTER -->
-  <footer class="footer">
+<!-- FOOTER -->
+<footer class="footer">
     <p>© 2026 UDI Digital Hub | Built with ❤️</p>
-  </footer>
+</footer>
+
+<!-- JAVASCRIPT -->
+<script>
+
+let tools = [];
+
+const toolsGrid = document.getElementById("toolsGrid");
+const searchBox = document.getElementById("searchBox");
+
+fetch("./tools.json")
+.then(response => response.json())
+.then(data => {
+
+    tools = data;
+    renderTools(tools);
+
+})
+.catch(error => {
+
+    toolsGrid.innerHTML =
+    "<p>Unable to load tools.</p>";
+
+    console.error(error);
+
+});
+
+function renderTools(toolList){
+
+    toolsGrid.innerHTML = "";
+
+    toolList.forEach(tool => {
+
+        const card = document.createElement("a");
+
+        card.className = "card";
+        card.href = tool.link;
+
+        card.innerHTML = `
+            <div style="font-size:40px">${tool.icon}</div>
+            <h3>${tool.name}</h3>
+            <small>${tool.category}</small>
+        `;
+
+        toolsGrid.appendChild(card);
+
+    });
+
+}
+
+searchBox.addEventListener("input", function(){
+
+    const keyword = this.value.toLowerCase();
+
+    const filteredTools = tools.filter(tool =>
+
+        tool.name.toLowerCase().includes(keyword) ||
+        tool.category.toLowerCase().includes(keyword)
+
+    );
+
+    renderTools(filteredTools);
+
+});
+
+</script>
 
 </body>
 </html>

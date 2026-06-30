@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Password Generator",
+    "icon": "🔐",
+    "link": "tools/password-generator.html",
+    "category": "Security"
+  },
+  {
+    "name": "QR Generator",
+    "icon": "📱",
+    "link": "tools/qr-generator.html",
+    "category": "Utility"
+  },
+  {
+    "name": "Subnet Calculator",
+    "icon": "🌐",
+    "link": "tools/subnet-calculator.html",
+    "category": "Network"
+  },
+  {
+    "name": "Word Counter",
+    "icon": "📝",
+    "link": "tools/word-counter.html",
+    "category": "Writing"
+  }
+]

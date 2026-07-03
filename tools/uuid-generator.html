@@ -59,6 +59,30 @@ button:hover {
     margin-top: 10px;
     background: #0A4D8C;
 }
+
+/* 🔥 Toast Popup */
+#toast {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    
+    background: rgba(0, 0, 0, 0.75);
+    color: white;
+
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-size: 14px;
+
+    opacity: 0;
+    pointer-events: none;
+
+    transition: 0.3s ease;
+}
+
+#toast.show {
+    opacity: 1;
+}
 </style>
 
 </head>
@@ -77,24 +101,40 @@ button:hover {
 
 </div>
 
+<!-- Toast message -->
+<div id="toast"></div>
+
 <script>
 
 let currentUUID = "";
 
+// Generate UUID
 function generateUUID() {
-
     currentUUID = crypto.randomUUID();
-
     document.getElementById("uuidBox").innerText = currentUUID;
 }
 
+// Copy UUID
 function copyUUID() {
-
-    if (!currentUUID) return;
+    if (!currentUUID) {
+        showToast("Generate UUID first!");
+        return;
+    }
 
     navigator.clipboard.writeText(currentUUID);
+    showToast("Copied!");
+}
 
-    alert("UUID copied!");
+// Toast function
+function showToast(message) {
+    const toast = document.getElementById("toast");
+
+    toast.innerText = message;
+    toast.classList.add("show");
+
+    setTimeout(() => {
+        toast.classList.remove("show");
+    }, 1500);
 }
 
 </script>

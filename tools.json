@@ -6,6 +6,12 @@
     "category": "Security"
   },
   {
+    "name": "Password Strength Checker",
+    "icon": "🛡️",
+    "link": "tools/password-strength-checker.html",
+    "category": "Security"
+  },
+  {
     "name": "QR Generator",
     "icon": "📱",
     "link": "tools/qr-generator.html",
@@ -22,11 +28,5 @@
     "icon": "📝",
     "link": "tools/word-counter.html",
     "category": "Writing"
-  },
-  {
-  "name": "Password Strength Checker",
-  "category": "Security Tools",
-  "icon": "🛡️",
-  "link": "./tools/password-strength-checker.html"
-}
+  }
 ]

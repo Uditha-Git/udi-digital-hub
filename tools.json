@@ -11,12 +11,12 @@
     "link": "tools/password-strength-checker.html",
     "category": "Security"
   },
-{
-  "name": "UUID Generator",
-  "icon": "🔑",
-  "link": "./tools/uuid-generator.html",
-  "category": "Developer"
-},
+  {
+    "name": "UUID Generator",
+    "icon": "🔑",
+    "link": "tools/uuid-generator.html",
+    "category": "Developer"
+  },
   {
     "name": "QR Generator",
     "icon": "📱",

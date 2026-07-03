@@ -23,4 +23,10 @@
     "link": "tools/word-counter.html",
     "category": "Writing"
   }
+  {
+  "name": "Password Strength Checker",
+  "category": "Security Tools",
+  "icon": "🛡️",
+  "link": "./tools/password-strength-checker.html"
+}
 ]

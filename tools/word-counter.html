@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Word Counter | UDI Digital Hub</title>
+
+<link rel="stylesheet" href="../style.css">
+
+<style>
+.container {
+    max-width: 700px;
+    margin: 50px auto;
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+
+h2 {
+    text-align: center;
+    color: var(--primary-blue);
+}
+
+textarea {
+    width: 100%;
+    height: 200px;
+    margin-top: 15px;
+    padding: 12px;
+    border-radius: 8px;
+    border: 2px solid #e5e7eb;
+    font-size: 16px;
+    resize: none;
+    outline: none;
+}
+
+textarea:focus {
+    border-color: var(--primary-blue);
+}
+
+.result {
+    margin-top: 20px;
+    line-height: 1.8;
+    font-size: 16px;
+}
+
+.result span {
+    font-weight: bold;
+    color: var(--primary-blue);
+}
+
+button {
+    margin-top: 15px;
+}
+</style>
+
+</head>
+<body>
+
+<div class="container">
+
+    <h2>📝 Word Counter</h2>
+
+    <textarea id="textInput" placeholder="Type or paste your text here..." oninput="countText()"></textarea>
+
+    <div class="result">
+        Words: <span id="words">0</span><br>
+        Characters: <span id="chars">0</span><br>
+        Characters (No Space): <span id="charsNoSpace">0</span><br>
+        Sentences: <span id="sentences">0</span><br>
+        Paragraphs: <span id="paragraphs">0</span><br>
+        Reading Time: <span id="readingTime">0</span> min
+    </div>
+
+    <button class="clearBtn" onclick="clearText()">Clear</button>
+
+</div>
+
+<script>
+
+// Main counter function
+function countText() {
+
+    let text = document.getElementById("textInput").value;
+
+    // Characters
+    let charCount = text.length;
+
+    // Characters without spaces
+    let charNoSpace = text.replace(/\s/g, "").length;
+
+    // Words (handle multiple spaces)
+    let words = text.trim().length > 0 ? text.trim().split(/\s+/).length : 0;
+
+    // Sentences
+    let sentences = text.split(/[.!?]+/).filter(s => s.trim().length > 0).length;
+
+    // Paragraphs
+    let paragraphs = text.split(/\n+/).filter(p => p.trim().length > 0).length;
+
+    // Reading time (200 words per min avg)
+    let readingTime = Math.ceil(words / 200);
+
+    // Update UI
+    document.getElementById("words").innerText = words;
+    document.getElementById("chars").innerText = charCount;
+    document.getElementById("charsNoSpace").innerText = charNoSpace;
+    document.getElementById("sentences").innerText = sentences;
+    document.getElementById("paragraphs").innerText = paragraphs;
+    document.getElementById("readingTime").innerText = readingTime;
+}
+
+// Clear function
+function clearText() {
+    document.getElementById("textInput").value = "";
+    countText();
+}
+
+// Initialize
+countText();
+
+</script>
+
+</body>
+</html>

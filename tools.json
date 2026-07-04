@@ -34,5 +34,11 @@
     "icon": "📝",
     "link": "tools/word-counter.html",
     "category": "Writing"
-  }
+  },
+  {
+  "name": "Word Counter",
+  "icon": "📝",
+  "link": "tools/word-counter.html",
+  "category": "Text Tools"
+}
 ]

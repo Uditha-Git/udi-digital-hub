@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>QR Generator | UDI Digital Hub</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: #f5f7fa;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.container {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    width: 400px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+h2 {
+    color: #0A4D8C;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    box-sizing: border-box;
+}
+
+button {
+    background: #800000;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    margin-top: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 16px;
+}
+
+button:hover {
+    background: #a00000;
+}
+
+#qrcode {
+    margin-top: 20px;
+}
+</style>
+
+</head>
+<body>
+
+<div class="container">
+
+    <h2>📱 QR Code Generator</h2>
+
+    <input
+        type="text"
+        id="qrText"
+        placeholder="Enter URL or text">
+
+    <button onclick="generateQR()">
+        Generate QR Code
+    </button>
+
+    <div id="qrcode"></div>
+
+</div>
+
+<!-- QR Library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+<script>
+
+function generateQR() {
+
+    let text = document.getElementById("qrText").value;
+
+    if(text.trim() === "") {
+        alert("Please enter text!");
+        return;
+    }
+
+    document.getElementById("qrcode").innerHTML = "";
+
+    new QRCode(document.getElementById("qrcode"), {
+        text: text,
+        width: 200,
+        height: 200
+    });
+}
+
+</script>
+
+</body>
+</html>

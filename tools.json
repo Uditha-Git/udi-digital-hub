@@ -40,5 +40,12 @@
   "icon": "📝",
   "link": "tools/word-counter.html",
   "category": "Text Tools"
+},
+{
+  "name": "Case Converter",
+  "icon": "🔤",
+  "link": "tools/case-converter.html",
+  "category": "Text Tools"
 }
+
 ]

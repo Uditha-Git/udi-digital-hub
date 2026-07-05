@@ -46,6 +46,12 @@
   "icon": "📦",
   "link": "tools/json-formatter.html",
   "category": "Developer"
+},
+  {
+  "name": "Base64 Encoder/Decoder",
+  "icon": "🔐",
+  "link": "tools/base64.html",
+  "category": "Developer"
 }
 
 ]

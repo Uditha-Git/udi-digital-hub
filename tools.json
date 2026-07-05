@@ -52,6 +52,12 @@
   "icon": "🔐",
   "link": "tools/base64.html",
   "category": "Developer"
+},
+  {
+  "name": "URL Encoder/Decoder",
+  "icon": "🌐",
+  "link": "tools/url-encoder.html",
+  "category": "Developer"
 }
 
 ]

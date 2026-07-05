@@ -58,6 +58,12 @@
   "icon": "🌐",
   "link": "tools/url-encoder.html",
   "category": "Developer"
+},
+  {
+  "name": "Hash Generator",
+  "icon": "🔐",
+  "link": "tools/hash-generator.html",
+  "category": "Developer"
 }
 
 ]

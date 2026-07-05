@@ -40,6 +40,12 @@
   "icon": "🔤",
   "link": "tools/case-converter.html",
   "category": "Text Tools"
+},
+  {
+  "name": "JSON Formatter",
+  "icon": "📦",
+  "link": "tools/json-formatter.html",
+  "category": "Developer"
 }
 
 ]

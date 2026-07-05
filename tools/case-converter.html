@@ -49,6 +49,13 @@ textarea{
     font-weight:bold;
     color:var(--primary-blue);
 }
+
+.copy-message{
+    margin-top:15px;
+    font-weight:bold;
+    display:none;
+    text-align:center;
+}
 </style>
 
 </head>
@@ -85,6 +92,8 @@ Characters :
 <span id="count">0</span>
 </div>
 
+<div id="copyMessage" class="copy-message"></div>
+
 </div>
 
 <script>
@@ -99,54 +108,74 @@ function updateCount(){
 }
 
 function toUpper(){
-    getText().value=getText().value.toUpperCase();
+    getText().value = getText().value.toUpperCase();
     updateCount();
 }
 
 function toLower(){
-    getText().value=getText().value.toLowerCase();
+    getText().value = getText().value.toLowerCase();
     updateCount();
 }
 
 function toTitle(){
 
-    let txt=getText().value.toLowerCase();
+    let txt = getText().value.toLowerCase();
 
-    txt=txt.replace(/\b\w/g,function(c){
+    txt = txt.replace(/\b\w/g, function(c){
         return c.toUpperCase();
     });
 
-    getText().value=txt;
+    getText().value = txt;
 
     updateCount();
 }
 
 function toSentence(){
 
-    let txt=getText().value.toLowerCase();
+    let txt = getText().value.toLowerCase();
 
-    txt=txt.replace(/(^\s*\w|[.!?]\s*\w)/g,function(c){
+    txt = txt.replace(/(^\s*\w|[.!?]\s*\w)/g, function(c){
         return c.toUpperCase();
     });
 
-    getText().value=txt;
+    getText().value = txt;
 
     updateCount();
 }
 
-function copyText(){
+function copyText() {
 
-    navigator.clipboard.writeText(getText().value);
+    let text = getText().value;
 
-    alert("Copied to clipboard!");
+    if(text.trim() === ""){
+        showMessage("Nothing to copy!", "#e63946");
+        return;
+    }
 
+    navigator.clipboard.writeText(text);
+
+    showMessage("Copied to Clipboard!", "#16a34a");
 }
 
 function clearText(){
 
-    getText().value="";
+    getText().value = "";
 
     updateCount();
+
+}
+
+function showMessage(message, color){
+
+    let msg = document.getElementById("copyMessage");
+
+    msg.innerText = message;
+    msg.style.color = color;
+    msg.style.display = "block";
+
+    setTimeout(() => {
+        msg.style.display = "none";
+    }, 2000);
 
 }
 

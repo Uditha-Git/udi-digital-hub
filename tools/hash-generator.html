@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Hash Generator | UDI Digital Hub</title>
+
+<link rel="stylesheet" href="../style.css">
+
+<style>
+.container {
+    max-width: 850px;
+    margin: 50px auto;
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0,0,0,.1);
+}
+
+h2 {
+    text-align: center;
+    color: var(--primary-blue);
+}
+
+textarea {
+    width: 100%;
+    height: 140px;
+    margin-top: 15px;
+    padding: 12px;
+    border-radius: 8px;
+    border: 2px solid #ddd;
+    font-size: 14px;
+    resize: vertical;
+    box-sizing: border-box;
+}
+
+.button-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.output {
+    margin-top: 20px;
+    padding: 12px;
+    background: #f8fafc;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-family: monospace;
+    white-space: pre-wrap;
+}
+
+.info {
+    margin-top: 10px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.copy-message {
+    margin-top: 10px;
+    text-align: center;
+    font-weight: bold;
+    display: none;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>🔐 Hash Generator</h2>
+
+<textarea id="input" placeholder="Enter text..."></textarea>
+
+<div class="button-grid">
+
+<button onclick="generateHash('SHA-1')">SHA-1</button>
+
+<button onclick="generateHash('SHA-256')">SHA-256</button>
+
+<button onclick="generateHash('SHA-512')">SHA-512</button>
+
+<button onclick="copyHash()">Copy</button>
+
+<button onclick="clearAll()" class="clearBtn">Clear</button>
+
+</div>
+
+<div class="info" id="status"></div>
+
+<div class="output" id="output"></div>
+
+<div id="copyMessage" class="copy-message"></div>
+
+</div>
+
+<script>
+
+// message system
+function showMessage(msg, color){
+    let el = document.getElementById("copyMessage");
+    el.innerText = msg;
+    el.style.color = color;
+    el.style.display = "block";
+
+    setTimeout(() => {
+        el.style.display = "none";
+    }, 2000);
+}
+
+// convert to hex
+function bufferToHex(buffer){
+    return [...new Uint8Array(buffer)]
+        .map(b => b.toString(16).padStart(2, '0'))
+        .join('');
+}
+
+// hash function
+async function generateHash(type){
+
+    let text = document.getElementById("input").value;
+
+    if(text.trim() === ""){
+        document.getElementById("status").innerText = "❌ Enter text first";
+        document.getElementById("status").style.color = "red";
+        return;
+    }
+
+    const encoder = new TextEncoder();
+    const data = encoder.encode(text);
+
+    let algo = "";
+
+    if(type === "SHA-1") algo = "SHA-1";
+    if(type === "SHA-256") algo = "SHA-256";
+    if(type === "SHA-512") algo = "SHA-512";
+
+    const hashBuffer = await crypto.subtle.digest(algo, data);
+    const hashHex = bufferToHex(hashBuffer);
+
+    document.getElementById("output").innerText =
+        type + ":\n" + hashHex;
+
+    document.getElementById("status").innerText =
+        "✅ " + type + " generated";
+
+    document.getElementById("status").style.color = "green";
+}
+
+// copy
+function copyHash(){
+
+    let text = document.getElementById("output").innerText;
+
+    if(text.trim() === ""){
+        showMessage("Nothing to copy!", "#e63946");
+        return;
+    }
+
+    navigator.clipboard.writeText(text);
+    showMessage("Copied to Clipboard!", "#16a34a");
+}
+
+// clear
+function clearAll(){
+    document.getElementById("input").value = "";
+    document.getElementById("output").innerText = "";
+    document.getElementById("status").innerText = "";
+}
+
+</script>
+
+</body>
+</html>

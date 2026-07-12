@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Age Calculator | UDI Digital Hub</title>
+
+<link rel="stylesheet" href="../style.css">
+
+<style>
+
+.container {
+    max-width: 750px;
+    margin: 50px auto;
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0,0,0,.1);
+}
+
+h2 {
+    text-align:center;
+    color:var(--primary-blue);
+}
+
+label {
+    font-weight:bold;
+    display:block;
+    margin-top:15px;
+}
+
+input {
+    width:100%;
+    padding:12px;
+    margin-top:8px;
+    border-radius:8px;
+    border:2px solid #ddd;
+    box-sizing:border-box;
+    font-size:16px;
+}
+
+.button-grid {
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+    gap:10px;
+    margin-top:20px;
+}
+
+.result {
+    margin-top:25px;
+    padding:20px;
+    background:#f8fafc;
+    border-radius:10px;
+    border:2px solid #ddd;
+    text-align:center;
+    font-size:18px;
+    line-height:1.8;
+}
+
+.card {
+    margin-top:10px;
+    font-weight:bold;
+    color:var(--primary-blue);
+}
+
+</style>
+
+</head>
+
+<body>
+
+
+<div class="container">
+
+<h2>🎂 Age Calculator</h2>
+
+
+<label>
+Date of Birth
+</label>
+
+<input type="date" id="dob">
+
+
+<label>
+Calculate Age As Of
+</label>
+
+<input type="date" id="today">
+
+
+<div class="button-grid">
+
+<button onclick="calculateAge()">
+Calculate Age
+</button>
+
+
+<button class="clearBtn" onclick="clearData()">
+Clear
+</button>
+
+</div>
+
+
+<div class="result" id="result">
+
+Enter your birthday and click Calculate
+
+</div>
+
+
+</div>
+
+
+
+<script>
+
+
+function calculateAge(){
+
+    let dob = new Date(document.getElementById("dob").value);
+
+    let today = new Date(document.getElementById("today").value);
+
+
+    if(!document.getElementById("dob").value){
+
+        document.getElementById("result").innerHTML =
+        "❌ Please select your date of birth";
+
+        return;
+    }
+
+
+    if(!document.getElementById("today").value){
+
+        today = new Date();
+
+    }
+
+
+
+    if(dob > today){
+
+        document.getElementById("result").innerHTML =
+        "❌ Birth date cannot be in the future";
+
+        return;
+
+    }
+
+
+
+    let years = today.getFullYear() - dob.getFullYear();
+
+    let months = today.getMonth() - dob.getMonth();
+
+    let days = today.getDate() - dob.getDate();
+
+
+
+    if(days < 0){
+
+        months--;
+
+        let previousMonth =
+        new Date(
+            today.getFullYear(),
+            today.getMonth(),
+            0
+        ).getDate();
+
+        days += previousMonth;
+
+    }
+
+
+
+    if(months < 0){
+
+        years--;
+
+        months += 12;
+
+    }
+
+
+
+    let difference =
+    today.getTime() - dob.getTime();
+
+
+    let totalDays =
+    Math.floor(
+        difference /
+        (1000*60*60*24)
+    );
+
+
+    let totalWeeks =
+    Math.floor(totalDays / 7);
+
+
+    let totalMonths =
+    years * 12 + months;
+
+
+
+    document.getElementById("result").innerHTML =
+
+    `
+    <div class="card">
+    Age:
+    </div>
+
+    ${years} Years,
+    ${months} Months,
+    ${days} Days
+
+
+    <hr>
+
+
+    <div class="card">
+    Total:
+    </div>
+
+    ${totalMonths} Months<br>
+
+    ${totalWeeks} Weeks<br>
+
+    ${totalDays} Days
+
+    `;
+
+
+}
+
+
+
+function clearData(){
+
+    document.getElementById("dob").value="";
+
+    document.getElementById("today").value="";
+
+    document.getElementById("result").innerHTML =
+    "Enter your birthday and click Calculate";
+
+}
+
+
+</script>
+
+
+</body>
+</html>

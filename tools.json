@@ -64,5 +64,11 @@
   "icon": "🌐",
   "link": "tools/url-encoder.html",
   "category": "Developer"
+},
+  {
+  "name": "Age Calculator",
+  "icon": "🎂",
+  "link": "tools/age-calculator.html",
+  "category": "Calculator"
 }
 ]

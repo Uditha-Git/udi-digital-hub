@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Percentage Calculator | UDI Digital Hub</title>
+
+<link rel="stylesheet" href="../style.css">
+
+
+<style>
+
+.container {
+
+    max-width:750px;
+    margin:50px auto;
+    background:white;
+    padding:25px;
+    border-radius:12px;
+    box-shadow:0 5px 20px rgba(0,0,0,.1);
+
+}
+
+
+h2 {
+
+    text-align:center;
+    color:var(--primary-blue);
+
+}
+
+
+.box {
+
+    margin-top:20px;
+    padding:20px;
+    border:2px solid #ddd;
+    border-radius:10px;
+
+}
+
+
+label {
+
+    font-weight:bold;
+    display:block;
+    margin-top:10px;
+
+}
+
+
+input {
+
+    width:100%;
+    padding:10px;
+    margin-top:5px;
+    border-radius:8px;
+    border:2px solid #ddd;
+    box-sizing:border-box;
+
+}
+
+
+button {
+
+    margin-top:15px;
+
+}
+
+
+.result {
+
+    margin-top:15px;
+    padding:15px;
+    background:#f8fafc;
+    border-radius:8px;
+    font-weight:bold;
+    text-align:center;
+
+}
+
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+<h2>📊 Percentage Calculator</h2>
+
+
+
+<div class="box">
+
+<h3>1️⃣ What is X% of Y?</h3>
+
+
+<label>Percentage (%)</label>
+
+<input id="percent1" type="number" placeholder="Example: 20">
+
+
+<label>Value</label>
+
+<input id="value1" type="number" placeholder="Example: 500">
+
+
+<button onclick="calculateOf()">
+Calculate
+</button>
+
+
+<div class="result" id="result1"></div>
+
+
+</div>
+
+
+
+
+
+<div class="box">
+
+<h3>2️⃣ X is what percentage of Y?</h3>
+
+
+<label>X Value</label>
+
+<input id="xValue" type="number">
+
+
+<label>Y Value</label>
+
+<input id="yValue" type="number">
+
+
+<button onclick="calculateWhatPercent()">
+Calculate
+</button>
+
+
+<div class="result" id="result2"></div>
+
+
+</div>
+
+
+
+
+
+<div class="box">
+
+<h3>3️⃣ Percentage Increase / Decrease</h3>
+
+
+<label>Old Value</label>
+
+<input id="oldValue" type="number">
+
+
+<label>New Value</label>
+
+<input id="newValue" type="number">
+
+
+<button onclick="calculateChange()">
+Calculate
+</button>
+
+
+<div class="result" id="result3"></div>
+
+
+</div>
+
+
+
+<button class="clearBtn" onclick="clearAll()">
+Clear All
+</button>
+
+
+
+</div>
+
+
+
+
+<script>
+
+
+function calculateOf(){
+
+let p =
+Number(document.getElementById("percent1").value);
+
+let v =
+Number(document.getElementById("value1").value);
+
+
+if(!p || !v){
+
+result1.innerHTML="❌ Enter values";
+
+return;
+
+}
+
+
+let result =
+(p/100)*v;
+
+
+result1.innerHTML =
+p+"% of "+v+" = "+result;
+
+
+}
+
+
+
+
+
+function calculateWhatPercent(){
+
+
+let x =
+Number(document.getElementById("xValue").value);
+
+
+let y =
+Number(document.getElementById("yValue").value);
+
+
+
+if(!x || !y){
+
+result2.innerHTML="❌ Enter values";
+
+return;
+
+}
+
+
+
+let result =
+(x/y)*100;
+
+
+
+result2.innerHTML =
+x+" is "+result.toFixed(2)+"% of "+y;
+
+
+}
+
+
+
+
+
+
+
+function calculateChange(){
+
+
+let oldVal =
+Number(document.getElementById("oldValue").value);
+
+
+let newVal =
+Number(document.getElementById("newValue").value);
+
+
+
+if(!oldVal || !newVal){
+
+result3.innerHTML="❌ Enter values";
+
+return;
+
+}
+
+
+
+let change =
+((newVal-oldVal)/oldVal)*100;
+
+
+
+if(change >=0){
+
+result3.innerHTML =
+"Increase: "+change.toFixed(2)+"%";
+
+}
+
+else{
+
+result3.innerHTML =
+"Decrease: "+Math.abs(change).toFixed(2)+"%";
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+function clearAll(){
+
+
+document.querySelectorAll("input")
+.forEach(input=>input.value="");
+
+
+document.querySelectorAll(".result")
+.forEach(result=>result.innerHTML="");
+
+
+}
+
+
+
+</script>
+
+
+</body>
+
+</html>

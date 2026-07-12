@@ -70,5 +70,11 @@
   "icon": "🎂",
   "link": "tools/age-calculator.html",
   "category": "Calculator"
+},
+  {
+  "name": "Percentage Calculator",
+  "icon": "📊",
+  "link": "tools/percentage-calculator.html",
+  "category": "Calculator"
 }
 ]

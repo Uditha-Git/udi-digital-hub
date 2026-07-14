@@ -5,14 +5,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Subnet Calculator | UDI Digital Hub</title>
+<title>Advanced Subnet Calculator | UDI Digital Hub</title>
 
 <link rel="stylesheet" href="../style.css">
+
 
 <style>
 
 .container{
-    max-width:800px;
+    max-width:850px;
     margin:50px auto;
     background:#fff;
     padding:25px;
@@ -20,10 +21,12 @@
     box-shadow:0 5px 20px rgba(0,0,0,.1);
 }
 
+
 h2{
     text-align:center;
     color:var(--primary-blue);
 }
+
 
 label{
     display:block;
@@ -31,7 +34,9 @@ label{
     font-weight:bold;
 }
 
+
 input{
+
     width:100%;
     padding:10px;
     margin-top:5px;
@@ -39,57 +44,83 @@ input{
     border-radius:8px;
     box-sizing:border-box;
     font-size:16px;
+
 }
 
+
 .button-grid{
+
     display:grid;
     grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
     gap:10px;
     margin-top:20px;
+
 }
 
+
 .result{
+
     margin-top:25px;
     border:2px solid #ddd;
     border-radius:10px;
     overflow:hidden;
+
 }
+
 
 table{
+
     width:100%;
     border-collapse:collapse;
+
 }
 
+
 th{
+
     background:var(--primary-blue);
     color:white;
     padding:12px;
+
 }
+
 
 td{
+
     padding:12px;
     border-bottom:1px solid #ddd;
+
 }
 
+
 tr:nth-child(even){
+
     background:#f8fafc;
+
 }
+
 
 </style>
 
 </head>
 
+
 <body>
+
 
 <div class="container">
 
-<h2>🌐 Subnet Calculator</h2>
+
+<h2>🌐 Advanced Subnet Calculator</h2>
+
 
 <label>IPv4 Address</label>
 
-<input
+<input 
 id="ip"
 placeholder="Example: 192.168.1.100">
+
+
 
 <label>CIDR Prefix</label>
 
@@ -100,21 +131,31 @@ min="0"
 max="32"
 placeholder="Example: 24">
 
+
+
 <div class="button-grid">
+
 
 <button onclick="calculateSubnet()">
 Calculate
 </button>
 
+
 <button class="clearBtn" onclick="clearData()">
 Clear
 </button>
 
+
 </div>
+
+
+
 
 <div class="result">
 
+
 <table>
+
 
 <tr>
 
@@ -124,37 +165,82 @@ Clear
 
 </tr>
 
-<tr>
 
+
+<tr>
 <td>Subnet Mask</td>
-
 <td id="mask">-</td>
-
 </tr>
 
-<tr>
 
+<tr>
+<td>Wildcard Mask</td>
+<td id="wildcard">-</td>
+</tr>
+
+
+<tr>
 <td>Network Address</td>
-
 <td id="network">-</td>
-
 </tr>
+
 
 <tr>
-
 <td>Broadcast Address</td>
-
 <td id="broadcast">-</td>
-
 </tr>
+
+
+<tr>
+<td>First Host</td>
+<td id="firstHost">-</td>
+</tr>
+
+
+<tr>
+<td>Last Host</td>
+<td id="lastHost">-</td>
+</tr>
+
+
+<tr>
+<td>Total Addresses</td>
+<td id="total">-</td>
+</tr>
+
+
+<tr>
+<td>Usable Hosts</td>
+<td id="usable">-</td>
+</tr>
+
+
+<tr>
+<td>IP Class</td>
+<td id="class">-</td>
+</tr>
+
+
+<tr>
+<td>IP Type</td>
+<td id="type">-</td>
+</tr>
+
+
 
 </table>
 
-</div>
 
 </div>
+
+
+</div>
+
+
+
 
 <script>
+
 
 function ipToInt(ip){
 
@@ -163,6 +249,8 @@ return ip.split(".").reduce((acc,octet)=>
 (acc<<8)+parseInt(octet),0)>>>0;
 
 }
+
+
 
 function intToIp(int){
 
@@ -180,51 +268,265 @@ int&255
 
 }
 
+
+
+
+
 function calculateSubnet(){
+
 
 let ip=document.getElementById("ip").value.trim();
 
-let cidr=parseInt(document.getElementById("cidr").value);
+
+let cidr=parseInt(
+document.getElementById("cidr").value
+);
+
+
 
 if(ip==="" || isNaN(cidr) || cidr<0 || cidr>32){
 
-alert("Please enter a valid IP address and CIDR.");
+alert("Enter valid IP and CIDR");
 
 return;
 
 }
 
+
+
 let ipInt=ipToInt(ip);
 
-let mask=(cidr===0)?0:(0xFFFFFFFF<<(32-cidr))>>>0;
 
-let network=ipInt & mask;
 
-let broadcast=network | (~mask>>>0);
+let mask = 
+(cidr===0)
+?
+0
+:
+(0xFFFFFFFF << (32-cidr))>>>0;
 
-document.getElementById("mask").innerText=intToIp(mask);
 
-document.getElementById("network").innerText=intToIp(network);
 
-document.getElementById("broadcast").innerText=intToIp(broadcast);
+let network = ipInt & mask;
+
+
+let broadcast = network | (~mask>>>0);
+
+
+
+let firstHost;
+
+let lastHost;
+
+
+
+if(cidr===31){
+
+firstHost = network;
+
+lastHost = broadcast;
 
 }
 
+else if(cidr===32){
+
+firstHost = network;
+
+lastHost = network;
+
+}
+
+else{
+
+firstHost = network + 1;
+
+lastHost = broadcast - 1;
+
+}
+
+
+
+
+let totalAddresses =
+Math.pow(2,32-cidr);
+
+
+
+let usableHosts;
+
+
+if(cidr>=31){
+
+usableHosts=totalAddresses;
+
+}
+
+else{
+
+usableHosts=totalAddresses-2;
+
+}
+
+
+
+
+let wildcard=(~mask)>>>0;
+
+
+
+document.getElementById("mask").innerText =
+intToIp(mask);
+
+
+
+document.getElementById("wildcard").innerText =
+intToIp(wildcard);
+
+
+
+document.getElementById("network").innerText =
+intToIp(network);
+
+
+
+document.getElementById("broadcast").innerText =
+intToIp(broadcast);
+
+
+
+document.getElementById("firstHost").innerText =
+intToIp(firstHost);
+
+
+
+document.getElementById("lastHost").innerText =
+intToIp(lastHost);
+
+
+
+document.getElementById("total").innerText =
+totalAddresses;
+
+
+
+document.getElementById("usable").innerText =
+usableHosts;
+
+
+
+document.getElementById("class").innerText =
+getClass(ip);
+
+
+
+document.getElementById("type").innerText =
+getType(ip);
+
+
+}
+
+
+
+
+
+
+function getClass(ip){
+
+
+let first=parseInt(ip.split(".")[0]);
+
+
+
+if(first>=1 && first<=126)
+return "Class A";
+
+
+if(first>=128 && first<=191)
+return "Class B";
+
+
+if(first>=192 && first<=223)
+return "Class C";
+
+
+if(first>=224 && first<=239)
+return "Class D";
+
+
+return "Class E";
+
+
+}
+
+
+
+
+
+function getType(ip){
+
+
+let parts=ip.split(".").map(Number);
+
+
+
+if(
+parts[0]===10 ||
+
+(parts[0]===172 && parts[1]>=16 && parts[1]<=31) ||
+
+(parts[0]===192 && parts[1]===168)
+)
+
+return "Private IP";
+
+
+return "Public IP";
+
+
+}
+
+
+
+
+
+
 function clearData(){
+
 
 document.getElementById("ip").value="";
 
 document.getElementById("cidr").value="";
 
-document.getElementById("mask").innerText="-";
 
-document.getElementById("network").innerText="-";
+let fields=[
 
-document.getElementById("broadcast").innerText="-";
+"mask",
+"wildcard",
+"network",
+"broadcast",
+"firstHost",
+"lastHost",
+"total",
+"usable",
+"class",
+"type"
+
+];
+
+
+fields.forEach(id=>{
+
+document.getElementById(id).innerText="-";
+
+});
+
 
 }
 
+
 </script>
 
+
 </body>
+
 </html>

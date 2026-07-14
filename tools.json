@@ -76,5 +76,11 @@
   "icon": "📊",
   "link": "tools/percentage-calculator.html",
   "category": "Calculator"
+},
+  {
+  "name": "Subnet Calculator",
+  "icon": "🌐",
+  "link": "tools/subnet-calculator.html",
+  "category": "Network"
 }
 ]

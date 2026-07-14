@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Subnet Calculator | UDI Digital Hub</title>
+
+<link rel="stylesheet" href="../style.css">
+
+<style>
+
+.container{
+    max-width:800px;
+    margin:50px auto;
+    background:#fff;
+    padding:25px;
+    border-radius:12px;
+    box-shadow:0 5px 20px rgba(0,0,0,.1);
+}
+
+h2{
+    text-align:center;
+    color:var(--primary-blue);
+}
+
+label{
+    display:block;
+    margin-top:15px;
+    font-weight:bold;
+}
+
+input{
+    width:100%;
+    padding:10px;
+    margin-top:5px;
+    border:2px solid #ddd;
+    border-radius:8px;
+    box-sizing:border-box;
+    font-size:16px;
+}
+
+.button-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:10px;
+    margin-top:20px;
+}
+
+.result{
+    margin-top:25px;
+    border:2px solid #ddd;
+    border-radius:10px;
+    overflow:hidden;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th{
+    background:var(--primary-blue);
+    color:white;
+    padding:12px;
+}
+
+td{
+    padding:12px;
+    border-bottom:1px solid #ddd;
+}
+
+tr:nth-child(even){
+    background:#f8fafc;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>🌐 Subnet Calculator</h2>
+
+<label>IPv4 Address</label>
+
+<input
+id="ip"
+placeholder="Example: 192.168.1.100">
+
+<label>CIDR Prefix</label>
+
+<input
+id="cidr"
+type="number"
+min="0"
+max="32"
+placeholder="Example: 24">
+
+<div class="button-grid">
+
+<button onclick="calculateSubnet()">
+Calculate
+</button>
+
+<button class="clearBtn" onclick="clearData()">
+Clear
+</button>
+
+</div>
+
+<div class="result">
+
+<table>
+
+<tr>
+
+<th>Property</th>
+
+<th>Value</th>
+
+</tr>
+
+<tr>
+
+<td>Subnet Mask</td>
+
+<td id="mask">-</td>
+
+</tr>
+
+<tr>
+
+<td>Network Address</td>
+
+<td id="network">-</td>
+
+</tr>
+
+<tr>
+
+<td>Broadcast Address</td>
+
+<td id="broadcast">-</td>
+
+</tr>
+
+</table>
+
+</div>
+
+</div>
+
+<script>
+
+function ipToInt(ip){
+
+return ip.split(".").reduce((acc,octet)=>
+
+(acc<<8)+parseInt(octet),0)>>>0;
+
+}
+
+function intToIp(int){
+
+return [
+
+(int>>>24)&255,
+
+(int>>>16)&255,
+
+(int>>>8)&255,
+
+int&255
+
+].join(".");
+
+}
+
+function calculateSubnet(){
+
+let ip=document.getElementById("ip").value.trim();
+
+let cidr=parseInt(document.getElementById("cidr").value);
+
+if(ip==="" || isNaN(cidr) || cidr<0 || cidr>32){
+
+alert("Please enter a valid IP address and CIDR.");
+
+return;
+
+}
+
+let ipInt=ipToInt(ip);
+
+let mask=(cidr===0)?0:(0xFFFFFFFF<<(32-cidr))>>>0;
+
+let network=ipInt & mask;
+
+let broadcast=network | (~mask>>>0);
+
+document.getElementById("mask").innerText=intToIp(mask);
+
+document.getElementById("network").innerText=intToIp(network);
+
+document.getElementById("broadcast").innerText=intToIp(broadcast);
+
+}
+
+function clearData(){
+
+document.getElementById("ip").value="";
+
+document.getElementById("cidr").value="";
+
+document.getElementById("mask").innerText="-";
+
+document.getElementById("network").innerText="-";
+
+document.getElementById("broadcast").innerText="-";
+
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>CIDR Calculator | UDI Digital Hub</title>
+
+<link rel="stylesheet" href="../style.css">
+
+<style>
+
+.container{
+    max-width:800px;
+    margin:50px auto;
+    background:#fff;
+    padding:25px;
+    border-radius:12px;
+    box-shadow:0 5px 20px rgba(0,0,0,.1);
+}
+
+h2{
+    text-align:center;
+    color:var(--primary-blue);
+}
+
+p{
+    text-align:center;
+    color:#555;
+}
+
+label{
+    display:block;
+    margin-top:20px;
+    font-weight:bold;
+}
+
+select{
+
+    width:100%;
+    padding:10px;
+    margin-top:8px;
+    border:2px solid #ddd;
+    border-radius:8px;
+    font-size:16px;
+
+}
+
+.button-grid{
+
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:10px;
+    margin-top:20px;
+
+}
+
+.result{
+
+    margin-top:25px;
+    border:2px solid #ddd;
+    border-radius:10px;
+    overflow:hidden;
+
+}
+
+table{
+
+    width:100%;
+    border-collapse:collapse;
+
+}
+
+th{
+
+    background:var(--primary-blue);
+    color:white;
+    padding:12px;
+
+}
+
+td{
+
+    padding:12px;
+    border-bottom:1px solid #ddd;
+
+}
+
+tr:nth-child(even){
+
+    background:#f8fafc;
+
+}
+
+.copy-message{
+
+    text-align:center;
+    margin-top:15px;
+    font-weight:bold;
+    display:none;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>📡 CIDR Calculator</h2>
+
+<p>Select a CIDR prefix to view its subnet information.</p>
+
+<label>CIDR Prefix</label>
+
+<select id="cidr">
+
+<option value="">-- Select CIDR Prefix --</option>
+
+</select>
+
+<div class="button-grid">
+
+<button onclick="calculateCIDR()">
+Calculate
+</button>
+
+<button onclick="copyResults()">
+Copy Results
+</button>
+
+<button class="clearBtn" onclick="clearData()">
+Clear
+</button>
+
+</div>
+
+<div class="result">
+
+<table>
+
+<tr>
+
+<th>Property</th>
+
+<th>Value</th>
+
+</tr>
+
+<tr>
+
+<td>CIDR Prefix</td>
+
+<td id="prefix">-</td>
+
+</tr>
+
+<tr>
+
+<td>Subnet Mask</td>
+
+<td id="mask">-</td>
+
+</tr>
+
+<tr>
+
+<td>Wildcard Mask</td>
+
+<td id="wildcard">-</td>
+
+</tr>
+
+<tr>
+
+<td>Total Addresses</td>
+
+<td id="total">-</td>
+
+</tr>
+
+<tr>
+
+<td>Usable Hosts</td>
+
+<td id="usable">-</td>
+
+</tr>
+
+<tr>
+
+<td>Network Bits</td>
+
+<td id="networkBits">-</td>
+
+</tr>
+
+<tr>
+
+<td>Host Bits</td>
+
+<td id="hostBits">-</td>
+
+</tr>
+
+</table>
+
+</div>
+
+<div class="copy-message" id="message"></div>
+
+</div>
+
+<script>
+
+const cidrSelect=document.getElementById("cidr");
+
+for(let i=0;i<=32;i++){
+
+let option=document.createElement("option");
+
+option.value=i;
+
+option.text="/"+i;
+
+cidrSelect.appendChild(option);
+
+}
+
+function intToIp(int){
+
+return [
+
+(int>>>24)&255,
+
+(int>>>16)&255,
+
+(int>>>8)&255,
+
+int&255
+
+].join(".");
+
+}
+
+function calculateCIDR(){
+
+let cidr=parseInt(document.getElementById("cidr").value);
+
+if(isNaN(cidr)){
+
+alert("Please select a CIDR prefix.");
+
+return;
+
+}
+
+let mask=(cidr===0)?0:(0xFFFFFFFF<<(32-cidr))>>>0;
+
+let wildcard=(~mask)>>>0;
+
+let total=Math.pow(2,32-cidr);
+
+let usable=(cidr>=31)?total:total-2;
+
+document.getElementById("prefix").innerText="/"+cidr;
+
+document.getElementById("mask").innerText=intToIp(mask);
+
+document.getElementById("wildcard").innerText=intToIp(wildcard);
+
+document.getElementById("total").innerText=total;
+
+document.getElementById("usable").innerText=usable;
+
+document.getElementById("networkBits").innerText=cidr;
+
+document.getElementById("hostBits").innerText=32-cidr;
+
+}
+
+function copyResults(){
+
+let text=
+
+"CIDR Prefix : "+document.getElementById("prefix").innerText+"\n"+
+
+"Subnet Mask : "+document.getElementById("mask").innerText+"\n"+
+
+"Wildcard Mask : "+document.getElementById("wildcard").innerText+"\n"+
+
+"Total Addresses : "+document.getElementById("total").innerText+"\n"+
+
+"Usable Hosts : "+document.getElementById("usable").innerText+"\n"+
+
+"Network Bits : "+document.getElementById("networkBits").innerText+"\n"+
+
+"Host Bits : "+document.getElementById("hostBits").innerText;
+
+navigator.clipboard.writeText(text);
+
+let msg=document.getElementById("message");
+
+msg.innerText="✅ Results copied to clipboard!";
+
+msg.style.color="green";
+
+msg.style.display="block";
+
+setTimeout(function(){
+
+msg.style.display="none";
+
+},2000);
+
+}
+
+function clearData(){
+
+document.getElementById("cidr").value="";
+
+document.getElementById("prefix").innerText="-";
+
+document.getElementById("mask").innerText="-";
+
+document.getElementById("wildcard").innerText="-";
+
+document.getElementById("total").innerText="-";
+
+document.getElementById("usable").innerText="-";
+
+document.getElementById("networkBits").innerText="-";
+
+document.getElementById("hostBits").innerText="-";
+
+document.getElementById("message").style.display="none";
+
+}
+
+</script>
+
+</body>
+</html>

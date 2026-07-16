@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>IPv4 Class Calculator | UDI Digital Hub</title>
+
+<link rel="stylesheet" href="../style.css">
+
+<style>
+
+.container{
+
+    max-width:800px;
+    margin:50px auto;
+    background:white;
+    padding:25px;
+    border-radius:12px;
+    box-shadow:0 5px 20px rgba(0,0,0,.1);
+
+}
+
+
+h2{
+
+    text-align:center;
+    color:var(--primary-blue);
+
+}
+
+
+label{
+
+    display:block;
+    margin-top:20px;
+    font-weight:bold;
+
+}
+
+
+input{
+
+    width:100%;
+    padding:10px;
+    margin-top:8px;
+    border:2px solid #ddd;
+    border-radius:8px;
+    font-size:16px;
+    box-sizing:border-box;
+
+}
+
+
+.button-grid{
+
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:10px;
+    margin-top:20px;
+
+}
+
+
+.result{
+
+    margin-top:25px;
+    border:2px solid #ddd;
+    border-radius:10px;
+    overflow:hidden;
+
+}
+
+
+table{
+
+    width:100%;
+    border-collapse:collapse;
+
+}
+
+
+th{
+
+    background:var(--primary-blue);
+    color:white;
+    padding:12px;
+
+}
+
+
+td{
+
+    padding:12px;
+    border-bottom:1px solid #ddd;
+
+}
+
+
+tr:nth-child(even){
+
+    background:#f8fafc;
+
+}
+
+
+.message{
+
+    text-align:center;
+    margin-top:15px;
+    font-weight:bold;
+
+}
+
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+<h2>🌐 IPv4 Class Calculator</h2>
+
+
+<label>Enter IPv4 Address</label>
+
+
+<input 
+id="ip"
+placeholder="Example: 192.168.1.10">
+
+
+
+<div class="button-grid">
+
+
+<button onclick="calculateIP()">
+
+Calculate
+
+</button>
+
+
+<button class="clearBtn" onclick="clearData()">
+
+Clear
+
+</button>
+
+
+</div>
+
+
+
+<div class="message" id="message"></div>
+
+
+
+
+<div class="result">
+
+
+<table>
+
+
+<tr>
+
+<th>Property</th>
+
+<th>Value</th>
+
+</tr>
+
+
+
+<tr>
+<td>IP Address</td>
+<td id="address">-</td>
+</tr>
+
+
+<tr>
+<td>IP Class</td>
+<td id="class">-</td>
+</tr>
+
+
+<tr>
+<td>Default Mask</td>
+<td id="mask">-</td>
+</tr>
+
+
+<tr>
+<td>IP Type</td>
+<td id="type">-</td>
+</tr>
+
+
+<tr>
+<td>Address Type</td>
+<td id="addressType">-</td>
+</tr>
+
+
+<tr>
+<td>Binary IP</td>
+<td id="binary">-</td>
+</tr>
+
+
+
+</table>
+
+
+</div>
+
+
+</div>
+
+
+
+<script>
+
+
+function validateIP(ip){
+
+let parts=ip.split(".");
+
+
+if(parts.length!==4)
+return false;
+
+
+return parts.every(part=>{
+
+let num=Number(part);
+
+return num>=0 && num<=255 && part!=="";
+
+});
+
+
+}
+
+
+
+function calculateIP(){
+
+
+let ip=document.getElementById("ip").value.trim();
+
+
+
+if(!validateIP(ip)){
+
+
+document.getElementById("message").innerText=
+"❌ Invalid IPv4 Address";
+
+document.getElementById("message").style.color="red";
+
+return;
+
+
+}
+
+
+
+let parts=ip.split(".").map(Number);
+
+let first=parts[0];
+
+
+
+let ipClass;
+
+let mask;
+
+
+
+if(first>=1 && first<=126){
+
+ipClass="Class A";
+mask="255.0.0.0";
+
+}
+
+else if(first>=128 && first<=191){
+
+ipClass="Class B";
+mask="255.255.0.0";
+
+}
+
+else if(first>=192 && first<=223){
+
+ipClass="Class C";
+mask="255.255.255.0";
+
+}
+
+else if(first>=224 && first<=239){
+
+ipClass="Class D (Multicast)";
+mask="N/A";
+
+}
+
+else{
+
+ipClass="Class E (Reserved)";
+mask="N/A";
+
+}
+
+
+
+
+let type=getIPType(parts);
+
+
+
+let addressType;
+
+
+
+if(first>=224 && first<=239){
+
+addressType="Multicast";
+
+}
+
+else if(first===127){
+
+addressType="Loopback";
+
+}
+
+else{
+
+addressType="Unicast";
+
+}
+
+
+
+
+document.getElementById("address").innerText=ip;
+
+document.getElementById("class").innerText=ipClass;
+
+document.getElementById("mask").innerText=mask;
+
+document.getElementById("type").innerText=type;
+
+document.getElementById("addressType").innerText=addressType;
+
+document.getElementById("binary").innerText=toBinary(parts);
+
+
+
+document.getElementById("message").innerText=
+"✅ Calculation completed";
+
+document.getElementById("message").style.color="green";
+
+
+}
+
+
+
+
+function getIPType(parts){
+
+
+let a=parts[0];
+
+let b=parts[1];
+
+
+
+if(a===10)
+
+return "Private IP";
+
+
+
+if(a===172 && b>=16 && b<=31)
+
+return "Private IP";
+
+
+
+if(a===192 && b===168)
+
+return "Private IP";
+
+
+
+if(a===127)
+
+return "Loopback";
+
+
+
+if(a===169 && b===254)
+
+return "APIPA";
+
+
+
+return "Public IP";
+
+
+}
+
+
+
+
+function toBinary(parts){
+
+
+return parts.map(num=>{
+
+return num.toString(2).padStart(8,"0");
+
+}).join(".");
+
+}
+
+
+
+
+function clearData(){
+
+
+document.getElementById("ip").value="";
+
+
+let ids=[
+
+"address",
+"class",
+"mask",
+"type",
+"addressType",
+"binary"
+
+];
+
+
+ids.forEach(id=>{
+
+document.getElementById(id).innerText="-";
+
+});
+
+
+document.getElementById("message").innerText="";
+
+
+}
+
+
+</script>
+
+
+</body>
+
+</html>

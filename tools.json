@@ -88,5 +88,11 @@
   "icon": "📡",
   "link": "tools/cidr-calculator.html",
   "category": "Network"
+},
+  {
+  "name": "IPv4 Class Calculator",
+  "icon": "🌐",
+  "link": "tools/ipv4-class-calculator.html",
+  "category": "Network"
 }
 ]

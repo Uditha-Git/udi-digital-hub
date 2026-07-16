@@ -82,5 +82,11 @@
   "icon": "🌐",
   "link": "tools/subnet-calculator.html",
   "category": "Network"
+},
+  {
+  "name": "CIDR Calculator",
+  "icon": "📡",
+  "link": "tools/cidr-calculator.html",
+  "category": "Network"
 }
 ]

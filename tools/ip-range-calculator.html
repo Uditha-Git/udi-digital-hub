@@ -1,1 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>IP Range Calculator | UDI Digital Hub</title>
+
+<link rel="stylesheet" href="../style.css">
+
+
+<style>
+
+.container{
+
+    max-width:850px;
+    margin:50px auto;
+    background:white;
+    padding:25px;
+    border-radius:12px;
+    box-shadow:0 5px 20px rgba(0,0,0,.1);
+
+}
+
+
+h2{
+
+    text-align:center;
+    color:var(--primary-blue);
+
+}
+
+
+.description{
+
+    text-align:center;
+    color:#555;
+}
+
+
+label{
+
+    display:block;
+    margin-top:15px;
+    font-weight:bold;
+
+}
+
+
+input{
+
+    width:100%;
+    padding:10px;
+    margin-top:5px;
+    border:2px solid #ddd;
+    border-radius:8px;
+    font-size:16px;
+    box-sizing:border-box;
+
+}
+
+
+.button-grid{
+
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+gap:10px;
+margin-top:20px;
+
+}
+
+
+.result{
+
+margin-top:25px;
+border:2px solid #ddd;
+border-radius:10px;
+overflow:hidden;
+
+}
+
+
+table{
+
+width:100%;
+border-collapse:collapse;
+
+}
+
+
+th{
+
+background:var(--primary-blue);
+color:white;
+padding:12px;
+
+}
+
+
+td{
+
+padding:12px;
+border-bottom:1px solid #ddd;
+
+}
+
+
+tr:nth-child(even){
+
+background:#f8fafc;
+
+}
+
+
+.message{
+
+text-align:center;
+font-weight:bold;
+margin-top:15px;
+display:none;
+
+}
+
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+<h2>🌐 IP Range Calculator</h2>
+
+
+<p class="description">
+Calculate Network, Host Range and Broadcast Address
+</p>
+
+
+
+<label>
+IPv4 Address
+</label>
+
+
+<input 
+id="ip"
+placeholder="Example: 192.168.1.100">
+
+
+
+<label>
+CIDR Prefix
+</label>
+
+
+<input 
+id="cidr"
+type="number"
+min="0"
+max="32"
+placeholder="Example: 24">
+
+
+
+<div class="button-grid">
+
+
+<button onclick="calculateRange()">
+Calculate
+</button>
+
+
+<button onclick="copyResult()">
+Copy Result
+</button>
+
+
+<button class="clearBtn" onclick="clearData()">
+Clear
+</button>
+
+
+</div>
+
+
+
+<div class="message" id="message"></div>
+
+
+
+<div class="result">
+
+
+<table>
+
+
+<tr>
+
+<th>
+Property
+</th>
+
+<th>
+Value
+</th>
+
+</tr>
+
+
+
+<tr>
+
+<td>
+Network Address
+</td>
+
+<td id="network">
+-
+</td>
+
+</tr>
+
+
+
+<tr>
+
+<td>
+First Host
+</td>
+
+<td id="firstHost">
+-
+</td>
+
+</tr>
+
+
+
+<tr>
+
+<td>
+Last Host
+</td>
+
+<td id="lastHost">
+-
+</td>
+
+</tr>
+
+
+
+<tr>
+
+<td>
+Broadcast Address
+</td>
+
+<td id="broadcast">
+-
+</td>
+
+</tr>
+
+
+
+<tr>
+
+<td>
+Subnet Mask
+</td>
+
+<td id="mask">
+-
+</td>
+
+</tr>
+
+
+
+<tr>
+
+<td>
+Total Addresses
+</td>
+
+<td id="total">
+-
+</td>
+
+</tr>
+
+
+
+<tr>
+
+<td>
+Usable Hosts
+</td>
+
+<td id="usable">
+-
+</td>
+
+</tr>
+
+
+
+</table>
+
+
+</div>
+
+
+</div>

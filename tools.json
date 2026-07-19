@@ -94,5 +94,11 @@
   "icon": "🌐",
   "link": "tools/ipv4-class-calculator.html",
   "category": "Network"
+},
+  {
+  "name": "IP Range Calculator",
+  "icon": "🌐",
+  "link": "tools/ip-range-calculator.html",
+  "category": "Network"
 }
 ]

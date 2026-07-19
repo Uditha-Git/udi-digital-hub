@@ -4,144 +4,233 @@
 <head>
 
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>VLSM Calculator | UDI Digital Hub</title>
 
 <link rel="stylesheet" href="../style.css">
 
+
 <style>
 
 .container{
 
-max-width:1000px;
-margin:50px auto;
-background:#fff;
-padding:25px;
-border-radius:12px;
-box-shadow:0 5px 20px rgba(0,0,0,.1);
+    max-width:1100px;
+    margin:50px auto;
+    background:white;
+    padding:25px;
+    border-radius:12px;
+    box-shadow:0 5px 20px rgba(0,0,0,.1);
 
 }
+
 
 h2{
 
-text-align:center;
-color:var(--primary-blue);
+    text-align:center;
+    color:var(--primary-blue);
 
 }
+
 
 .description{
 
-text-align:center;
-color:#666;
-margin-bottom:20px;
+    text-align:center;
+    color:#555;
+    margin-bottom:20px;
 
 }
+
 
 label{
 
-display:block;
-margin-top:15px;
-font-weight:bold;
+    display:block;
+    margin-top:15px;
+    font-weight:bold;
 
 }
+
+
 
 input{
 
-width:100%;
-padding:10px;
-margin-top:5px;
-border:2px solid #ddd;
-border-radius:8px;
-box-sizing:border-box;
-font-size:16px;
+    width:100%;
+    padding:10px;
+    margin-top:5px;
+    border:2px solid #ddd;
+    border-radius:8px;
+    box-sizing:border-box;
+    font-size:16px;
 
 }
+
+
 
 .button-grid{
 
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
-gap:10px;
-margin-top:20px;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+    gap:10px;
+    margin-top:20px;
 
 }
+
+
+
+button{
+
+    padding:10px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:15px;
+
+}
+
+
 
 table{
 
-width:100%;
-border-collapse:collapse;
-margin-top:20px;
+    width:100%;
+    border-collapse:collapse;
+    margin-top:20px;
 
 }
+
+
 
 th{
 
-background:var(--primary-blue);
-color:white;
-padding:12px;
+    background:var(--primary-blue);
+    color:white;
+    padding:12px;
 
 }
+
+
 
 td{
 
-padding:10px;
-border-bottom:1px solid #ddd;
+    padding:10px;
+    border-bottom:1px solid #ddd;
 
 }
+
+
 
 tr:nth-child(even){
 
-background:#f8fafc;
+    background:#f8fafc;
 
 }
+
+
 
 .result{
 
-margin-top:25px;
-border:2px solid #ddd;
-border-radius:10px;
-overflow:hidden;
+    margin-top:25px;
+    border:2px solid #ddd;
+    border-radius:10px;
+    overflow:auto;
 
 }
+
+
 
 .message{
 
-margin-top:15px;
-text-align:center;
-font-weight:bold;
-display:none;
+    margin-top:15px;
+    text-align:center;
+    font-weight:bold;
+    display:none;
 
 }
+
+
 
 .smallInput{
 
-width:100%;
-padding:8px;
+    width:100%;
+    padding:8px;
 
 }
 
+
+
+.info-box{
+
+    margin-top:20px;
+    padding:15px;
+    background:#f8fafc;
+    border-radius:10px;
+    border:1px solid #ddd;
+
+}
+
+
 </style>
+
 
 </head>
 
+
 <body>
+
 
 <div class="container">
 
+
 <h2>🌐 VLSM Calculator</h2>
+
 
 <p class="description">
 
-Variable Length Subnet Mask Calculator
+Variable Length Subnet Masking Calculator
 
 </p>
+
+
+
+<div class="info-box">
+
+<b>Example:</b>
+
+<br><br>
+
+Base Network:
+
+<br>
+
+192.168.1.0/24
+
+<br><br>
+
+Requirements:
+
+<br>
+
+Users - 100 Hosts
+
+<br>
+
+Servers - 50 Hosts
+
+<br>
+
+CCTV - 20 Hosts
+
+</div>
+
+
+
 
 <label>
 
 Base Network
 
 </label>
+
 
 <input
 
@@ -151,42 +240,72 @@ placeholder="Example: 192.168.1.0/24"
 
 >
 
+
+
+
 <h3 style="margin-top:30px">
 
 Subnet Requirements
 
 </h3>
 
+
+
 <table id="inputTable">
+
 
 <tr>
 
-<th>Department</th>
+<th>
+Department
+</th>
 
-<th>Required Hosts</th>
 
-<th>Action</th>
+<th>
+Required Hosts
+</th>
+
+
+<th>
+Action
+</th>
 
 </tr>
 
+
+
 <tr>
 
+
 <td>
 
 <input
+
 class="smallInput"
-placeholder="Example: Users">
+
+placeholder="Example: Users"
+
+>
 
 </td>
 
+
+
 <td>
 
 <input
+
 class="smallInput"
+
 type="number"
-placeholder="50">
+
+placeholder="100"
+
+>
 
 </td>
+
+
 
 <td>
 
@@ -198,11 +317,19 @@ Remove
 
 </td>
 
+
 </tr>
+
+
 
 </table>
 
+
+
+
+
 <div class="button-grid">
+
 
 <button onclick="addRow()">
 
@@ -210,11 +337,15 @@ Remove
 
 </button>
 
+
+
 <button onclick="calculateVLSM()">
 
 🧮 Calculate
 
 </button>
+
+
 
 <button onclick="copyResult()">
 
@@ -222,13 +353,27 @@ Remove
 
 </button>
 
+
+
+<button onclick="exportCSV()">
+
+📄 Export CSV
+
+</button>
+
+
+
 <button class="clearBtn" onclick="clearAll()">
 
 🗑 Clear
 
 </button>
 
+
 </div>
+
+
+
 
 <div
 
@@ -238,9 +383,15 @@ class="message">
 
 </div>
 
+
+
+
+
 <div class="result">
 
+
 <table id="resultTable">
+
 
 <tr>
 
@@ -258,21 +409,28 @@ class="message">
 
 <th>Broadcast</th>
 
-<th>Hosts</th>
+<th>Available Hosts</th>
+
 
 </tr>
 
+
 </table>
 
-</div>
 
 </div>
 
-  <script>
+
+
+</div>
+
+<script>
+
 
 // ==============================
-// Add / Remove Rows
+// ADD / REMOVE SUBNET ROWS
 // ==============================
+
 
 function addRow(){
 
@@ -280,23 +438,38 @@ function addRow(){
 
     let row = table.insertRow(-1);
 
+
     row.innerHTML = `
 
-        <td>
-            <input class="smallInput" placeholder="Department">
-        </td>
+    <td>
 
-        <td>
-            <input class="smallInput" type="number" placeholder="50">
-        </td>
+    <input 
+    class="smallInput"
+    placeholder="Department">
 
-        <td>
-            <button onclick="removeRow(this)">
-                Remove
-            </button>
-        </td>
+    </td>
+
+
+    <td>
+
+    <input
+    class="smallInput"
+    type="number"
+    placeholder="100">
+
+    </td>
+
+
+    <td>
+
+    <button onclick="removeRow(this)">
+    Remove
+    </button>
+
+    </td>
 
     `;
+
 
 }
 
@@ -304,180 +477,247 @@ function addRow(){
 
 function removeRow(btn){
 
-    let table = document.getElementById("inputTable");
 
-    if(table.rows.length <= 2){
+    let table=document.getElementById("inputTable");
+
+
+    if(table.rows.length<=2){
 
         showMessage(
-            "At least one subnet is required.",
-            "red"
-        );
+        "At least one subnet required",
+        "red");
 
         return;
 
     }
 
-    btn.parentNode.parentNode.remove();
+
+    btn.parentElement.parentElement.remove();
+
 
 }
 
 
 
 // ==============================
-// Message
+// MESSAGE SYSTEM
 // ==============================
+
 
 function showMessage(text,color){
 
-    let msg = document.getElementById("message");
 
-    msg.innerText = text;
+    let msg=document.getElementById("message");
 
-    msg.style.color = color;
 
-    msg.style.display = "block";
+    msg.innerText=text;
+
+    msg.style.color=color;
+
+    msg.style.display="block";
+
+
 
     setTimeout(()=>{
 
-        msg.style.display = "none";
+        msg.style.display="none";
 
     },2500);
+
 
 }
 
 
 
+
 // ==============================
-// IPv4 Helpers
+// IP CONVERSION FUNCTIONS
 // ==============================
+
 
 function ipToInt(ip){
 
-    return ip.split(".").reduce((acc,octet)=>{
+
+    return ip.split(".").reduce(
+
+    (acc,octet)=>{
 
         return (acc<<8)+parseInt(octet);
 
     },0)>>>0;
 
+
 }
+
 
 
 
 function intToIp(num){
 
+
     return [
 
-        (num>>>24)&255,
+    (num>>>24)&255,
 
-        (num>>>16)&255,
+    (num>>>16)&255,
 
-        (num>>>8)&255,
+    (num>>>8)&255,
 
-        num&255
+    num&255
 
     ].join(".");
 
+
 }
 
 
 
+
+
 // ==============================
-// Validation
+// VALIDATE IP
 // ==============================
+
 
 function validateIP(ip){
 
-    let p = ip.split(".");
 
-    if(p.length!==4) return false;
+    let parts=ip.split(".");
 
-    return p.every(part=>{
 
-        if(part==="") return false;
+    if(parts.length!==4)
 
-        let n = Number(part);
+    return false;
 
-        return Number.isInteger(n) &&
 
-               n>=0 &&
 
-               n<=255;
+    return parts.every(part=>{
+
+
+        let n=Number(part);
+
+
+        return Number.isInteger(n)
+        && n>=0
+        && n<=255;
+
 
     });
 
+
 }
 
 
 
+
+
 // ==============================
-// Network Parsing
+// READ NETWORK
 // ==============================
+
 
 function parseNetwork(){
 
-    let value =
 
-    document.getElementById("network").value.trim();
+    let value=document
+    .getElementById("network")
+    .value
+    .trim();
+
+
 
     if(value==="")
-        return null;
 
-    let arr = value.split("/");
+    return null;
 
-    if(arr.length!==2)
-        return null;
 
-    let ip = arr[0];
 
-    let cidr = Number(arr[1]);
+    let parts=value.split("/");
+
+
+
+    if(parts.length!==2)
+
+    return null;
+
+
+
+    let ip=parts[0];
+
+
+    let cidr=parseInt(parts[1]);
+
+
 
     if(!validateIP(ip))
-        return null;
 
-    if(cidr<0 || cidr>32)
-        return null;
+    return null;
 
-    return{
 
-        ip,
 
-        cidr,
+    if(isNaN(cidr) || cidr<0 || cidr>32)
+
+    return null;
+
+
+
+    return {
+
+
+        ip:ip,
+
+        cidr:cidr,
 
         networkInt:ipToInt(ip)
 
+
     };
+
 
 }
 
 
 
+
+
 // ==============================
-// Host → CIDR
+// HOST REQUIREMENT TO CIDR
 // ==============================
+
 
 function hostsToCIDR(hosts){
 
-    let bits = 0;
 
-    while(Math.pow(2,bits)-2 < hosts){
+    let bits=0;
+
+
+    while((Math.pow(2,bits)-2)<hosts){
 
         bits++;
 
     }
 
+
     return 32-bits;
+
 
 }
 
 
 
+
+
 // ==============================
-// CIDR → Mask
+// CIDR TO MASK
 // ==============================
+
 
 function cidrToMask(cidr){
 
+
     let mask;
+
+
 
     if(cidr===0){
 
@@ -487,25 +727,33 @@ function cidrToMask(cidr){
 
     else{
 
-        mask=(0xFFFFFFFF<<(32-cidr))>>>0;
+        mask=(0xFFFFFFFF << (32-cidr))>>>0;
 
     }
 
+
+
     return intToIp(mask);
+
 
 }
 
 
 
+
+
 // ==============================
-// Clear Result Table
+// CLEAR RESULT TABLE
 // ==============================
+
 
 function clearResults(){
 
-    let table =
 
-    document.getElementById("resultTable");
+    let table=document
+    .getElementById("resultTable");
+
+
 
     while(table.rows.length>1){
 
@@ -513,148 +761,165 @@ function clearResults(){
 
     }
 
+
 }
 
 
 
 // ==============================
-// Placeholder
-// (Implemented in Part 3)
+// VLSM CALCULATION ENGINE
 // ==============================
 
-<script>
-
-// ==============================
-// VLSM Calculation Engine
-// ==============================
 
 function calculateVLSM(){
 
+
     clearResults();
 
-    let base = parseNetwork();
 
-    if(base==null){
+
+    let base=parseNetwork();
+
+
+
+    if(base===null){
+
 
         showMessage(
-            "❌ Enter a valid network (Example: 192.168.1.0/24)",
-            "red"
-        );
+        "❌ Enter valid network e.g. 192.168.1.0/24",
+        "red");
+
 
         return;
 
+
     }
 
-    let rows = document.querySelectorAll("#inputTable tr");
 
-    let subnets = [];
 
-    // Skip header row
+
+
+    let rows=document
+    .querySelectorAll("#inputTable tr");
+
+
+
+    let networks=[];
+
+
+
     for(let i=1;i<rows.length;i++){
 
-        let inputs = rows[i].querySelectorAll("input");
 
-        let name = inputs[0].value.trim();
+        let inputs=rows[i]
+        .querySelectorAll("input");
 
-        let hosts = parseInt(inputs[1].value);
 
-        if(name==="" || isNaN(hosts) || hosts<=0){
 
-            continue;
+        let name=inputs[0].value.trim();
+
+
+        let hosts=parseInt(inputs[1].value);
+
+
+
+        if(name!=="" && !isNaN(hosts)){
+
+
+            networks.push({
+
+                name:name,
+
+                hosts:hosts
+
+
+            });
+
 
         }
 
-        subnets.push({
-
-            name:name,
-
-            hosts:hosts
-
-        });
 
     }
 
-    if(subnets.length===0){
+
+
+
+
+    if(networks.length===0){
+
 
         showMessage(
-            "❌ Add at least one subnet.",
-            "red"
-        );
+        "❌ Add subnet requirements",
+        "red");
+
 
         return;
 
+
     }
 
+
+
+
+
     // Largest subnet first
-    subnets.sort((a,b)=>b.hosts-a.hosts);
 
-    let current = base.networkInt;
+    networks.sort(
+    (a,b)=>b.hosts-a.hosts
+    );
 
-    let endNetwork =
-        base.networkInt +
-        Math.pow(2,32-base.cidr);
 
-    let resultTable =
-        document.getElementById("resultTable");
 
-    for(let subnet of subnets){
 
-        let cidr = hostsToCIDR(subnet.hosts);
+    let current=base.networkInt;
 
-        let blockSize =
-            Math.pow(2,32-cidr);
 
-        // Align network address
-        if(current % blockSize !==0){
 
-            current =
-            current +
-            (blockSize - (current % blockSize));
+    let table=document
+    .getElementById("resultTable");
 
-        }
 
-        if(current + blockSize > endNetwork){
 
-            showMessage(
-                "❌ Base network is too small for requested subnets.",
-                "red"
-            );
 
-            return;
 
-        }
+    for(let net of networks){
 
-        let network = current;
 
-        let broadcast =
-            current + blockSize - 1;
 
-        let firstHost;
+        let cidr=hostsToCIDR(net.hosts);
 
-        let lastHost;
 
-        if(cidr>=31){
 
-            firstHost = network;
+        let size=Math.pow(2,32-cidr);
 
-            lastHost = broadcast;
 
-        }
 
-        else{
 
-            firstHost = network + 1;
+        let network=current;
 
-            lastHost = broadcast - 1;
 
-        }
 
-        let row =
-            resultTable.insertRow(-1);
+        let broadcast=
+        network+size-1;
 
-        row.innerHTML = `
 
-        <td>${subnet.name}</td>
+
+        let firstHost=network+1;
+
+
+
+        let lastHost=broadcast-1;
+
+
+
+
+        let row=table.insertRow(-1);
+
+
+
+        row.innerHTML=`
+
+        <td>${net.name}</td>
 
         <td>${intToIp(network)}</td>
 
@@ -668,51 +933,270 @@ function calculateVLSM(){
 
         <td>${intToIp(broadcast)}</td>
 
-        <td>${subnet.hosts}</td>
+        <td>${size-2}</td>
 
         `;
 
-        current =
-            broadcast + 1;
+
+
+        current=broadcast+1;
+
 
     }
 
+
+
+
+
     showMessage(
-        "✅ VLSM Calculation Completed",
-        "green"
-    );
+    "✅ VLSM Calculation Completed",
+    "green");
+
 
 }
 
-</script>
-
-
+  // ==============================
+// COPY RESULT
 // ==============================
-// Placeholder
-// (Implemented in Part 4)
-// ==============================
+
 
 function copyResult(){
 
+
+    let table=document.getElementById("resultTable");
+
+
+    if(table.rows.length<=1){
+
+
+        showMessage(
+        "❌ Calculate first",
+        "red"
+        );
+
+
+        return;
+
+
+    }
+
+
+
+
+    let text="VLSM Calculator Result\n\n";
+
+
+
+    for(let i=0;i<table.rows.length;i++){
+
+
+        let row=table.rows[i];
+
+        let rowText=[];
+
+
+
+        for(let j=0;j<row.cells.length;j++){
+
+
+            rowText.push(
+            row.cells[j].innerText
+            );
+
+
+        }
+
+
+
+        text += rowText.join(" | ")+"\n";
+
+
+    }
+
+
+
+
+
+    navigator.clipboard.writeText(text);
+
+
+
     showMessage(
-
-    "Copy feature coming in Part 4",
-
-    "blue"
-
+    "📋 Result copied!",
+    "green"
     );
+
 
 }
 
+
+
+
+
+
+// ==============================
+// EXPORT CSV
+// ==============================
+
+
+function exportCSV(){
+
+
+    let table=document.getElementById("resultTable");
+
+
+
+    if(table.rows.length<=1){
+
+
+        showMessage(
+        "❌ No result to export",
+        "red"
+        );
+
+
+        return;
+
+
+    }
+
+
+
+    let csv=[];
+
+
+
+    for(let i=0;i<table.rows.length;i++){
+
+
+        let row=[];
+
+
+
+        for(let j=0;j<table.rows[i].cells.length;j++){
+
+
+            row.push(
+            table.rows[i].cells[j].innerText
+            );
+
+
+        }
+
+
+
+        csv.push(row.join(","));
+
+
+    }
+
+
+
+    let csvFile =
+
+    new Blob(
+    [csv.join("\n")],
+    {type:"text/csv"}
+    );
+
+
+
+    let link=document.createElement("a");
+
+
+
+    link.href=
+    URL.createObjectURL(csvFile);
+
+
+
+    link.download=
+    "vlsm-result.csv";
+
+
+
+    link.click();
+
+
+
+    showMessage(
+    "📄 CSV exported!",
+    "green"
+    );
+
+
+}
+
+
+
+
+
+
+// ==============================
+// CLEAR ALL
+// ==============================
 
 
 function clearAll(){
 
+
     document.getElementById("network").value="";
+
+
 
     clearResults();
 
+
+
+    let rows=document
+    .querySelectorAll("#inputTable tr");
+
+
+
+    while(rows.length>2){
+
+
+        document
+        .getElementById("inputTable")
+        .deleteRow(2);
+
+
+
+        rows=document
+        .querySelectorAll("#inputTable tr");
+
+
+    }
+
+
+
+    document
+    .querySelector("#inputTable tr:nth-child(2) input")
+    .value="";
+
+
+
+    document
+    .querySelector("#inputTable tr:nth-child(2) input[type='number']")
+    .value="";
+
+
+
+    showMessage(
+    "🗑 Cleared",
+    "green"
+    );
+
+
 }
 
+
+
 </script>
-  
+
+
+</body>
+
+</html>
+
+

@@ -37,6 +37,7 @@ h2{
 
     text-align:center;
     color:#555;
+
 }
 
 
@@ -64,62 +65,68 @@ input{
 
 .button-grid{
 
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-gap:10px;
-margin-top:20px;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:10px;
+    margin-top:20px;
 
 }
+
 
 
 .result{
 
-margin-top:25px;
-border:2px solid #ddd;
-border-radius:10px;
-overflow:hidden;
+    margin-top:25px;
+    border:2px solid #ddd;
+    border-radius:10px;
+    overflow:hidden;
 
 }
+
 
 
 table{
 
-width:100%;
-border-collapse:collapse;
+    width:100%;
+    border-collapse:collapse;
 
 }
+
 
 
 th{
 
-background:var(--primary-blue);
-color:white;
-padding:12px;
+    background:var(--primary-blue);
+    color:white;
+    padding:12px;
 
 }
+
 
 
 td{
 
-padding:12px;
-border-bottom:1px solid #ddd;
+    padding:12px;
+    border-bottom:1px solid #ddd;
 
 }
+
 
 
 tr:nth-child(even){
 
-background:#f8fafc;
+    background:#f8fafc;
 
 }
 
 
+
 .message{
 
-text-align:center;
-font-weight:bold;
-margin-top:15px;
-display:none;
+    text-align:center;
+    font-weight:bold;
+    margin-top:15px;
+    display:none;
 
 }
 
@@ -216,101 +223,45 @@ Value
 
 
 <tr>
-
-<td>
-Network Address
-</td>
-
-<td id="network">
--
-</td>
-
+<td>Network Address</td>
+<td id="network">-</td>
 </tr>
-
 
 
 <tr>
-
-<td>
-First Host
-</td>
-
-<td id="firstHost">
--
-</td>
-
+<td>First Host</td>
+<td id="firstHost">-</td>
 </tr>
-
 
 
 <tr>
-
-<td>
-Last Host
-</td>
-
-<td id="lastHost">
--
-</td>
-
+<td>Last Host</td>
+<td id="lastHost">-</td>
 </tr>
-
 
 
 <tr>
-
-<td>
-Broadcast Address
-</td>
-
-<td id="broadcast">
--
-</td>
-
+<td>Broadcast Address</td>
+<td id="broadcast">-</td>
 </tr>
-
 
 
 <tr>
-
-<td>
-Subnet Mask
-</td>
-
-<td id="mask">
--
-</td>
-
+<td>Subnet Mask</td>
+<td id="mask">-</td>
 </tr>
-
 
 
 <tr>
-
-<td>
-Total Addresses
-</td>
-
-<td id="total">
--
-</td>
-
+<td>Total Addresses</td>
+<td id="total">-</td>
 </tr>
-
 
 
 <tr>
-
-<td>
-Usable Hosts
-</td>
-
-<td id="usable">
--
-</td>
-
+<td>Usable Hosts</td>
+<td id="usable">-</td>
 </tr>
-
 
 
 </table>
@@ -318,5 +269,358 @@ Usable Hosts
 
 </div>
 
+<script>
 
-</div>
+
+function ipToInt(ip){
+
+    return ip.split(".").reduce((acc, octet)=>{
+
+        return (acc << 8) + parseInt(octet);
+
+    },0) >>> 0;
+
+}
+
+
+
+function intToIp(int){
+
+    return [
+
+        (int >>> 24) & 255,
+
+        (int >>> 16) & 255,
+
+        (int >>> 8) & 255,
+
+        int & 255
+
+    ].join(".");
+
+}
+
+
+
+
+function validateIP(ip){
+
+    let parts = ip.split(".");
+
+
+    if(parts.length !== 4){
+        return false;
+    }
+
+
+    return parts.every(part=>{
+
+        let num = Number(part);
+
+        return num >=0 && num <=255;
+
+    });
+
+}
+
+
+
+
+
+function calculateRange(){
+
+
+    let ip = document.getElementById("ip").value.trim();
+
+    let cidr = parseInt(
+        document.getElementById("cidr").value
+    );
+
+
+
+    if(!validateIP(ip) || isNaN(cidr) || cidr <0 || cidr >32){
+
+        showMessage(
+            "❌ Enter valid IP Address and CIDR",
+            "red"
+        );
+
+        return;
+
+    }
+
+
+
+    let ipInt = ipToInt(ip);
+
+
+
+    let mask;
+
+
+    if(cidr === 0){
+
+        mask = 0;
+
+    }
+    else{
+
+        mask = (0xFFFFFFFF << (32-cidr)) >>>0;
+
+    }
+
+
+
+
+    let network = ipInt & mask;
+
+
+    let broadcast = network | (~mask >>>0);
+
+
+
+
+    let firstHost;
+
+    let lastHost;
+
+
+
+    if(cidr === 31){
+
+        firstHost = network;
+
+        lastHost = broadcast;
+
+    }
+
+    else if(cidr === 32){
+
+        firstHost = network;
+
+        lastHost = network;
+
+    }
+
+    else{
+
+        firstHost = network + 1;
+
+        lastHost = broadcast - 1;
+
+    }
+
+
+
+
+    let totalAddresses =
+        Math.pow(2,32-cidr);
+
+
+
+    let usableHosts;
+
+
+
+    if(cidr >=31){
+
+        usableHosts = totalAddresses;
+
+    }
+    else{
+
+        usableHosts = totalAddresses - 2;
+
+    }
+
+
+
+
+
+    document.getElementById("network").innerText =
+        intToIp(network);
+
+
+
+    document.getElementById("firstHost").innerText =
+        intToIp(firstHost);
+
+
+
+    document.getElementById("lastHost").innerText =
+        intToIp(lastHost);
+
+
+
+    document.getElementById("broadcast").innerText =
+        intToIp(broadcast);
+
+
+
+    document.getElementById("mask").innerText =
+        intToIp(mask);
+
+
+
+    document.getElementById("total").innerText =
+        totalAddresses;
+
+
+
+    document.getElementById("usable").innerText =
+        usableHosts;
+
+
+
+
+    showMessage(
+        "✅ Calculation completed",
+        "green"
+    );
+
+
+}
+
+
+
+
+
+
+
+function copyResult(){
+
+
+    let result =
+
+    "IP Range Calculator\n\n" +
+
+    "Network Address: " +
+    document.getElementById("network").innerText + "\n" +
+
+    "First Host: " +
+    document.getElementById("firstHost").innerText + "\n" +
+
+    "Last Host: " +
+    document.getElementById("lastHost").innerText + "\n" +
+
+    "Broadcast Address: " +
+    document.getElementById("broadcast").innerText + "\n" +
+
+    "Subnet Mask: " +
+    document.getElementById("mask").innerText + "\n" +
+
+    "Total Addresses: " +
+    document.getElementById("total").innerText + "\n" +
+
+    "Usable Hosts: " +
+    document.getElementById("usable").innerText;
+
+
+
+
+    if(result.includes("-")){
+
+        showMessage(
+            "❌ Calculate first",
+            "red"
+        );
+
+        return;
+
+    }
+
+
+
+    navigator.clipboard.writeText(result);
+
+
+
+    showMessage(
+        "📋 Copied to Clipboard!",
+        "green"
+    );
+
+
+}
+
+
+
+
+
+
+
+function showMessage(text,color){
+
+
+    let msg = document.getElementById("message");
+
+
+    msg.innerText = text;
+
+
+    msg.style.color = color;
+
+
+    msg.style.display = "block";
+
+
+
+    setTimeout(()=>{
+
+        msg.style.display="none";
+
+    },2000);
+
+
+}
+
+
+
+
+
+
+
+function clearData(){
+
+
+    document.getElementById("ip").value="";
+
+    document.getElementById("cidr").value="";
+
+
+
+    let fields=[
+
+        "network",
+        "firstHost",
+        "lastHost",
+        "broadcast",
+        "mask",
+        "total",
+        "usable"
+
+    ];
+
+
+
+    fields.forEach(id=>{
+
+        document.getElementById(id).innerText="-";
+
+    });
+
+
+
+    document.getElementById("message").style.display="none";
+
+
+}
+
+
+
+</script>
+
+
+</body>
+
+</html>

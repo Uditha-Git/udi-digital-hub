@@ -315,14 +315,20 @@ function validateIP(ip){
 
     return parts.every(part=>{
 
+        if(part === "")
+            return false;
+
+
         let num = Number(part);
 
-        return num >=0 && num <=255;
+
+        return Number.isInteger(num) &&
+               num >=0 &&
+               num <=255;
 
     });
 
 }
-
 
 
 

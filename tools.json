@@ -112,5 +112,11 @@
   "icon": "🗂️",
   "link": "tools/vlsm-calculator.html",
   "category": "Network"
+},
+  {
+  "name": "Supernet Calculator",
+  "icon": "🛰️",
+  "link": "tools/supernet-calculator.html",
+  "category": "Network"
 }
 ]

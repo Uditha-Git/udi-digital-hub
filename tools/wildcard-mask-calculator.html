@@ -1,1 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Wildcard Mask Calculator | UDI Digital Hub</title>
+
+<link rel="stylesheet" href="../style.css">
+
+
+<style>
+
+.container{
+
+    max-width:850px;
+    margin:50px auto;
+    background:white;
+    padding:25px;
+    border-radius:12px;
+    box-shadow:0 5px 20px rgba(0,0,0,.1);
+
+}
+
+
+h2{
+
+    text-align:center;
+    color:var(--primary-blue);
+
+}
+
+
+.description{
+
+    text-align:center;
+    color:#555;
+
+}
+
+
+label{
+
+    display:block;
+    margin-top:20px;
+    font-weight:bold;
+
+}
+
+
+input{
+
+    width:100%;
+    padding:10px;
+    margin-top:8px;
+    border:2px solid #ddd;
+    border-radius:8px;
+    font-size:16px;
+    box-sizing:border-box;
+
+}
+
+
+.button-grid{
+
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:10px;
+    margin-top:20px;
+
+}
+
+
+
+.result{
+
+    margin-top:25px;
+    border:2px solid #ddd;
+    border-radius:10px;
+    overflow:hidden;
+
+}
+
+
+
+table{
+
+    width:100%;
+    border-collapse:collapse;
+
+}
+
+
+
+th{
+
+    background:var(--primary-blue);
+    color:white;
+    padding:12px;
+
+}
+
+
+
+td{
+
+    padding:12px;
+    border-bottom:1px solid #ddd;
+
+}
+
+
+
+tr:nth-child(even){
+
+    background:#f8fafc;
+
+}
+
+
+
+.message{
+
+    text-align:center;
+    margin-top:15px;
+    font-weight:bold;
+    display:none;
+
+}
+
+
+</style>
+
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+<h2>🎯 Wildcard Mask Calculator</h2>
+
+
+<p class="description">
+Calculate subnet mask and wildcard mask from CIDR prefix
+</p>
+
+
+
+<label>
+CIDR Prefix
+</label>
+
+
+<input 
+id="cidr"
+type="number"
+min="0"
+max="32"
+placeholder="Example: 24">
+
+
+
+<div class="button-grid">
+
+
+<button onclick="calculateWildcard()">
+
+Calculate
+
+</button>
+
+
+
+<button onclick="copyResult()">
+
+Copy Result
+
+</button>
+
+
+
+<button class="clearBtn" onclick="clearData()">
+
+Clear
+
+</button>
+
+
+</div>
+
+
+
+<div class="message" id="message"></div>
+
+
+
+
+<div class="result">
+
+
+<table>
+
+
+<tr>
+
+<th>
+Property
+</th>
+
+<th>
+Value
+</th>
+
+</tr>
+
+
+<tr>
+
+<td>
+CIDR Prefix
+</td>
+
+<td id="prefix">
+-
+</td>
+
+</tr>
+
+
+
+<tr>
+
+<td>
+Subnet Mask
+</td>
+
+<td id="mask">
+-
+</td>
+
+</tr>
+
+
+
+<tr>
+
+<td>
+Wildcard Mask
+</td>
+
+<td id="wildcard">
+-
+</td>
+
+</tr>
+
+
+
+<tr>
+
+<td>
+Network Bits
+</td>
+
+<td id="networkBits">
+-
+</td>
+
+</tr>
+
+
+
+<tr>
+
+<td>
+Host Bits
+</td>
+
+<td id="hostBits">
+-
+</td>
+
+</tr>
+
+
+
+<tr>
+
+<td>
+Total Addresses
+</td>
+
+<td id="total">
+-
+</td>
+
+</tr>
+
+
+
+<tr>
+
+<td>
+Usable Hosts
+</td>
+
+<td id="usable">
+-
+</td>
+
+</tr>
+
+
+
+</table>
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+<script>
+
+
+function intToIp(int){
+
+
+return [
+
+(int >>> 24) & 255,
+
+(int >>> 16) & 255,
+
+(int >>> 8) & 255,
+
+int & 255
+
+].join(".");
+
+
+}
+
+
+
+
+
+function calculateWildcard(){
+
+
+let cidr=parseInt(
+document.getElementById("cidr").value
+);
+
+
+
+if(isNaN(cidr) || cidr<0 || cidr>32){
+
+
+showMessage(
+"❌ Enter valid CIDR",
+"red"
+);
+
+return;
+
+}
+
+
+
+
+let mask;
+
+
+if(cidr===0){
+
+mask=0;
+
+}
+
+else{
+
+mask=(0xFFFFFFFF << (32-cidr))>>>0;
+
+}
+
+
+
+
+let wildcard=(~mask)>>>0;
+
+
+
+let total=Math.pow(2,32-cidr);
+
+
+
+let usable;
+
+
+if(cidr>=31){
+
+usable=total;
+
+}
+
+else{
+
+usable=total-2;
+
+}
+
+
+
+
+
+document.getElementById("prefix").innerText="/"+cidr;
+
+
+document.getElementById("mask").innerText=
+intToIp(mask);
+
+
+
+document.getElementById("wildcard").innerText=
+intToIp(wildcard);
+
+
+
+document.getElementById("networkBits").innerText=
+cidr;
+
+
+
+document.getElementById("hostBits").innerText=
+32-cidr;
+
+
+
+document.getElementById("total").innerText=
+total;
+
+
+
+document.getElementById("usable").innerText=
+usable;
+
+
+
+showMessage(
+"✅ Calculation completed",
+"green"
+);
+
+
+}
+
+
+
+
+function copyResult(){
+
+
+let text=
+
+"Wildcard Mask Calculator\n\n"+
+
+"CIDR : "+document.getElementById("prefix").innerText+"\n"+
+
+"Subnet Mask : "+document.getElementById("mask").innerText+"\n"+
+
+"Wildcard Mask : "+document.getElementById("wildcard").innerText+"\n"+
+
+"Network Bits : "+document.getElementById("networkBits").innerText+"\n"+
+
+"Host Bits : "+document.getElementById("hostBits").innerText+"\n"+
+
+"Total Addresses : "+document.getElementById("total").innerText+"\n"+
+
+"Usable Hosts : "+document.getElementById("usable").innerText;
+
+
+
+navigator.clipboard.writeText(text);
+
+
+
+showMessage(
+"📋 Copied to clipboard!",
+"green"
+);
+
+
+}
+
+
+
+
+
+function showMessage(msg,color){
+
+
+let el=document.getElementById("message");
+
+
+el.innerText=msg;
+
+el.style.color=color;
+
+el.style.display="block";
+
+
+
+setTimeout(()=>{
+
+el.style.display="none";
+
+},2000);
+
+
+}
+
+
+
+
+
+function clearData(){
+
+
+document.getElementById("cidr").value="";
+
+
+let ids=[
+
+"prefix",
+"mask",
+"wildcard",
+"networkBits",
+"hostBits",
+"total",
+"usable"
+
+];
+
+
+
+ids.forEach(id=>{
+
+document.getElementById(id).innerText="-";
+
+});
+
+
+
+document.getElementById("message").style.display="none";
+
+
+}
+
+
+
+</script>
+
+
+</body>
+
+</html>

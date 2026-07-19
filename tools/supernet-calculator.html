@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Supernet Calculator | UDI Digital Hub</title>
+
+<link rel="stylesheet" href="../style.css">
+
+<style>
+
+.container{
+
+    max-width:1000px;
+    margin:50px auto;
+    background:#fff;
+    padding:25px;
+    border-radius:12px;
+    box-shadow:0 5px 20px rgba(0,0,0,.1);
+
+}
+
+h2{
+
+    text-align:center;
+    color:var(--primary-blue);
+
+}
+
+.description{
+
+    text-align:center;
+    color:#666;
+    margin-bottom:20px;
+
+}
+
+.info-box{
+
+    margin-top:20px;
+    padding:15px;
+    background:#f8fafc;
+    border:1px solid #ddd;
+    border-radius:10px;
+
+}
+
+label{
+
+    display:block;
+    margin-top:20px;
+    font-weight:bold;
+
+}
+
+textarea{
+
+    width:100%;
+    height:180px;
+    padding:12px;
+    margin-top:8px;
+    border:2px solid #ddd;
+    border-radius:8px;
+    font-size:15px;
+    resize:vertical;
+    box-sizing:border-box;
+
+}
+
+.button-grid{
+
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:10px;
+    margin-top:20px;
+
+}
+
+.result{
+
+    margin-top:25px;
+    border:2px solid #ddd;
+    border-radius:10px;
+    overflow:hidden;
+
+}
+
+table{
+
+    width:100%;
+    border-collapse:collapse;
+
+}
+
+th{
+
+    background:var(--primary-blue);
+    color:white;
+    padding:12px;
+
+}
+
+td{
+
+    padding:12px;
+    border-bottom:1px solid #ddd;
+
+}
+
+tr:nth-child(even){
+
+    background:#f8fafc;
+
+}
+
+.message{
+
+    margin-top:15px;
+    text-align:center;
+    font-weight:bold;
+    display:none;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>🛰️ Supernet Calculator</h2>
+
+<p class="description">
+
+Combine multiple IPv4 networks into one summarized route.
+
+</p>
+
+<div class="info-box">
+
+<b>Example:</b>
+
+<br><br>
+
+192.168.0.0/24
+
+<br>
+
+192.168.1.0/24
+
+<br>
+
+192.168.2.0/24
+
+<br>
+
+192.168.3.0/24
+
+</div>
+
+<label>
+
+IPv4 Networks (One per line)
+
+</label>
+
+<textarea
+id="networks"
+placeholder="Example:
+
+192.168.0.0/24
+192.168.1.0/24
+192.168.2.0/24
+192.168.3.0/24"></textarea>
+
+<div class="button-grid">
+
+<button onclick="calculateSupernet()">
+🧮 Calculate
+</button>
+
+<button onclick="copyResult()">
+📋 Copy Result
+</button>
+
+<button onclick="exportCSV()">
+📄 Export CSV
+</button>
+
+<button class="clearBtn" onclick="clearData()">
+🗑 Clear
+</button>
+
+</div>
+
+<div
+id="message"
+class="message">
+</div>
+
+<div class="result">
+
+<table>
+
+<tr>
+
+<th>Property</th>
+
+<th>Value</th>
+
+</tr>
+
+<tr>
+
+<td>Summary Network</td>
+
+<td id="summaryNetwork">-</td>
+
+</tr>
+
+<tr>
+
+<td>Summary CIDR</td>
+
+<td id="summaryCIDR">-</td>
+
+</tr>
+
+<tr>
+
+<td>Subnet Mask</td>
+
+<td id="summaryMask">-</td>
+
+</tr>
+
+<tr>
+
+<td>Total Networks</td>
+
+<td id="networkCount">-</td>
+
+</tr>
+
+</table>
+
+</div>
+
+</div>
+
+  <script>
+
+// ======================================
+// MESSAGE
+// ======================================
+
+function showMessage(text,color){
+
+    let msg=document.getElementById("message");
+
+    msg.innerText=text;
+
+    msg.style.color=color;
+
+    msg.style.display="block";
+
+    setTimeout(()=>{
+
+        msg.style.display="none";
+
+    },2500);
+
+}
+
+
+
+// ======================================
+// IP TO INTEGER
+// ======================================
+
+function ipToInt(ip){
+
+    return ip.split(".").reduce((acc,octet)=>{
+
+        return (acc<<8)+parseInt(octet);
+
+    },0)>>>0;
+
+}
+
+
+
+// ======================================
+// INTEGER TO IP
+// ======================================
+
+function intToIp(num){
+
+    return [
+
+        (num>>>24)&255,
+
+        (num>>>16)&255,
+
+        (num>>>8)&255,
+
+        num&255
+
+    ].join(".");
+
+}
+
+
+
+// ======================================
+// CIDR TO MASK
+// ======================================
+
+function cidrToMask(cidr){
+
+    let mask;
+
+    if(cidr===0){
+
+        mask=0;
+
+    }
+
+    else{
+
+        mask=(0xFFFFFFFF<<(32-cidr))>>>0;
+
+    }
+
+    return intToIp(mask);
+
+}
+
+
+
+// ======================================
+// VALIDATE IP
+// ======================================
+
+function validateIP(ip){
+
+    let parts=ip.split(".");
+
+    if(parts.length!==4) return false;
+
+    return parts.every(part=>{
+
+        let n=Number(part);
+
+        return Number.isInteger(n) &&
+
+               n>=0 &&
+
+               n<=255;
+
+    });
+
+}
+
+
+
+// ======================================
+// CALCULATE SUPERNET
+// ======================================
+
+function calculateSupernet(){
+
+    let text=document.getElementById("networks").value.trim();
+
+    if(text===""){
+
+        showMessage(
+        "❌ Enter at least one network.",
+        "red");
+
+        return;
+
+    }
+
+    let lines=text.split("\n");
+
+    let networks=[];
+
+    for(let line of lines){
+
+        line=line.trim();
+
+        if(line==="") continue;
+
+        let parts=line.split("/");
+
+        if(parts.length!==2){
+
+            showMessage(
+            "❌ Invalid format.",
+            "red");
+
+            return;
+
+        }
+
+        let ip=parts[0];
+
+        let cidr=parseInt(parts[1]);
+
+        if(!validateIP(ip) || cidr<0 || cidr>32){
+
+            showMessage(
+            "❌ Invalid network.",
+            "red");
+
+            return;
+
+        }
+
+        networks.push({
+
+            ipInt:ipToInt(ip),
+
+            cidr:cidr
+
+        });
+
+    }
+
+    if(networks.length===0){
+
+        showMessage(
+        "❌ No valid networks.",
+        "red");
+
+        return;
+
+    }
+
+    let minIP=Math.min(...networks.map(n=>n.ipInt));
+
+    let maxIP=Math.max(...networks.map(n=>{
+
+        let size=Math.pow(2,32-n.cidr);
+
+        return n.ipInt+size-1;
+
+    }));
+
+
+
+    let xor=minIP^maxIP;
+
+    let prefix=32;
+
+    while(xor>0){
+
+        xor>>>=1;
+
+        prefix--;
+
+    }
+
+    let mask=(prefix===0)?0:(0xFFFFFFFF<<(32-prefix))>>>0;
+
+    let summary=minIP & mask;
+
+
+
+    document.getElementById("summaryNetwork").innerText=
+    intToIp(summary);
+
+
+
+    document.getElementById("summaryCIDR").innerText=
+    "/"+prefix;
+
+
+
+    document.getElementById("summaryMask").innerText=
+    cidrToMask(prefix);
+
+
+
+    document.getElementById("networkCount").innerText=
+    networks.length;
+
+
+
+    showMessage(
+    "✅ Supernet calculated successfully.",
+    "green");
+
+}
+
+    // ======================================
+// COPY RESULT
+// ======================================
+
+function copyResult(){
+
+    let summary =
+        document.getElementById("summaryNetwork").innerText;
+
+    if(summary=="-"){
+
+        showMessage(
+        "❌ Calculate first",
+        "red");
+
+        return;
+
+    }
+
+    let result =
+
+`Supernet Calculator Result
+
+Summary Network : ${document.getElementById("summaryNetwork").innerText}
+Summary CIDR    : ${document.getElementById("summaryCIDR").innerText}
+Subnet Mask     : ${document.getElementById("summaryMask").innerText}
+Total Networks  : ${document.getElementById("networkCount").innerText}`;
+
+    navigator.clipboard.writeText(result);
+
+    showMessage(
+    "📋 Copied to clipboard!",
+    "green");
+
+}
+
+
+
+// ======================================
+// EXPORT CSV
+// ======================================
+
+function exportCSV(){
+
+    let summary =
+        document.getElementById("summaryNetwork").innerText;
+
+    if(summary=="-"){
+
+        showMessage(
+        "❌ Nothing to export",
+        "red");
+
+        return;
+
+    }
+
+    let csv =
+
+`Property,Value
+Summary Network,${document.getElementById("summaryNetwork").innerText}
+Summary CIDR,${document.getElementById("summaryCIDR").innerText}
+Subnet Mask,${document.getElementById("summaryMask").innerText}
+Total Networks,${document.getElementById("networkCount").innerText}`;
+
+    let blob = new Blob([csv],{
+
+        type:"text/csv"
+
+    });
+
+    let link=document.createElement("a");
+
+    link.href=URL.createObjectURL(blob);
+
+    link.download="supernet-result.csv";
+
+    link.click();
+
+    showMessage(
+    "📄 CSV Exported!",
+    "green");
+
+}
+
+
+
+// ======================================
+// CLEAR
+// ======================================
+
+function clearData(){
+
+    document.getElementById("networks").value="";
+
+    document.getElementById("summaryNetwork").innerText="-";
+
+    document.getElementById("summaryCIDR").innerText="-";
+
+    document.getElementById("summaryMask").innerText="-";
+
+    document.getElementById("networkCount").innerText="-";
+
+    document.getElementById("message").style.display="none";
+
+}
+
+</script>
+
+</body>
+
+</html>
+    
+  

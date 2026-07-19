@@ -100,5 +100,11 @@
   "icon": "🌐",
   "link": "tools/ip-range-calculator.html",
   "category": "Network"
+},
+  {
+  "name": "Wildcard Mask Calculator",
+  "icon": "🎯",
+  "link": "tools/wildcard-mask-calculator.html",
+  "category": "Network"
 }
 ]

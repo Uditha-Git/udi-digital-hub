@@ -106,5 +106,11 @@
   "icon": "🎯",
   "link": "tools/wildcard-mask-calculator.html",
   "category": "Network"
+},
+  {
+  "name": "VLSM Calculator",
+  "icon": "🗂️",
+  "link": "tools/vlsm-calculator.html",
+  "category": "Network"
 }
 ]

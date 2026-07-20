@@ -118,5 +118,12 @@
   "icon": "🛰️",
   "link": "tools/supernet-calculator.html",
   "category": "Network"
+},
+  {
+    "name": "IPv6 Calculator",
+    "description": "Analyze IPv6 addresses, expand, compress, detect address type and calculate network prefix.",
+    "category": "Networking",
+    "icon": "🌐",
+    "link": "tools/ipv6-calculator.html"
 }
 ]

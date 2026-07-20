@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>IPv6 Calculator | UDI Digital Hub</title>
+
+<link rel="stylesheet" href="../style.css">
+
+  
+
+<style>
+
+.container{
+
+    max-width:900px;
+    margin:50px auto;
+    background:#fff;
+    padding:25px;
+    border-radius:12px;
+    box-shadow:0 5px 20px rgba(0,0,0,.1);
+
+}
+
+
+h2{
+
+    text-align:center;
+    color:var(--primary-blue);
+
+}
+
+
+.description{
+
+    text-align:center;
+    color:#666;
+    margin-bottom:20px;
+
+}
+
+
+label{
+
+    display:block;
+    margin-top:15px;
+    font-weight:bold;
+
+}
+
+
+input{
+
+    width:100%;
+    padding:10px;
+    margin-top:5px;
+    border:2px solid #ddd;
+    border-radius:8px;
+    box-sizing:border-box;
+    font-size:16px;
+
+}
+
+
+
+.button-grid{
+
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:10px;
+    margin-top:20px;
+
+}
+
+
+
+.result{
+
+    margin-top:25px;
+    border:2px solid #ddd;
+    border-radius:10px;
+    overflow:hidden;
+
+}
+
+
+
+table{
+
+    width:100%;
+    border-collapse:collapse;
+
+}
+
+
+
+th{
+
+    background:var(--primary-blue);
+    color:white;
+    padding:12px;
+
+}
+
+
+
+td{
+
+    padding:12px;
+    border-bottom:1px solid #ddd;
+
+}
+
+
+
+tr:nth-child(even){
+
+    background:#f8fafc;
+
+}
+
+
+
+.message{
+
+    text-align:center;
+    margin-top:15px;
+    font-weight:bold;
+    display:none;
+
+}
+
+
+</style>
+
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+<h2>🌐 IPv6 Calculator</h2>
+
+
+<p class="description">
+
+Analyze IPv6 Address Information
+
+</p>
+
+
+
+<label>
+
+IPv6 Address
+
+</label>
+
+
+<input
+
+id="ipv6"
+
+placeholder="Example: 2001:0db8:85a3::8a2e:0370:7334"
+
+>
+
+
+
+<label>
+
+Prefix Length
+
+</label>
+
+
+<input
+
+id="prefix"
+
+type="number"
+
+min="0"
+
+max="128"
+
+placeholder="Example: 64"
+
+>
+
+
+
+<div class="button-grid">
+
+
+<button onclick="calculateIPv6()">
+
+🧮 Calculate
+
+</button>
+
+
+<button onclick="copyResult()">
+
+📋 Copy Result
+
+</button>
+
+
+<button class="clearBtn" onclick="clearData()">
+
+🗑 Clear
+
+</button>
+
+
+</div>
+
+
+
+<div id="message" class="message"></div>
+
+
+<div class="result">
+
+
+<table>
+
+
+<tr>
+
+<th>
+Property
+</th>
+
+<th>
+Value
+</th>
+
+</tr>
+
+
+
+<tr>
+<td>Compressed IPv6</td>
+<td id="compressed">-</td>
+</tr>
+
+
+<tr>
+<td>Expanded IPv6</td>
+<td id="expanded">-</td>
+</tr>
+
+
+<tr>
+<td>Address Type</td>
+<td id="type">-</td>
+</tr>
+
+
+<tr>
+<td>Network Prefix</td>
+<td id="network">-</td>
+</tr>
+
+
+<tr>
+<td>Prefix Length</td>
+<td id="prefixResult">-</td>
+</tr>
+
+
+</table>
+
+
+</div>
+
+
+</div>
+
+<script>
+
+
+// ======================================
+// MESSAGE
+// ======================================
+
+function showMessage(text,color){
+
+    let msg=document.getElementById("message");
+
+    msg.innerText=text;
+
+    msg.style.color=color;
+
+    msg.style.display="block";
+
+
+    setTimeout(()=>{
+
+        msg.style.display="none";
+
+    },2500);
+
+}
+
+
+
+// ======================================
+// EXPAND IPV6
+// ======================================
+
+function expandIPv6(address){
+
+
+    if(address.includes("::")){
+
+
+        let parts=address.split("::");
+
+
+        let left =
+        parts[0] ? parts[0].split(":") : [];
+
+
+        let right =
+        parts[1] ? parts[1].split(":") : [];
+
+
+        let missing =
+        8 - (left.length + right.length);
+
+
+        let zeros=[];
+
+
+        for(let i=0;i<missing;i++){
+
+            zeros.push("0000");
+
+        }
+
+
+        return [
+
+            ...left,
+
+            ...zeros,
+
+            ...right
+
+        ]
+
+        .map(x=>x.padStart(4,"0"))
+
+        .join(":");
+
+
+    }
+
+
+    else{
+
+
+        return address
+
+        .split(":")
+
+        .map(x=>x.padStart(4,"0"))
+
+        .join(":");
+
+
+    }
+
+
+}
+
+
+
+
+// ======================================
+// COMPRESS IPV6
+// ======================================
+
+function compressIPv6(address){
+
+
+    let parts =
+    address.split(":")
+    .map(x=>x.replace(/^0+/,"") || "0");
+
+
+
+    let bestStart=-1;
+
+    let bestLength=0;
+
+    let start=-1;
+
+    let length=0;
+
+
+
+    for(let i=0;i<=parts.length;i++){
+
+
+        if(i<parts.length && parts[i]=="0"){
+
+
+            if(start==-1){
+
+                start=i;
+
+            }
+
+
+            length++;
+
+
+        }
+
+        else{
+
+
+            if(length>bestLength){
+
+                bestStart=start;
+
+                bestLength=length;
+
+            }
+
+
+            start=-1;
+
+            length=0;
+
+
+        }
+
+
+    }
+
+
+
+    if(bestLength>1){
+
+
+        parts.splice(
+            bestStart,
+            bestLength,
+            ""
+        );
+
+
+        if(bestStart===0){
+
+            parts.unshift("");
+
+        }
+
+
+        if(bestStart+bestLength===8){
+
+            parts.push("");
+
+        }
+
+
+    }
+
+
+
+    return parts.join(":");
+
+
+}
+
+
+
+
+// ======================================
+// ADDRESS TYPE
+// ======================================
+
+function getIPv6Type(ip){
+
+
+    if(ip.toLowerCase().startsWith("fe80"))
+
+        return "Link Local";
+
+
+    if(ip.toLowerCase().startsWith("fc") ||
+       ip.toLowerCase().startsWith("fd"))
+
+        return "Unique Local Address (ULA)";
+
+
+
+    if(ip.toLowerCase().startsWith("ff"))
+
+        return "Multicast";
+
+
+
+    if(ip==="::1")
+
+        return "Loopback";
+
+
+
+    if(ip==="::")
+
+        return "Unspecified";
+
+
+
+    if(ip.toLowerCase().startsWith("2001:db8"))
+
+        return "Documentation Address";
+
+
+
+    return "Global Unicast";
+
+}
+
+
+
+
+// ======================================
+// NETWORK PREFIX
+// ======================================
+
+function calculateNetwork(expanded,prefix){
+
+
+    let groups =
+    expanded.split(":");
+
+
+    let bits =
+    prefix;
+
+
+    let result=[];
+
+
+    for(let i=0;i<8;i++){
+
+
+        if(bits>=16){
+
+
+            result.push(groups[i]);
+
+            bits-=16;
+
+
+        }
+
+        else if(bits>0){
+
+
+            let value =
+            parseInt(groups[i],16);
+
+
+            let mask =
+            (0xffff << (16-bits)) & 0xffff;
+
+
+            value =
+            value & mask;
+
+
+            result.push(
+            value.toString(16)
+            .padStart(4,"0")
+            );
+
+
+            bits=0;
+
+
+        }
+
+        else{
+
+
+            result.push("0000");
+
+
+        }
+
+
+    }
+
+
+    return compressIPv6(result.join(":"));
+
+
+}
+
+
+
+
+// ======================================
+// MAIN CALCULATION
+// ======================================
+
+function calculateIPv6(){
+
+
+    let ip =
+    document.getElementById("ipv6")
+    .value.trim();
+
+
+    let prefix =
+    parseInt(
+    document.getElementById("prefix").value
+    );
+
+
+
+    if(ip==="" ||
+       isNaN(prefix) ||
+       prefix<0 ||
+       prefix>128){
+
+
+        showMessage(
+        "❌ Enter valid IPv6 and prefix",
+        "red"
+        );
+
+        return;
+
+    }
+
+
+
+    let expanded;
+
+
+    try{
+
+
+        expanded =
+        expandIPv6(ip);
+
+
+        if(expanded.split(":").length!==8){
+
+            throw "error";
+
+        }
+
+
+    }
+
+    catch{
+
+
+        showMessage(
+        "❌ Invalid IPv6 Address",
+        "red"
+        );
+
+        return;
+
+    }
+
+
+
+    let compressed =
+    compressIPv6(expanded);
+
+
+
+    document.getElementById("compressed")
+    .innerText=compressed;
+
+
+
+    document.getElementById("expanded")
+    .innerText=expanded;
+
+
+
+    document.getElementById("type")
+    .innerText=getIPv6Type(compressed);
+
+
+
+    document.getElementById("network")
+    .innerText=
+    calculateNetwork(expanded,prefix)
+    +"/"+prefix;
+
+
+
+    document.getElementById("prefixResult")
+    .innerText="/"+prefix;
+
+
+
+    showMessage(
+    "✅ IPv6 Calculation Completed",
+    "green"
+    );
+
+
+}
+
+  // ======================================
+// COPY RESULT
+// ======================================
+
+function copyResult(){
+
+
+    let compressed =
+    document.getElementById("compressed").innerText;
+
+
+    if(compressed=="-"){
+
+
+        showMessage(
+        "❌ Calculate first",
+        "red"
+        );
+
+
+        return;
+
+    }
+
+
+
+    let result =
+
+`IPv6 Calculator Result
+
+Compressed IPv6:
+${document.getElementById("compressed").innerText}
+
+Expanded IPv6:
+${document.getElementById("expanded").innerText}
+
+Address Type:
+${document.getElementById("type").innerText}
+
+Network Prefix:
+${document.getElementById("network").innerText}
+
+Prefix Length:
+${document.getElementById("prefixResult").innerText}`;
+
+
+
+    navigator.clipboard.writeText(result);
+
+
+
+    showMessage(
+    "📋 Copied to Clipboard!",
+    "green"
+    );
+
+
+}
+
+
+
+
+
+// ======================================
+// CLEAR DATA
+// ======================================
+
+function clearData(){
+
+
+    document.getElementById("ipv6").value="";
+
+
+    document.getElementById("prefix").value="";
+
+
+    let fields=[
+
+        "compressed",
+        "expanded",
+        "type",
+        "network",
+        "prefixResult"
+
+    ];
+
+
+
+    fields.forEach(id=>{
+
+
+        document.getElementById(id).innerText="-";
+
+
+    });
+
+
+
+    document.getElementById("message")
+    .style.display="none";
+
+
+}
+
+
+
+</script>
+
+
+</body>
+
+</html>
+  

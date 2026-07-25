@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>LTE EARFCN Calculator | UDI Digital Hub</title>
+
+<link rel="stylesheet" href="../style.css">
+
+<style>
+
+.container{
+max-width:900px;
+margin:50px auto;
+background:#fff;
+padding:25px;
+border-radius:12px;
+box-shadow:0 5px 20px rgba(0,0,0,.1);
+}
+
+h2{
+text-align:center;
+color:var(--primary-blue);
+}
+
+.description{
+text-align:center;
+color:#666;
+margin-bottom:20px;
+}
+
+label{
+display:block;
+margin-top:15px;
+font-weight:bold;
+}
+
+select,
+input{
+
+width:100%;
+padding:10px;
+margin-top:5px;
+border:2px solid #ddd;
+border-radius:8px;
+font-size:16px;
+box-sizing:border-box;
+
+}
+
+.button-grid{
+
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+gap:10px;
+margin-top:20px;
+
+}
+
+.result{
+
+margin-top:25px;
+border:2px solid #ddd;
+border-radius:10px;
+overflow:hidden;
+
+}
+
+table{
+
+width:100%;
+border-collapse:collapse;
+
+}
+
+th{
+
+background:var(--primary-blue);
+color:#fff;
+padding:12px;
+
+}
+
+td{
+
+padding:12px;
+border-bottom:1px solid #ddd;
+
+}
+
+tr:nth-child(even){
+
+background:#f8fafc;
+
+}
+
+.message{
+
+margin-top:15px;
+text-align:center;
+font-weight:bold;
+display:none;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>📡 LTE EARFCN Calculator</h2>
+
+<p class="description">
+
+Convert LTE EARFCN into Downlink and Uplink frequencies.
+
+</p>
+
+<label>
+
+LTE Band
+
+</label>
+
+<select id="band">
+
+<option value="">Select LTE Band</option>
+
+<option value="1">Band 1 (2100 MHz)</option>
+
+<option value="3">Band 3 (1800 MHz)</option>
+
+<option value="5">Band 5 (850 MHz)</option>
+
+<option value="7">Band 7 (2600 MHz)</option>
+
+<option value="8">Band 8 (900 MHz)</option>
+
+<option value="20">Band 20 (800 MHz)</option>
+
+<option value="28">Band 28 (700 MHz)</option>
+
+<option value="40">Band 40 (2300 MHz)</option>
+
+<option value="41">Band 41 (2500 MHz)</option>
+
+</select>
+
+<label>
+
+EARFCN
+
+</label>
+
+<input
+id="earfcn"
+type="number"
+placeholder="Example: 1300">
+
+<div class="button-grid">
+
+<button onclick="calculateEARFCN()">
+
+🧮 Calculate
+
+</button>
+
+<button onclick="copyResult()">
+
+📋 Copy
+
+</button>
+
+<button class="clearBtn" onclick="clearData()">
+
+🗑 Clear
+
+</button>
+
+</div>
+
+<div
+id="message"
+class="message">
+</div>
+
+<div class="result">
+
+<table>
+
+<tr>
+
+<th>Property</th>
+
+<th>Value</th>
+
+</tr>
+
+<tr>
+<td>LTE Band</td>
+<td id="bandResult">-</td>
+</tr>
+
+<tr>
+<td>EARFCN</td>
+<td id="earfcnResult">-</td>
+</tr>
+
+<tr>
+<td>Downlink Frequency</td>
+<td id="dlFreq">-</td>
+</tr>
+
+<tr>
+<td>Uplink Frequency</td>
+<td id="ulFreq">-</td>
+</tr>
+
+<tr>
+<td>Duplex Mode</td>
+<td id="duplex">-</td>
+</tr>
+
+</table>
+
+</div>
+
+</div>
+
+  <script>
+
+// ======================================
+// MESSAGE
+// ======================================
+
+function showMessage(text,color){
+
+    let msg=document.getElementById("message");
+
+    msg.innerText=text;
+
+    msg.style.color=color;
+
+    msg.style.display="block";
+
+    setTimeout(()=>{
+
+        msg.style.display="none";
+
+    },2500);
+
+}
+
+
+
+// ======================================
+// LTE BAND DATABASE
+// ======================================
+
+const bands={
+
+1:{
+name:"Band 1 (2100 MHz)",
+dlLow:2110,
+ulLow:1920,
+offset:0,
+duplex:"FDD"
+},
+
+3:{
+name:"Band 3 (1800 MHz)",
+dlLow:1805,
+ulLow:1710,
+offset:1200,
+duplex:"FDD"
+},
+
+5:{
+name:"Band 5 (850 MHz)",
+dlLow:869,
+ulLow:824,
+offset:2400,
+duplex:"FDD"
+},
+
+7:{
+name:"Band 7 (2600 MHz)",
+dlLow:2620,
+ulLow:2500,
+offset:2750,
+duplex:"FDD"
+},
+
+8:{
+name:"Band 8 (900 MHz)",
+dlLow:925,
+ulLow:880,
+offset:3450,
+duplex:"FDD"
+},
+
+20:{
+name:"Band 20 (800 MHz)",
+dlLow:791,
+ulLow:832,
+offset:6150,
+duplex:"FDD"
+},
+
+28:{
+name:"Band 28 (700 MHz)",
+dlLow:758,
+ulLow:703,
+offset:9210,
+duplex:"FDD"
+},
+
+40:{
+name:"Band 40 (2300 MHz)",
+dlLow:2300,
+ulLow:null,
+offset:38650,
+duplex:"TDD"
+},
+
+41:{
+name:"Band 41 (2500 MHz)",
+dlLow:2496,
+ulLow:null,
+offset:39650,
+duplex:"TDD"
+}
+
+};
+
+
+
+// ======================================
+// CALCULATE
+// ======================================
+
+function calculateEARFCN(){
+
+let band=document.getElementById("band").value;
+
+let earfcn=parseInt(
+
+document.getElementById("earfcn").value
+
+);
+
+if(band==="" || isNaN(earfcn)){
+
+showMessage(
+
+"❌ Select LTE Band and EARFCN",
+
+"red"
+
+);
+
+return;
+
+}
+
+let b=bands[band];
+
+let dl=b.dlLow+0.1*(earfcn-b.offset);
+
+let ul="-";
+
+if(b.duplex==="FDD"){
+
+ul=(b.ulLow+0.1*(earfcn-b.offset)).toFixed(1)+" MHz";
+
+}
+
+document.getElementById("bandResult").innerText=b.name;
+
+document.getElementById("earfcnResult").innerText=earfcn;
+
+document.getElementById("dlFreq").innerText=
+
+dl.toFixed(1)+" MHz";
+
+document.getElementById("ulFreq").innerText=
+
+ul;
+
+document.getElementById("duplex").innerText=
+
+b.duplex;
+
+showMessage(
+
+"✅ LTE EARFCN Calculated",
+
+"green"
+
+);
+
+}
+// ======================================
+// COPY RESULT
+// ======================================
+
+function copyResult(){
+
+    if(document.getElementById("bandResult").innerText=="-"){
+
+        showMessage(
+            "❌ Calculate first",
+            "red"
+        );
+
+        return;
+
+    }
+
+    let result=
+
+`LTE EARFCN Calculator
+
+LTE Band : ${document.getElementById("bandResult").innerText}
+EARFCN : ${document.getElementById("earfcnResult").innerText}
+Downlink Frequency : ${document.getElementById("dlFreq").innerText}
+Uplink Frequency : ${document.getElementById("ulFreq").innerText}
+Duplex Mode : ${document.getElementById("duplex").innerText}`;
+
+    navigator.clipboard.writeText(result);
+
+    showMessage(
+        "📋 Result copied!",
+        "green"
+    );
+
+}
+
+
+
+// ======================================
+// CLEAR
+// ======================================
+
+function clearData(){
+
+    document.getElementById("band").value="";
+
+    document.getElementById("earfcn").value="";
+
+    let fields=[
+
+        "bandResult",
+        "earfcnResult",
+        "dlFreq",
+        "ulFreq",
+        "duplex"
+
+    ];
+
+    fields.forEach(id=>{
+
+        document.getElementById(id).innerText="-";
+
+    });
+
+    document.getElementById("message").style.display="none";
+
+}
+
+</script>
+
+</body>
+
+</html>

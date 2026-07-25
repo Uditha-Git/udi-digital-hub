@@ -125,6 +125,13 @@
     "category": "Networking",
     "icon": "🌐",
     "link": "tools/ipv6-calculator.html"
+},
+  {
+    "name": "LTE EARFCN Calculator",
+    "description": "Convert LTE EARFCN to Downlink and Uplink frequencies.",
+    "category": "Telecom",
+    "icon": "📡",
+    "link": "tools/lte-earfcn-calculator.html"
 }
   
 ]

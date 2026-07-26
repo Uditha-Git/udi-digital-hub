@@ -132,6 +132,13 @@
     "category": "Telecom",
     "icon": "📡",
     "link": "tools/lte-earfcn-calculator.html"
+},
+  {
+  "name": "5G NR-ARFCN Calculator",
+  "description": "Convert 5G NR-ARFCN to frequency and identify NR bands.",
+  "category": "Telecom",
+  "icon": "📡",
+  "link": "tools/5g-nr-arfcn-calculator.html"
 }
   
 ]

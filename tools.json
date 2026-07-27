@@ -139,5 +139,11 @@
   "category": "Telecom",
   "icon": "📡",
   "link": "tools/5g-nr-arfcn-calculator.html"
+},
+  {
+    "name": "RRU Port Watt / Cell Power Calculator",
+    "description": "Calculate RRU power, port power, carrier power and dBm conversion",
+    "category": "Telecom Tools",
+    "link": "tools/rru-power-calculator.html"
 }
 ]

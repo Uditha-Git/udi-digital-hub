@@ -6,130 +6,242 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>5G NR-ARFCN Calculator | UDI Digital Hub</title>
+<title>5G NR Engineering Calculator | UDI Digital Hub</title>
 
 <link rel="stylesheet" href="../style.css">
 
-  
+
 <style>
 
 .container{
 
-max-width:900px;
-margin:50px auto;
-background:#fff;
-padding:25px;
-border-radius:12px;
-box-shadow:0 5px 20px rgba(0,0,0,.1);
+    max-width:1000px;
+    margin:50px auto;
+    background:white;
+    padding:25px;
+    border-radius:12px;
+    box-shadow:0 5px 20px rgba(0,0,0,.1);
 
 }
+
 
 h2{
 
-text-align:center;
-color:var(--primary-blue);
+    text-align:center;
+    color:var(--primary-blue);
 
 }
+
 
 .description{
 
-text-align:center;
-color:#666;
-margin-bottom:20px;
+    text-align:center;
+    color:#666;
+    margin-bottom:20px;
 
 }
+
 
 label{
 
-display:block;
-margin-top:15px;
-font-weight:bold;
+    display:block;
+    margin-top:15px;
+    font-weight:bold;
 
 }
+
 
 select,
 input{
 
-width:100%;
-padding:10px;
-margin-top:5px;
-border:2px solid #ddd;
-border-radius:8px;
-font-size:16px;
-box-sizing:border-box;
+    width:100%;
+    padding:10px;
+    margin-top:5px;
+    border:2px solid #ddd;
+    border-radius:8px;
+    font-size:16px;
+    box-sizing:border-box;
 
 }
+
+
 
 .button-grid{
 
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-gap:10px;
-margin-top:20px;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:10px;
+    margin-top:20px;
 
 }
+
+
+
+button{
+
+    padding:12px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:bold;
+
+}
+
+
 
 .result{
 
-margin-top:25px;
-border:2px solid #ddd;
-border-radius:10px;
-overflow:hidden;
+    margin-top:25px;
+    border:2px solid #ddd;
+    border-radius:10px;
+    overflow:hidden;
 
 }
+
+
 
 table{
 
-width:100%;
-border-collapse:collapse;
+    width:100%;
+    border-collapse:collapse;
 
 }
+
+
 
 th{
 
-background:var(--primary-blue);
-color:#fff;
-padding:12px;
+    background:var(--primary-blue);
+    color:white;
+    padding:12px;
 
 }
+
+
 
 td{
 
-padding:12px;
-border-bottom:1px solid #ddd;
+    padding:12px;
+    border-bottom:1px solid #ddd;
 
 }
+
+
 
 tr:nth-child(even){
 
-background:#f8fafc;
+    background:#f8fafc;
 
 }
+
+
+
+.info-box{
+
+    margin-top:20px;
+    padding:15px;
+    background:#f8fafc;
+    border-radius:10px;
+    border:1px solid #ddd;
+
+}
+
+
 
 .message{
 
-margin-top:15px;
-text-align:center;
-font-weight:bold;
-display:none;
+    text-align:center;
+    font-weight:bold;
+    margin-top:15px;
+    display:none;
 
 }
 
+
+
 </style>
+
 
 </head>
 
+
 <body>
+
 
 <div class="container">
 
-<h2>📡 5G NR-ARFCN Calculator</h2>
+
+<h2>📡 5G NR Engineering Calculator</h2>
+
 
 <p class="description">
 
-Convert NR-ARFCN into operating frequency and identify the 5G NR band.
+NR-ARFCN, Frequency, Band and RF Parameter Calculator
 
 </p>
+
+
+
+<div class="info-box">
+
+<b>Supported Functions</b>
+
+<br><br>
+
+✅ NR-ARFCN → Frequency
+
+<br>
+
+✅ Frequency → NR-ARFCN
+
+<br>
+
+✅ NR Band Lookup
+
+<br>
+
+✅ 5G NR Engineering Reference
+
+</div>
+
+
+
+<label>
+
+Calculation Mode
+
+</label>
+
+
+<select id="mode">
+
+
+<option value="arfcn">
+
+NR-ARFCN → Frequency
+
+</option>
+
+
+<option value="frequency">
+
+Frequency → NR-ARFCN
+
+</option>
+
+
+<option value="band">
+
+NR Band Lookup
+
+</option>
+
+
+</select>
+
+
+
+
 
 <label>
 
@@ -137,15 +249,29 @@ Frequency Range
 
 </label>
 
+
 <select id="range">
 
-<option value="">Select Frequency Range</option>
 
-<option value="FR1">FR1 (410 MHz – 7125 MHz)</option>
+<option value="FR1">
 
-<option value="FR2">FR2 (24.25 GHz – 52.6 GHz)</option>
+FR1 (410 MHz - 7125 MHz)
+
+</option>
+
+
+<option value="FR2">
+
+FR2 (24250 MHz - 52600 MHz)
+
+</option>
+
 
 </select>
+
+
+
+
 
 <label>
 
@@ -153,12 +279,152 @@ NR-ARFCN
 
 </label>
 
+
 <input
+
 id="arfcn"
+
 type="number"
-placeholder="Example: 636000">
+
+placeholder="Example: 636666"
+
+>
+
+
+
+
+
+<label>
+
+Frequency (MHz)
+
+</label>
+
+
+<input
+
+id="frequencyInput"
+
+type="number"
+
+step="0.001"
+
+placeholder="Example: 3500"
+
+>
+
+
+
+
+
+<label>
+
+NR Band
+
+</label>
+
+
+<select id="bandSelect">
+
+
+<option value="">
+
+Select NR Band
+
+</option>
+
+
+<option value="n1">
+
+n1
+
+</option>
+
+
+<option value="n3">
+
+n3
+
+</option>
+
+
+<option value="n5">
+
+n5
+
+</option>
+
+
+<option value="n7">
+
+n7
+
+</option>
+
+
+<option value="n8">
+
+n8
+
+</option>
+
+
+<option value="n28">
+
+n28
+
+</option>
+
+
+<option value="n38">
+
+n38
+
+</option>
+
+
+<option value="n40">
+
+n40
+
+</option>
+
+
+<option value="n41">
+
+n41
+
+</option>
+
+
+<option value="n77">
+
+n77
+
+</option>
+
+
+<option value="n78">
+
+n78
+
+</option>
+
+
+<option value="n79">
+
+n79
+
+</option>
+
+
+</select>
+
+
+
 
 <div class="button-grid">
+
 
 <button onclick="calculateNR()">
 
@@ -166,77 +432,312 @@ placeholder="Example: 636000">
 
 </button>
 
+
 <button onclick="copyResult()">
 
 📋 Copy
 
 </button>
 
-<button class="clearBtn" onclick="clearData()">
+
+<button onclick="clearData()">
 
 🗑 Clear
 
 </button>
 
+
 </div>
 
-<div
-id="message"
-class="message">
-</div>
+
+
+
+<div id="message" class="message"></div>
+
+
+
 
 <div class="result">
 
+
 <table>
 
+
 <tr>
 
-<th>Property</th>
+<th>
 
-<th>Value</th>
+Parameter
+
+</th>
+
+<th>
+
+Value
+
+</th>
 
 </tr>
 
-<tr>
-<td>NR-ARFCN</td>
-<td id="arfcnResult">-</td>
-</tr>
+
 
 <tr>
-<td>Frequency</td>
-<td id="frequency">-</td>
+
+<td>
+
+NR-ARFCN
+
+</td>
+
+<td id="arfcnResult">
+
+-
+
+</td>
+
 </tr>
 
-<tr>
-<td>Frequency Range</td>
-<td id="rangeResult">-</td>
-</tr>
+
+
 
 <tr>
-<td>5G NR Band</td>
-<td id="bandResult">-</td>
+
+<td>
+
+Frequency
+
+</td>
+
+<td id="frequencyResult">
+
+-
+
+</td>
+
 </tr>
 
+
+
+
 <tr>
-<td>Duplex Mode</td>
-<td id="duplex">-</td>
+
+<td>
+
+NR Band
+
+</td>
+
+<td id="bandResult">
+
+-
+
+</td>
+
 </tr>
+
+
+
+
+<tr>
+
+<td>
+
+Duplex Mode
+
+</td>
+
+<td id="duplexResult">
+
+-
+
+</td>
+
+</tr>
+
+
+
+
+<tr>
+
+<td>
+
+Frequency Range
+
+</td>
+
+<td id="rangeResult">
+
+-
+
+</td>
+
+</tr>
+
+
+
+
+<tr>
+
+<td>
+
+SCS
+
+</td>
+
+<td id="scsResult">
+
+-
+
+</td>
+
+</tr>
+
+
+
+
+<tr>
+
+<td>
+
+Deployment
+
+</td>
+
+<td id="deploymentResult">
+
+-
+
+</td>
+
+</tr>
+
+
 
 </table>
 
-</div>
 
 </div>
 
-<script>
+
+</div>
+
+  <script>
+
 
 // =====================================
-// MESSAGE
+// NR BAND DATABASE
 // =====================================
+
+
+const nrBands = [
+
+
+{
+band:"n1",
+start:1920,
+end:2170,
+duplex:"FDD",
+scs:"15/30 kHz",
+deployment:"2100 MHz"
+},
+
+
+{
+band:"n3",
+start:1710,
+end:1880,
+duplex:"FDD",
+scs:"15/30 kHz",
+deployment:"1800 MHz"
+},
+
+
+{
+band:"n28",
+start:703,
+end:748,
+duplex:"FDD",
+scs:"15/30 kHz",
+deployment:"700 MHz"
+},
+
+
+{
+band:"n38",
+start:2570,
+end:2620,
+duplex:"TDD",
+scs:"15/30 kHz",
+deployment:"2600 MHz"
+},
+
+
+{
+band:"n40",
+start:2300,
+end:2400,
+duplex:"TDD",
+scs:"15/30 kHz",
+deployment:"2300 MHz"
+},
+
+
+{
+band:"n41",
+start:2496,
+end:2690,
+duplex:"TDD",
+scs:"30/60 kHz",
+deployment:"2500 MHz"
+},
+
+
+{
+band:"n77",
+start:3300,
+end:4200,
+duplex:"TDD",
+scs:"30 kHz",
+deployment:"3700 MHz"
+},
+
+
+{
+band:"n78",
+start:3300,
+end:3800,
+duplex:"TDD",
+scs:"30 kHz",
+deployment:"3500 MHz / 3700 MHz"
+},
+
+
+{
+band:"n79",
+start:4400,
+end:5000,
+duplex:"TDD",
+scs:"30/60 kHz",
+deployment:"4500 MHz"
+}
+
+
+];
+
+
+
+
+
+// =====================================
+// SHOW MESSAGE
+// =====================================
+
 
 function showMessage(text,color){
 
+
 let msg=document.getElementById("message");
+
 
 msg.innerText=text;
 
@@ -244,238 +745,512 @@ msg.style.color=color;
 
 msg.style.display="block";
 
+
 setTimeout(()=>{
 
 msg.style.display="none";
 
 },2500);
 
-}
-
-  // =====================================
-// NR BAND DATABASE
-// =====================================
-
-const nrBands = [
-
-{band:"n1",  start:422000, end:434000, duplex:"FDD"},
-{band:"n3",  start:361000, end:376000, duplex:"FDD"},
-{band:"n5",  start:173800, end:178800, duplex:"FDD"},
-{band:"n7",  start:524000, end:538000, duplex:"FDD"},
-{band:"n8",  start:185000, end:192000, duplex:"FDD"},
-{band:"n28", start:151600, end:160600, duplex:"FDD"},
-{band:"n38", start:514000, end:524000, duplex:"TDD"},
-{band:"n40", start:460000, end:480000, duplex:"TDD"},
-{band:"n41", start:499200, end:537999, duplex:"TDD"},
-{band:"n77", start:620000, end:680000, duplex:"TDD"},
-{band:"n78", start:620000, end:653333, duplex:"TDD"},
-{band:"n79", start:693334, end:733333, duplex:"TDD"}
-
-];
-
-
-// =====================================
-// FIND NR BAND
-// =====================================
-
-function findBand(arfcn){
-
-    for(let b of nrBands){
-
-        if(arfcn>=b.start && arfcn<=b.end){
-
-            return b;
-
-        }
-
-    }
-
-    return null;
 
 }
 
 
 
+
+
 // =====================================
-// NR-ARFCN CALCULATION
+// ARFCN TO FREQUENCY
 // =====================================
+
+
+function arfcnToFrequency(arfcn,range){
+
+
+let freq;
+
+
+if(range==="FR1"){
+
+
+freq=arfcn*0.005;
+
+
+}
+
+else{
+
+
+freq=24250+(arfcn-2016667)*0.06;
+
+
+}
+
+
+return freq;
+
+
+}
+
+
+
+
+
+// =====================================
+// FREQUENCY TO ARFCN
+// =====================================
+
+
+function frequencyToArfcn(freq,range){
+
+
+let arfcn;
+
+
+if(range==="FR1"){
+
+
+arfcn=Math.round(freq/0.005);
+
+
+}
+
+else{
+
+
+arfcn=Math.round(
+
+2016667+(freq-24250)/0.06
+
+);
+
+
+}
+
+
+return arfcn;
+
+
+}
+
+
+
+
+
+// =====================================
+// FIND BAND
+// =====================================
+
+
+function findBand(freq){
+
+
+for(let b of nrBands){
+
+
+if(freq>=b.start && freq<=b.end){
+
+
+return b;
+
+
+}
+
+
+}
+
+
+return null;
+
+
+}
+
+
+
+
+
+// =====================================
+// MAIN CALCULATION
+// =====================================
+
 
 function calculateNR(){
 
-    let range =
-    document.getElementById("range").value;
 
-    let arfcn =
-    parseInt(document.getElementById("arfcn").value);
 
-    if(range==="" || isNaN(arfcn)){
+let mode=document.getElementById("mode").value;
 
-        showMessage(
-        "❌ Select Frequency Range and enter NR-ARFCN",
-        "red");
 
-        return;
+let range=document.getElementById("range").value;
 
-    }
 
-    let frequency;
+let arfcn=
+Number(document.getElementById("arfcn").value);
 
-    // ---------- FR1 ----------
-    if(range==="FR1"){
 
-        frequency =
-        arfcn * 0.005;
+let frequencyInput=
+Number(document.getElementById("frequencyInput").value);
 
-    }
 
-    // ---------- FR2 ----------
-    else{
 
-        frequency =
-        24250 +
-        (arfcn-2016667)*0.06;
+let frequency;
 
-    }
+let arfcnValue;
 
-    let band = findBand(arfcn);
 
-    let bandName = "-";
 
-    let duplex = "-";
 
-    if(band){
 
-        bandName = band.band;
+// ARFCN → Frequency
 
-        duplex = band.duplex;
 
-    }
+if(mode==="arfcn"){
 
-    document.getElementById("arfcnResult").innerText =
-    arfcn;
 
-    document.getElementById("frequency").innerText =
-    frequency.toFixed(3)+" MHz";
 
-    document.getElementById("rangeResult").innerText =
-    range;
+if(isNaN(arfcn)){
 
-    document.getElementById("bandResult").innerText =
-    bandName;
 
-    document.getElementById("duplex").innerText =
-    duplex;
+showMessage(
+"❌ Enter NR-ARFCN",
+"red"
+);
 
-    showMessage(
-    "✅ NR-ARFCN Calculated",
-    "green");
+
+return;
+
 
 }
+
+
+
+frequency=
+arfcnToFrequency(
+arfcn,
+range
+);
+
+
+arfcnValue=arfcn;
+
+
+}
+
+
+
+
+
+// Frequency → ARFCN
+
+
+else if(mode==="frequency"){
+
+
+
+if(isNaN(frequencyInput)){
+
+
+showMessage(
+"❌ Enter Frequency",
+"red"
+);
+
+
+return;
+
+
+}
+
+
+
+frequency=frequencyInput;
+
+
+arfcnValue=
+frequencyToArfcn(
+frequency,
+range
+);
+
+
+
+}
+
+
+
+
+
+// Band Lookup
+
+
+else if(mode==="band"){
+
+
+
+let selected=
+document.getElementById("bandSelect").value;
+
+
+
+let bandData =
+nrBands.find(
+b=>b.band===selected
+);
+
+
+
+if(!bandData){
+
+
+showMessage(
+"❌ Select NR Band",
+"red"
+);
+
+
+return;
+
+
+}
+
+
+
+document.getElementById("bandResult").innerText=
+bandData.band;
+
+
+document.getElementById("duplexResult").innerText=
+bandData.duplex;
+
+
+document.getElementById("rangeResult").innerText=
+bandData.start+
+" - "+
+bandData.end+
+" MHz";
+
+
+document.getElementById("scsResult").innerText=
+bandData.scs;
+
+
+document.getElementById("deploymentResult").innerText=
+bandData.deployment;
+
+
+
+showMessage(
+"✅ Band Lookup Completed",
+"green"
+);
+
+
+return;
+
+
+}
+
+
+
+
+
+
+let band=findBand(frequency);
+
+
+
+
+
+document.getElementById("arfcnResult").innerText=
+arfcnValue;
+
+
+
+document.getElementById("frequencyResult").innerText=
+frequency.toFixed(3)+" MHz";
+
+
+
+
+
+if(band){
+
+
+
+document.getElementById("bandResult").innerText=
+band.band;
+
+
+document.getElementById("duplexResult").innerText=
+band.duplex;
+
+
+document.getElementById("scsResult").innerText=
+band.scs;
+
+
+document.getElementById("deploymentResult").innerText=
+band.deployment;
+
+
+
+document.getElementById("rangeResult").innerText=
+band.start+
+" - "+
+band.end+
+" MHz";
+
+
+}
+
+
+else{
+
+
+document.getElementById("bandResult").innerText=
+"Unknown";
+
+
+document.getElementById("duplexResult").innerText=
+"-";
+
+
+}
+
+
+
+
+
+showMessage(
+"✅ Calculation Completed",
+"green"
+);
+
+
+
+}
+
 // =====================================
 // COPY RESULT
 // =====================================
 
+
 function copyResult(){
 
-    if(document.getElementById("arfcnResult").innerText=="-"){
 
-        showMessage(
-        "❌ Calculate first",
-        "red");
+let result =
 
-        return;
+`5G NR Engineering Calculator
 
-    }
+NR-ARFCN:
+${document.getElementById("arfcnResult").innerText}
 
-    let result=
+Frequency:
+${document.getElementById("frequencyResult").innerText}
 
-`5G NR-ARFCN Calculator
+NR Band:
+${document.getElementById("bandResult").innerText}
 
-NR-ARFCN : ${document.getElementById("arfcnResult").innerText}
-Frequency : ${document.getElementById("frequency").innerText}
-Frequency Range : ${document.getElementById("rangeResult").innerText}
-5G NR Band : ${document.getElementById("bandResult").innerText}
-Duplex Mode : ${document.getElementById("duplex").innerText}`;
+Duplex:
+${document.getElementById("duplexResult").innerText}
 
-    navigator.clipboard.writeText(result);
+Frequency Range:
+${document.getElementById("rangeResult").innerText}
 
-    showMessage(
-    "📋 Result copied!",
-    "green");
+SCS:
+${document.getElementById("scsResult").innerText}
+
+Deployment:
+${document.getElementById("deploymentResult").innerText}
+`;
+
+
+
+if(result.includes("-")){
+
+
+showMessage(
+"❌ Calculate first",
+"red"
+);
+
+
+return;
+
 
 }
 
 
 
-// =====================================
-// EXPORT CSV
-// =====================================
+navigator.clipboard.writeText(result);
 
-function exportCSV(){
 
-    if(document.getElementById("arfcnResult").innerText=="-"){
 
-        showMessage(
-        "❌ Calculate first",
-        "red");
+showMessage(
+"📋 Result copied!",
+"green"
+);
 
-        return;
 
-    }
-
-    let csv=
-
-`Property,Value
-NR-ARFCN,${document.getElementById("arfcnResult").innerText}
-Frequency,${document.getElementById("frequency").innerText}
-Frequency Range,${document.getElementById("rangeResult").innerText}
-5G NR Band,${document.getElementById("bandResult").innerText}
-Duplex Mode,${document.getElementById("duplex").innerText}`;
-
-    let blob=new Blob([csv],{
-
-        type:"text/csv"
-
-    });
-
-    let link=document.createElement("a");
-
-    link.href=URL.createObjectURL(blob);
-
-    link.download="5g-nr-arfcn-result.csv";
-
-    link.click();
-
-    showMessage(
-    "📄 CSV Exported!",
-    "green");
 
 }
 
 
 
+
+
+
+
 // =====================================
-// CLEAR
+// CLEAR DATA
 // =====================================
+
 
 function clearData(){
 
-    document.getElementById("range").value="";
 
-    document.getElementById("arfcn").value="";
+document.getElementById("arfcn").value="";
 
-    document.getElementById("arfcnResult").innerText="-";
-    document.getElementById("frequency").innerText="-";
-    document.getElementById("rangeResult").innerText="-";
-    document.getElementById("bandResult").innerText="-";
-    document.getElementById("duplex").innerText="-";
 
-    document.getElementById("message").style.display="none";
+document.getElementById("frequencyInput").value="";
+
+
+document.getElementById("bandSelect").value="";
+
+
+
+document.getElementById("arfcnResult").innerText="-";
+
+
+document.getElementById("frequencyResult").innerText="-";
+
+
+document.getElementById("bandResult").innerText="-";
+
+
+document.getElementById("duplexResult").innerText="-";
+
+
+document.getElementById("rangeResult").innerText="-";
+
+
+document.getElementById("scsResult").innerText="-";
+
+
+document.getElementById("deploymentResult").innerText="-";
+
+
+document.getElementById("message").style.display="none";
+
+
 
 }
 
+
 </script>
 
+
 </body>
+
 
 </html>

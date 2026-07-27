@@ -140,10 +140,23 @@
   "icon": "📡",
   "link": "tools/5g-nr-arfcn-calculator.html"
 },
-  {
+{
     "name": "RRU Port Watt / Cell Power Calculator",
-    "description": "Calculate RRU power, port power, carrier power and dBm conversion",
+    "description": "Calculate RRU output power, port power, cell power, carrier power and dBm conversion for LTE and 5G networks.",
     "category": "Telecom Tools",
-    "link": "tools/rru-power-calculator.html"
+    "icon": "📡",
+    "link": "tools/rru-power-calculator.html",
+    "keywords": [
+        "RRU",
+        "Power",
+        "Watt",
+        "dBm",
+        "LTE",
+        "5G",
+        "RNO",
+        "Cell Power",
+        "Carrier Power"
+    ],
+    "status": "Available"
 }
 ]

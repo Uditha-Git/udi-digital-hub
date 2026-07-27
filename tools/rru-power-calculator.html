@@ -1,1 +1,949 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>RRU Power Calculator | UDI Digital Hub</title>
+
+<link rel="stylesheet" href="../style.css">
+
+
+<style>
+
+
+.container{
+
+    max-width:1000px;
+    margin:50px auto;
+    background:white;
+    padding:25px;
+    border-radius:12px;
+    box-shadow:0 5px 20px rgba(0,0,0,.1);
+
+}
+
+
+h2{
+
+    text-align:center;
+    color:var(--primary-blue);
+
+}
+
+
+.description{
+
+    text-align:center;
+    color:#666;
+    margin-bottom:20px;
+
+}
+
+
+
+.info-box{
+
+    background:#f8fafc;
+    border:1px solid #ddd;
+    padding:15px;
+    border-radius:10px;
+    margin-bottom:20px;
+
+}
+
+
+
+label{
+
+    display:block;
+    margin-top:15px;
+    font-weight:bold;
+
+}
+
+
+
+input,
+select{
+
+
+    width:100%;
+    padding:10px;
+    margin-top:5px;
+    border:2px solid #ddd;
+    border-radius:8px;
+    font-size:16px;
+    box-sizing:border-box;
+
+
+}
+
+
+
+.button-grid{
+
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:10px;
+    margin-top:20px;
+
+}
+
+
+
+button{
+
+    padding:12px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:bold;
+
+}
+
+
+
+.result{
+
+    margin-top:25px;
+    border:2px solid #ddd;
+    border-radius:10px;
+    overflow:hidden;
+
+}
+
+
+
+table{
+
+    width:100%;
+    border-collapse:collapse;
+
+}
+
+
+
+th{
+
+    background:var(--primary-blue);
+    color:white;
+    padding:12px;
+
+}
+
+
+
+td{
+
+    padding:12px;
+    border-bottom:1px solid #ddd;
+
+}
+
+
+
+tr:nth-child(even){
+
+    background:#f8fafc;
+
+}
+
+
+
+.message{
+
+    margin-top:15px;
+    text-align:center;
+    font-weight:bold;
+    display:none;
+
+}
+
+
+
+</style>
+
+
+</head>
+
+
+
+<body>
+
+
+<div class="container">
+
+
+
+<h2>
+📡 RRU Port Watt / Cell Power Calculator
+</h2>
+
+
+
+<p class="description">
+
+Calculate RRU output power distribution for LTE / 5G networks
+
+</p>
+
+
+
+
+<div class="info-box">
+
+<b>Example:</b>
+
+<br><br>
+
+RRU Power: 240 W
+
+<br>
+
+Ports: 4
+
+<br>
+
+Cells: 3
+
+<br>
+
+Carriers: 2
+
+<br><br>
+
+Used for RNO power planning and optimization.
+
+</div>
+
+
+
+
+
+<label>
+
+RRU Total Output Power (Watt)
+
+</label>
+
+
+<input
+
+id="rruPower"
+
+type="number"
+
+placeholder="Example: 240"
+
+>
+
+
+
+
+
+<label>
+
+Number of RRU Ports
+
+</label>
+
+
+<input
+
+id="ports"
+
+type="number"
+
+placeholder="Example: 4"
+
+>
+
+
+
+
+
+<label>
+
+Number of Cells / Sectors
+
+</label>
+
+
+<input
+
+id="cells"
+
+type="number"
+
+placeholder="Example: 3"
+
+>
+
+
+
+
+
+<label>
+
+Number of Carriers
+
+</label>
+
+
+<input
+
+id="carriers"
+
+type="number"
+
+placeholder="Example: 2"
+
+>
+
+
+
+
+
+<label>
+
+Power Split Method
+
+</label>
+
+
+<select id="splitMethod">
+
+
+<option value="equal">
+
+Equal Power Split
+
+</option>
+
+
+<option value="carrier">
+
+Carrier Based Split
+
+</option>
+
+
+</select>
+
+
+
+
+
+<div class="button-grid">
+
+
+<button onclick="calculatePower()">
+
+🧮 Calculate
+
+</button>
+
+
+<button onclick="copyResult()">
+
+📋 Copy Result
+
+</button>
+
+
+<button onclick="clearData()">
+
+🗑 Clear
+
+</button>
+
+
+</div>
+
+
+
+
+
+<div id="message" class="message"></div>
+
+
+
+
+
+
+<div class="result">
+
+
+<table>
+
+
+<tr>
+
+<th>
+Parameter
+</th>
+
+<th>
+Value
+</th>
+
+</tr>
+
+
+
+<tr>
+
+<td>
+Total RRU Power
+</td>
+
+<td id="totalPower">
+-
+</td>
+
+</tr>
+
+
+
+
+<tr>
+
+<td>
+Power Per Port
+</td>
+
+<td id="portPower">
+-
+</td>
+
+</tr>
+
+
+
+
+<tr>
+
+<td>
+Power Per Cell
+</td>
+
+<td id="cellPower">
+-
+</td>
+
+</tr>
+
+
+
+
+<tr>
+
+<td>
+Power Per Carrier
+</td>
+
+<td id="carrierPower">
+-
+</td>
+
+</tr>
+
+
+
+
+<tr>
+
+<td>
+Total dBm
+</td>
+
+<td id="totalDbm">
+-
+</td>
+
+</tr>
+
+
+
+
+<tr>
+
+<td>
+Port dBm
+</td>
+
+<td id="portDbm">
+-
+</td>
+
+</tr>
+
+
+
+
+<tr>
+
+<td>
+Carrier dBm
+</td>
+
+<td id="carrierDbm">
+-
+</td>
+
+</tr>
+
+
+
+</table>
+
+
+</div>
+
+
+
+</div>
+
+  <script>
+
+
+// =====================================
+// MESSAGE FUNCTION
+// =====================================
+
+
+function showMessage(text,color){
+
+
+    let msg=document.getElementById("message");
+
+
+    msg.innerText=text;
+
+
+    msg.style.color=color;
+
+
+    msg.style.display="block";
+
+
+    setTimeout(()=>{
+
+        msg.style.display="none";
+
+    },2500);
+
+
+}
+
+
+
+
+
+// =====================================
+// WATT TO dBm
+// Formula:
+// dBm = 10 × log10(W × 1000)
+// =====================================
+
+
+function wattToDbm(watt){
+
+
+    if(watt<=0){
+
+        return 0;
+
+    }
+
+
+    return 10 * Math.log10(watt * 1000);
+
+
+}
+
+
+
+
+
+// =====================================
+// dBm TO WATT
+// Formula:
+// W = 10^((dBm-30)/10)
+// =====================================
+
+
+function dbmToWatt(dbm){
+
+
+    return Math.pow(10,(dbm-30)/10);
+
+
+}
+
+
+
+
+
+// =====================================
+// MAIN CALCULATION
+// =====================================
+
+
+function calculatePower(){
+
+
+
+let rruPower =
+Number(document.getElementById("rruPower").value);
+
+
+
+let ports =
+Number(document.getElementById("ports").value);
+
+
+
+let cells =
+Number(document.getElementById("cells").value);
+
+
+
+let carriers =
+Number(document.getElementById("carriers").value);
+
+
+
+let method =
+document.getElementById("splitMethod").value;
+
+
+
+
+
+if(
+
+isNaN(rruPower) ||
+
+isNaN(ports) ||
+
+isNaN(cells) ||
+
+isNaN(carriers) ||
+
+rruPower<=0 ||
+
+ports<=0 ||
+
+cells<=0 ||
+
+carriers<=0
+
+){
+
+
+showMessage(
+"❌ Enter valid values",
+"red"
+);
+
+
+return;
+
+
+}
+
+
+
+
+
+// ================================
+// POWER CALCULATION
+// ================================
+
+
+
+let powerPerPort;
+
+
+let powerPerCell;
+
+
+let powerPerCarrier;
+
+
+
+
+
+powerPerPort =
+
+rruPower / ports;
+
+
+
+
+
+powerPerCell =
+
+rruPower / cells;
+
+
+
+
+
+if(method==="equal"){
+
+
+powerPerCarrier =
+
+rruPower /
+
+(cells * carriers);
+
+
+}
+
+
+else{
+
+
+// carrier based split
+
+powerPerCarrier =
+
+powerPerCell / carriers;
+
+
+}
+
+
+
+
+
+// ================================
+// dBm CONVERSION
+// ================================
+
+
+
+let totalDbm =
+
+wattToDbm(rruPower);
+
+
+
+let portDbm =
+
+wattToDbm(powerPerPort);
+
+
+
+let carrierDbm =
+
+wattToDbm(powerPerCarrier);
+
+
+
+
+
+
+// ================================
+// DISPLAY RESULT
+// ================================
+
+
+
+document.getElementById("totalPower").innerText =
+
+rruPower.toFixed(2)+" W";
+
+
+
+document.getElementById("portPower").innerText =
+
+powerPerPort.toFixed(2)+" W";
+
+
+
+document.getElementById("cellPower").innerText =
+
+powerPerCell.toFixed(2)+" W";
+
+
+
+document.getElementById("carrierPower").innerText =
+
+powerPerCarrier.toFixed(2)+" W";
+
+
+
+
+
+document.getElementById("totalDbm").innerText =
+
+totalDbm.toFixed(2)+" dBm";
+
+
+
+document.getElementById("portDbm").innerText =
+
+portDbm.toFixed(2)+" dBm";
+
+
+
+document.getElementById("carrierDbm").innerText =
+
+carrierDbm.toFixed(2)+" dBm";
+
+
+
+
+
+showMessage(
+
+"✅ Power calculation completed",
+
+"green"
+
+);
+
+
+
+}
+
+
+// =====================================
+// COPY RESULT
+// =====================================
+
+
+function copyResult(){
+
+
+let total = document.getElementById("totalPower").innerText;
+
+
+if(total === "-"){
+
+
+showMessage(
+"❌ Calculate first",
+"red"
+);
+
+
+return;
+
+
+}
+
+
+
+let result =
+
+`RRU Port Watt / Cell Power Calculator
+
+Total RRU Power:
+${document.getElementById("totalPower").innerText}
+
+Power Per Port:
+${document.getElementById("portPower").innerText}
+
+Power Per Cell:
+${document.getElementById("cellPower").innerText}
+
+Power Per Carrier:
+${document.getElementById("carrierPower").innerText}
+
+Total dBm:
+${document.getElementById("totalDbm").innerText}
+
+Port dBm:
+${document.getElementById("portDbm").innerText}
+
+Carrier dBm:
+${document.getElementById("carrierDbm").innerText}
+`;
+
+
+
+navigator.clipboard.writeText(result);
+
+
+
+showMessage(
+"📋 Result copied!",
+"green"
+);
+
+
+
+}
+
+
+
+
+
+
+
+// =====================================
+// CLEAR DATA
+// =====================================
+
+
+function clearData(){
+
+
+
+document.getElementById("rruPower").value="";
+
+
+document.getElementById("ports").value="";
+
+
+document.getElementById("cells").value="";
+
+
+document.getElementById("carriers").value="";
+
+
+
+document.getElementById("totalPower").innerText="-";
+
+
+document.getElementById("portPower").innerText="-";
+
+
+document.getElementById("cellPower").innerText="-";
+
+
+document.getElementById("carrierPower").innerText="-";
+
+
+document.getElementById("totalDbm").innerText="-";
+
+
+document.getElementById("portDbm").innerText="-";
+
+
+document.getElementById("carrierDbm").innerText="-";
+
+
+
+document.getElementById("message").style.display="none";
+
+
+}
+
+
+
+</script>
+
+
+</body>
+
+
+</html>

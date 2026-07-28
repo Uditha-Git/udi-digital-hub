@@ -4,155 +4,194 @@
 <head>
 
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>RRU Port Watt / Cell Power Calculator | UDI Digital Hub</title>
+<title>RRU Power Calculator | UDI Digital Hub</title>
 
 <link rel="stylesheet" href="../style.css">
 
+
 <style>
+
 
 .container{
 
-    max-width:1000px;
-    margin:50px auto;
-    background:#fff;
-    padding:25px;
-    border-radius:12px;
-    box-shadow:0 5px 20px rgba(0,0,0,.10);
+max-width:1000px;
+margin:50px auto;
+background:white;
+padding:25px;
+border-radius:12px;
+box-shadow:0 5px 20px rgba(0,0,0,.1);
 
 }
+
 
 h2{
 
-    text-align:center;
-    color:var(--primary-blue);
+text-align:center;
+color:var(--primary-blue);
 
 }
+
 
 .description{
 
-    text-align:center;
-    color:#666;
-    margin-bottom:20px;
+text-align:center;
+color:#666;
 
 }
+
 
 .info-box{
 
-    background:#f8fafc;
-    border:1px solid #ddd;
-    border-radius:10px;
-    padding:15px;
-    margin-bottom:20px;
+margin-top:20px;
+padding:15px;
+background:#f8fafc;
+border:1px solid #ddd;
+border-radius:10px;
 
 }
+
+
+.section-title{
+
+margin-top:25px;
+padding:10px;
+background:#eef2ff;
+border-radius:8px;
+font-weight:bold;
+color:var(--primary-blue);
+
+}
+
 
 label{
 
-    display:block;
-    margin-top:15px;
-    font-weight:bold;
+display:block;
+margin-top:15px;
+font-weight:bold;
 
 }
+
 
 input,
 select{
 
-    width:100%;
-    padding:10px;
-    margin-top:5px;
-    border:2px solid #ddd;
-    border-radius:8px;
-    font-size:16px;
-    box-sizing:border-box;
+width:100%;
+padding:10px;
+margin-top:5px;
+border:2px solid #ddd;
+border-radius:8px;
+font-size:16px;
+box-sizing:border-box;
 
 }
+
 
 small{
 
-    color:#666;
+color:#666;
 
 }
+
 
 .button-grid{
 
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-    gap:10px;
-    margin-top:20px;
+display:grid;
+
+grid-template-columns:
+repeat(auto-fit,minmax(180px,1fr));
+
+gap:10px;
+
+margin-top:25px;
 
 }
+
 
 .result{
 
-    margin-top:25px;
-    border:2px solid #ddd;
-    border-radius:10px;
-    overflow:hidden;
+margin-top:25px;
+border:2px solid #ddd;
+border-radius:10px;
+overflow:hidden;
 
 }
+
 
 table{
 
-    width:100%;
-    border-collapse:collapse;
+width:100%;
+border-collapse:collapse;
 
 }
+
 
 th{
 
-    background:var(--primary-blue);
-    color:#fff;
-    padding:12px;
+background:var(--primary-blue);
+color:white;
+padding:12px;
 
 }
+
 
 td{
 
-    padding:12px;
-    border-bottom:1px solid #ddd;
+padding:12px;
+border-bottom:1px solid #ddd;
 
 }
+
 
 tr:nth-child(even){
 
-    background:#f8fafc;
+background:#f8fafc;
 
 }
+
 
 .message{
 
-    margin-top:15px;
-    text-align:center;
-    font-weight:bold;
-    display:none;
+margin-top:15px;
+text-align:center;
+font-weight:bold;
+display:none;
 
 }
 
+
 </style>
+
 
 </head>
 
+
 <body>
+
 
 <div class="container">
 
-<h2>📡 RRU Port Watt / Cell Power Calculator</h2>
+
+<h2>📡 RRU Power Calculator V3</h2>
+
 
 <p class="description">
 
-Professional LTE / 5G RRU Power Planning Tool
+LTE / 5G RRU Power, TX Chain, Reference Signal & PA/PB Analysis Tool
 
 </p>
 
+
+
 <div class="info-box">
 
-<b>Typical Example</b>
+<b>Example Configuration</b>
 
 <br><br>
 
-RRU Output Power : 240 W
+RRU Power : 240 W
 
 <br>
 
@@ -164,13 +203,32 @@ Cells : 3
 
 <br>
 
-Carriers / Cell : 2
+Carriers per Cell : 2
 
 <br>
 
 Reference Signal Power : 18.2 dBm
 
+<br>
+
+PA : 0 dB
+
+<br>
+
+PB : -3 dB
+
 </div>
+
+
+
+
+
+<div class="section-title">
+
+📡 RRU Configuration
+
+</div>
+
 
 <label>
 
@@ -178,10 +236,18 @@ RRU Total Output Power (W)
 
 </label>
 
+
 <input
+
 id="rruPower"
+
 type="number"
+
 placeholder="Example: 240">
+
+
+
+
 
 <label>
 
@@ -189,21 +255,50 @@ Radio Configuration
 
 </label>
 
+
 <select id="trxMode">
 
-<option value="2">2T2R</option>
 
-<option value="4" selected>4T4R</option>
+<option value="2">
 
-<option value="8">8T8R</option>
+2T2R
 
-<option value="16">16T16R</option>
+</option>
 
-<option value="32">32T32R</option>
 
-<option value="64">64T64R</option>
+<option value="4" selected>
+
+4T4R
+
+</option>
+
+
+<option value="8">
+
+8T8R
+
+</option>
+
+
+<option value="32">
+
+32T32R
+
+</option>
+
+
+<option value="64">
+
+64T64R
+
+</option>
+
 
 </select>
+
+
+
+
 
 <label>
 
@@ -211,10 +306,18 @@ Number of Cells (Sectors)
 
 </label>
 
+
 <input
+
 id="cells"
+
 type="number"
+
 placeholder="Example: 3">
+
+
+
+
 
 <label>
 
@@ -222,123 +325,340 @@ Number of Carriers per Cell
 
 </label>
 
+
 <input
+
 id="carriers"
+
 type="number"
+
 placeholder="Example: 2">
+
+
+
+
+
+<div class="section-title">
+
+📶 Reference Signal Parameters
+
+</div>
+
+
 
 <label>
 
-Maximum Reference Signal Power (dBm)
+Reference Signal Power (dBm)
 
 </label>
 
+
 <input
+
 id="rsPower"
+
 type="number"
-step="0.1"
+
 value="18.2"
-max="20.2">
+
+step="0.1">
+
+
 
 <small>
 
-Default: <b>18.2 dBm</b> &nbsp; | &nbsp;
-Maximum Recommended: <b>20.2 dBm</b>
+Default: 18.2 dBm
 
 </small>
 
+
+
+
+
+<label>
+
+Maximum Recommended RS Power (dBm)
+
+</label>
+
+
+<input
+
+id="maxRsPower"
+
+type="number"
+
+value="20.2"
+
+step="0.1">
+
+
+
+<small>
+
+Example limit: 20.2 dBm
+
+</small>
+
+
+
+
+
+<div class="section-title">
+
+⚙ Power Allocation Parameters
+
+</div>
+
+
+
+<label>
+
+PA Value (dB)
+
+</label>
+
+
+<select id="paValue">
+
+
+<option value="0" selected>
+
+0 dB
+
+</option>
+
+
+<option value="-3">
+
+-3 dB
+
+</option>
+
+
+<option value="3">
+
+3 dB
+
+</option>
+
+
+</select>
+
+
+
+
+
+<label>
+
+PB Value
+
+</label>
+
+
+<select id="pbValue">
+
+
+<option value="-3" selected>
+
+-3
+
+</option>
+
+
+<option value="0">
+
+0
+
+</option>
+
+
+<option value="1">
+
+1
+
+</option>
+
+
+<option value="2">
+
+2
+
+</option>
+
+
+<option value="3">
+
+3
+
+</option>
+
+
+</select>
+
+
+
+
+
 <div class="button-grid">
 
+
 <button onclick="calculatePower()">
+
 🧮 Calculate
+
 </button>
+
 
 <button onclick="copyResult()">
-📋 Copy Result
+
+📋 Copy
+
 </button>
+
 
 <button onclick="exportCSV()">
+
 📄 Export CSV
+
 </button>
 
-<button class="clearBtn" onclick="clearData()">
+
+<button onclick="clearData()">
+
 🗑 Clear
+
 </button>
 
+
 </div>
 
-<div
-id="message"
-class="message">
-</div>
+
+
+
+<div id="message" class="message"></div>
+
+
+
+
 
 <div class="result">
 
+
 <table>
 
+
 <tr>
 
-<th>Parameter</th>
+<th>
+Parameter
+</th>
 
-<th>Value</th>
+<th>
+Value
+</th>
 
 </tr>
 
-<tr>
-<td>Total RRU Power</td>
-<td id="totalPower">-</td>
-</tr>
+
 
 <tr>
-<td>Radio Configuration</td>
-<td id="trxResult">-</td>
+
+<td>
+Total RRU Power
+</td>
+
+<td id="totalPower">
+-
+</td>
+
 </tr>
+
+
 
 <tr>
-<td>Power per TX Chain</td>
-<td id="txPower">-</td>
+
+<td>
+Radio Configuration
+</td>
+
+<td id="trxResult">
+-
+</td>
+
 </tr>
+
+
 
 <tr>
-<td>Power per Cell</td>
-<td id="cellPower">-</td>
+
+<td>
+Power per TX Chain
+</td>
+
+<td id="txPower">
+-
+</td>
+
 </tr>
+
+
 
 <tr>
-<td>Power per Carrier</td>
-<td id="carrierPower">-</td>
+
+<td>
+Power per Cell
+</td>
+
+<td id="cellPower">
+-
+</td>
+
 </tr>
+
+
 
 <tr>
-<td>Total Output Power (dBm)</td>
-<td id="totalDbm">-</td>
+
+<td>
+Power per Carrier
+</td>
+
+<td id="carrierPower">
+-
+</td>
+
 </tr>
+
+
 
 <tr>
-<td>TX Chain Power (dBm)</td>
-<td id="txDbm">-</td>
+
+<td>
+Total Power (dBm)
+</td>
+
+<td id="totalDbm">
+-
+</td>
+
 </tr>
+
+
 
 <tr>
-<td>Reference Signal Power</td>
-<td id="rsResult">-</td>
+
+<td>
+TX Chain Power (dBm)
+</td>
+
+<td id="txDbm">
+-
+</td>
+
 </tr>
-
-<tr>
-<td>Reference Signal Status</td>
-<td id="rsStatus">-</td>
-</tr>
-
-</table>
-
-</div>
-
-</div>
-
-<script>
-
 // =====================================
-// MESSAGE
+// MESSAGE FUNCTION
 // =====================================
 
 function showMessage(text,color){
@@ -351,6 +671,7 @@ function showMessage(text,color){
 
     msg.style.display="block";
 
+
     setTimeout(()=>{
 
         msg.style.display="none";
@@ -362,7 +683,7 @@ function showMessage(text,color){
 
 
 // =====================================
-// WATT → dBm
+// WATT TO dBm
 // =====================================
 
 function wattToDbm(watt){
@@ -373,19 +694,7 @@ function wattToDbm(watt){
 
     }
 
-    return 10*Math.log10(watt*1000);
-
-}
-
-
-
-// =====================================
-// dBm → WATT
-// =====================================
-
-function dbmToWatt(dbm){
-
-    return Math.pow(10,(dbm-30)/10);
+    return 10 * Math.log10(watt * 1000);
 
 }
 
@@ -397,35 +706,48 @@ function dbmToWatt(dbm){
 
 function calculatePower(){
 
-let totalPower =
+
+let rruPower =
 Number(document.getElementById("rruPower").value);
+
 
 let trx =
 Number(document.getElementById("trxMode").value);
 
+
 let cells =
 Number(document.getElementById("cells").value);
 
+
 let carriers =
 Number(document.getElementById("carriers").value);
+
 
 let rsPower =
 Number(document.getElementById("rsPower").value);
 
 
+let maxRsPower =
+Number(document.getElementById("maxRsPower").value);
 
-// -------------------------------
-// Validation
-// -------------------------------
+
+let pa =
+Number(document.getElementById("paValue").value);
+
+
+let pb =
+Number(document.getElementById("pbValue").value);
+
+
+
+// =====================================
+// VALIDATION
+// =====================================
+
 
 if(
 
-isNaN(totalPower) ||
-isNaN(trx) ||
-isNaN(cells) ||
-isNaN(carriers) ||
-
-totalPower<=0 ||
+rruPower<=0 ||
 trx<=0 ||
 cells<=0 ||
 carriers<=0
@@ -433,7 +755,7 @@ carriers<=0
 ){
 
 showMessage(
-"❌ Please enter valid values.",
+"❌ Please enter valid values",
 "red"
 );
 
@@ -443,10 +765,10 @@ return;
 
 
 
-if(rsPower>20.2){
+if(rsPower > maxRsPower){
 
 showMessage(
-"❌ Maximum Reference Signal Power is 20.2 dBm",
+"❌ RS Power exceeds maximum allowed level",
 "red"
 );
 
@@ -456,135 +778,216 @@ return;
 
 
 
-// -------------------------------
-// Calculations
-// -------------------------------
+// =====================================
+// POWER CALCULATIONS
+// =====================================
+
+
+// Power per TX chain
 
 let txPower =
-totalPower / trx;
+
+rruPower / trx;
+
+
+
+// Power per cell
 
 let cellPower =
-totalPower / cells;
+
+rruPower / cells;
+
+
+
+// Power per carrier
 
 let carrierPower =
-totalPower / (cells*carriers);
+
+rruPower / (cells * carriers);
+
+
+
+// dBm conversion
 
 let totalDbm =
-wattToDbm(totalPower);
+
+wattToDbm(rruPower);
+
+
 
 let txDbm =
+
 wattToDbm(txPower);
 
 
 
-// -------------------------------
-// Radio Mode
-// -------------------------------
+// =====================================
+// RS POWER ANALYSIS
+// =====================================
 
-let trxName="";
 
-switch(trx){
+let remainingIncrease =
 
-case 2:
-
-trxName="2T2R";
-
-break;
-
-case 4:
-
-trxName="4T4R";
-
-break;
-
-case 8:
-
-trxName="8T8R";
-
-break;
-
-case 16:
-
-trxName="16T16R";
-
-break;
-
-case 32:
-
-trxName="32T32R";
-
-break;
-
-case 64:
-
-trxName="64T64R";
-
-break;
-
-default:
-
-trxName=trx+"T"+trx+"R";
-
-}
+maxRsPower - rsPower;
 
 
 
-// -------------------------------
-// RS Status
-// -------------------------------
+let rsRecommendation;
 
-let status="";
 
-if(rsPower<=18.2){
+if(remainingIncrease > 0){
 
-status="✅ Normal";
+rsRecommendation =
 
-}
-
-else if(rsPower<=20.2){
-
-status="⚠ High";
+"✅ Can increase RS Power by "
++
+remainingIncrease.toFixed(1)
++
+" dB";
 
 }
 
 else{
 
-status="❌ Above Limit";
+rsRecommendation =
+
+"❌ Maximum RS Power reached";
 
 }
 
 
 
-// -------------------------------
-// Display
-// -------------------------------
+// =====================================
+// RADIO MODE NAME
+// =====================================
+
+
+let trxName;
+
+
+switch(trx){
+
+case 2:
+trxName="2T2R";
+break;
+
+
+case 4:
+trxName="4T4R";
+break;
+
+
+case 8:
+trxName="8T8R";
+break;
+
+
+case 16:
+trxName="16T16R";
+break;
+
+
+case 32:
+trxName="32T32R";
+break;
+
+
+case 64:
+trxName="64T64R";
+break;
+
+
+default:
+
+trxName=
+trx+"T"+trx+"R";
+
+}
+
+
+
+// =====================================
+// DISPLAY RESULTS
+// =====================================
+
 
 document.getElementById("totalPower").innerText =
-totalPower.toFixed(2)+" W";
+
+rruPower.toFixed(2)+" W";
+
+
 
 document.getElementById("trxResult").innerText =
+
 trxName;
 
+
+
 document.getElementById("txPower").innerText =
+
 txPower.toFixed(2)+" W";
 
+
+
 document.getElementById("cellPower").innerText =
+
 cellPower.toFixed(2)+" W";
 
+
+
 document.getElementById("carrierPower").innerText =
+
 carrierPower.toFixed(2)+" W";
 
+
+
 document.getElementById("totalDbm").innerText =
+
 totalDbm.toFixed(2)+" dBm";
 
+
+
 document.getElementById("txDbm").innerText =
+
 txDbm.toFixed(2)+" dBm";
 
+
+
+// RS / PA / PB
+
 document.getElementById("rsResult").innerText =
+
 rsPower.toFixed(1)+" dBm";
 
-document.getElementById("rsStatus").innerText =
-status;
+
+
+document.getElementById("maxRsResult").innerText =
+
+maxRsPower.toFixed(1)+" dBm";
+
+
+
+document.getElementById("paResult").innerText =
+
+pa.toFixed(1)+" dB";
+
+
+
+document.getElementById("pbResult").innerText =
+
+pb.toFixed(1)+" dB";
+
+
+
+document.getElementById("increaseResult").innerText =
+
+remainingIncrease.toFixed(1)+" dB";
+
+
+
+document.getElementById("recommendation").innerText =
+
+rsRecommendation;
 
 
 
@@ -593,61 +996,87 @@ showMessage(
 "green"
 );
 
+
 }
 
-// =====================================
+    // =====================================
 // COPY RESULT
 // =====================================
 
 function copyResult(){
 
-    if(document.getElementById("totalPower").innerText=="-"){
 
-        showMessage(
-        "❌ Please calculate first.",
-        "red"
-        );
+if(document.getElementById("totalPower").innerText=="-"){
 
-        return;
 
-    }
+showMessage(
+"❌ Please calculate first",
+"red"
+);
 
-    let result=`RRU Port Watt / Cell Power Calculator
 
-Total RRU Power :
+return;
+
+}
+
+
+
+let result =
+
+`RRU Power Calculator V3
+
+Total RRU Power:
 ${document.getElementById("totalPower").innerText}
 
-Radio Configuration :
+Radio Configuration:
 ${document.getElementById("trxResult").innerText}
 
-Power per TX Chain :
+TX Chain Power:
 ${document.getElementById("txPower").innerText}
 
-Power per Cell :
+Cell Power:
 ${document.getElementById("cellPower").innerText}
 
-Power per Carrier :
+Carrier Power:
 ${document.getElementById("carrierPower").innerText}
 
-Total Output Power :
+Total Output Power:
 ${document.getElementById("totalDbm").innerText}
 
-TX Chain Power :
+TX Chain dBm:
 ${document.getElementById("txDbm").innerText}
 
-Reference Signal Power :
+
+Reference Signal Power:
 ${document.getElementById("rsResult").innerText}
 
-Reference Signal Status :
-${document.getElementById("rsStatus").innerText}
+Maximum RS Power:
+${document.getElementById("maxRsResult").innerText}
+
+PA Value:
+${document.getElementById("paResult").innerText}
+
+PB Value:
+${document.getElementById("pbResult").innerText}
+
+Available RS Increase:
+${document.getElementById("increaseResult").innerText}
+
+Recommendation:
+${document.getElementById("recommendation").innerText}
 `;
 
-    navigator.clipboard.writeText(result);
 
-    showMessage(
-    "📋 Result copied successfully.",
-    "green"
-    );
+
+navigator.clipboard.writeText(result);
+
+
+
+showMessage(
+"📋 Result copied successfully",
+"green"
+);
+
 
 }
 
@@ -659,91 +1088,174 @@ ${document.getElementById("rsStatus").innerText}
 
 function exportCSV(){
 
-    if(document.getElementById("totalPower").innerText=="-"){
 
-        showMessage(
-        "❌ Please calculate first.",
-        "red"
-        );
+if(document.getElementById("totalPower").innerText=="-"){
 
-        return;
 
-    }
+showMessage(
+"❌ Please calculate first",
+"red"
+);
 
-    let csv=`Parameter,Value
-Total RRU Power,${document.getElementById("totalPower").innerText}
-Radio Configuration,${document.getElementById("trxResult").innerText}
-Power per TX Chain,${document.getElementById("txPower").innerText}
-Power per Cell,${document.getElementById("cellPower").innerText}
-Power per Carrier,${document.getElementById("carrierPower").innerText}
-Total Output Power (dBm),${document.getElementById("totalDbm").innerText}
-TX Chain Power (dBm),${document.getElementById("txDbm").innerText}
-Reference Signal Power,${document.getElementById("rsResult").innerText}
-Reference Signal Status,${document.getElementById("rsStatus").innerText}`;
 
-    let blob=new Blob([csv],{
-
-        type:"text/csv"
-
-    });
-
-    let link=document.createElement("a");
-
-    link.href=URL.createObjectURL(blob);
-
-    link.download="rru-power-calculator-result.csv";
-
-    link.click();
-
-    showMessage(
-    "📄 CSV exported successfully.",
-    "green"
-    );
+return;
 
 }
 
 
 
+let csv =
+
+`Parameter,Value
+
+Total RRU Power,${document.getElementById("totalPower").innerText}
+
+Radio Configuration,${document.getElementById("trxResult").innerText}
+
+TX Chain Power,${document.getElementById("txPower").innerText}
+
+Cell Power,${document.getElementById("cellPower").innerText}
+
+Carrier Power,${document.getElementById("carrierPower").innerText}
+
+Total Output dBm,${document.getElementById("totalDbm").innerText}
+
+TX Chain dBm,${document.getElementById("txDbm").innerText}
+
+Reference Signal Power,${document.getElementById("rsResult").innerText}
+
+Maximum RS Power,${document.getElementById("maxRsResult").innerText}
+
+PA Value,${document.getElementById("paResult").innerText}
+
+PB Value,${document.getElementById("pbResult").innerText}
+
+Available RS Increase,${document.getElementById("increaseResult").innerText}
+
+Recommendation,${document.getElementById("recommendation").innerText}`;
+
+
+
+let blob = new Blob(
+
+[csv],
+
+{
+
+type:"text/csv"
+
+}
+
+);
+
+
+
+let link=document.createElement("a");
+
+
+link.href=URL.createObjectURL(blob);
+
+
+link.download="rru-power-calculator-v3.csv";
+
+
+link.click();
+
+
+
+showMessage(
+"📄 CSV exported successfully",
+"green"
+);
+
+
+}
+
+
+
+
 // =====================================
-// CLEAR
+// CLEAR DATA
 // =====================================
 
 function clearData(){
 
-    document.getElementById("rruPower").value="";
 
-    document.getElementById("trxMode").value="4";
+document.getElementById("rruPower").value="";
 
-    document.getElementById("cells").value="";
 
-    document.getElementById("carriers").value="";
+document.getElementById("trxMode").value="4";
 
-    document.getElementById("rsPower").value="18.2";
 
-    document.getElementById("totalPower").innerText="-";
+document.getElementById("cells").value="";
 
-    document.getElementById("trxResult").innerText="-";
 
-    document.getElementById("txPower").innerText="-";
+document.getElementById("carriers").value="";
 
-    document.getElementById("cellPower").innerText="-";
 
-    document.getElementById("carrierPower").innerText="-";
+document.getElementById("rsPower").value="18.2";
 
-    document.getElementById("totalDbm").innerText="-";
 
-    document.getElementById("txDbm").innerText="-";
+document.getElementById("maxRsPower").value="20.2";
 
-    document.getElementById("rsResult").innerText="-";
 
-    document.getElementById("rsStatus").innerText="-";
+document.getElementById("paValue").value="0";
 
-    document.getElementById("message").style.display="none";
+
+document.getElementById("pbValue").value="-3";
+
+
+
+document.getElementById("totalPower").innerText="-";
+
+
+document.getElementById("trxResult").innerText="-";
+
+
+document.getElementById("txPower").innerText="-";
+
+
+document.getElementById("cellPower").innerText="-";
+
+
+document.getElementById("carrierPower").innerText="-";
+
+
+document.getElementById("totalDbm").innerText="-";
+
+
+document.getElementById("txDbm").innerText="-";
+
+
+document.getElementById("rsResult").innerText="-";
+
+
+document.getElementById("maxRsResult").innerText="-";
+
+
+document.getElementById("paResult").innerText="-";
+
+
+document.getElementById("pbResult").innerText="-";
+
+
+document.getElementById("increaseResult").innerText="-";
+
+
+document.getElementById("recommendation").innerText="-";
+
+
+
+document.getElementById("message").style.display="none";
+
 
 }
 
+
 </script>
 
+
 </body>
+
 
 </html>

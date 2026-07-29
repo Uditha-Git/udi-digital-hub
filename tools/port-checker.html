@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Port Checker | UDI Digital Hub</title>
+
+<meta name="description"
+content="Lookup common TCP and UDP ports. Find service names, protocols and port usage instantly.">
+
+<style>
+
+:root{
+    --primary-red:#e63946;
+    --primary-blue:#1d4ed8;
+    --primary-white:#ffffff;
+    --text-dark:#1f2937;
+    --bg-light:#f5f7fb;
+    --border:#dbe2ea;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:var(--bg-light);
+    color:var(--text-dark);
+}
+
+header{
+    background:linear-gradient(90deg,var(--primary-red),var(--primary-blue));
+    color:#fff;
+    padding:18px;
+    text-align:center;
+    font-size:24px;
+    font-weight:bold;
+}
+
+.container{
+    max-width:700px;
+    margin:35px auto;
+    background:#fff;
+    padding:25px;
+    border-radius:12px;
+    box-shadow:0 5px 18px rgba(0,0,0,.08);
+}
+
+h2{
+    margin-bottom:20px;
+}
+
+label{
+    font-weight:bold;
+    display:block;
+    margin-bottom:8px;
+}
+
+input{
+    width:100%;
+    padding:12px;
+    border:1px solid var(--border);
+    border-radius:8px;
+    font-size:16px;
+    margin-bottom:20px;
+}
+
+.button-group{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+button{
+    flex:1;
+    padding:12px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:16px;
+    color:#fff;
+}
+
+#checkBtn{
+    background:var(--primary-blue);
+}
+
+#copyBtn{
+    background:#16a34a;
+}
+
+#clearBtn{
+    background:var(--primary-red);
+}
+
+button:hover{
+    opacity:.9;
+}
+
+.result{
+    margin-top:25px;
+    background:#f9fafb;
+    border-left:5px solid var(--primary-blue);
+    padding:18px;
+    border-radius:8px;
+    display:none;
+}
+
+.result h3{
+    margin-bottom:12px;
+}
+
+.result p{
+    margin:8px 0;
+    line-height:1.6;
+}
+
+.footer{
+    margin-top:30px;
+    text-align:center;
+    color:#666;
+    font-size:14px;
+}
+
+#popup{
+    position:fixed;
+    bottom:25px;
+    right:25px;
+    background:#16a34a;
+    color:#fff;
+    padding:12px 18px;
+    border-radius:8px;
+    display:none;
+    opacity:.95;
+}
+
+@media(max-width:600px){
+
+.button-group{
+    flex-direction:column;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+
+UDI Digital Hub
+
+</header>
+
+<div class="container">
+
+<h2>Port Information Checker</h2>
+
+<label>Port Number</label>
+
+<input
+type="number"
+id="port"
+placeholder="Example: 443"
+min="1"
+max="65535">
+
+<div class="button-group">
+
+<button id="checkBtn" onclick="checkPort()">
+Check Port
+</button>
+
+<button id="copyBtn" onclick="copyResult()">
+Copy Result
+</button>
+
+<button id="clearBtn" onclick="clearForm()">
+Clear
+</button>
+
+</div>
+
+<div class="result" id="result">
+
+<h3>Port Details</h3>
+
+<p><strong>Port:</strong> <span id="rPort"></span></p>
+
+<p><strong>Service:</strong> <span id="rService"></span></p>
+
+<p><strong>Protocol:</strong> <span id="rProtocol"></span></p>
+
+<p><strong>Usage:</strong> <span id="rUsage"></span></p>
+
+<p><strong>Security:</strong> <span id="rSecurity"></span></p>
+
+</div>
+
+<div class="footer">
+
+UDI Digital Hub © 2026
+
+</div>
+
+</div>
+
+<div id="popup">
+Copied Successfully!
+</div>
+
+<script>
+
+  const ports = {
+
+1:{service:"TCP Port Service Multiplexer",protocol:"TCP",usage:"TCP Port Service Multiplexer",security:"System Port"},
+5:{service:"RJE",protocol:"TCP",usage:"Remote Job Entry",security:"Legacy"},
+7:{service:"Echo",protocol:"TCP/UDP",usage:"Testing",security:"Disable if unused"},
+20:{service:"FTP Data",protocol:"TCP",usage:"File Transfer Data",security:"Unencrypted"},
+21:{service:"FTP Control",protocol:"TCP",usage:"File Transfer Control",security:"Unencrypted"},
+22:{service:"SSH",protocol:"TCP",usage:"Secure Remote Login",security:"Highly Secure"},
+23:{service:"Telnet",protocol:"TCP",usage:"Remote Login",security:"Insecure"},
+25:{service:"SMTP",protocol:"TCP",usage:"Email Sending",security:"May Require TLS"},
+53:{service:"DNS",protocol:"TCP/UDP",usage:"Domain Name Resolution",security:"Critical Infrastructure"},
+67:{service:"DHCP Server",protocol:"UDP",usage:"IP Address Assignment",security:"Trusted Networks"},
+68:{service:"DHCP Client",protocol:"UDP",usage:"Receive IP Address",security:"Trusted Networks"},
+69:{service:"TFTP",protocol:"UDP",usage:"Simple File Transfer",security:"Unencrypted"},
+80:{service:"HTTP",protocol:"TCP",usage:"Web Browsing",security:"Not Encrypted"},
+88:{service:"Kerberos",protocol:"TCP/UDP",usage:"Authentication",security:"Enterprise Networks"},
+110:{service:"POP3",protocol:"TCP",usage:"Email Retrieval",security:"Use POP3S if possible"},
+119:{service:"NNTP",protocol:"TCP",usage:"Network News",security:"Legacy"},
+123:{service:"NTP",protocol:"UDP",usage:"Time Synchronization",security:"Essential"},
+135:{service:"MS RPC",protocol:"TCP",usage:"Microsoft RPC",security:"Internal Networks"},
+137:{service:"NetBIOS Name",protocol:"UDP",usage:"Windows Networking",security:"Internal Only"},
+138:{service:"NetBIOS Datagram",protocol:"UDP",usage:"Windows Networking",security:"Internal Only"},
+139:{service:"NetBIOS Session",protocol:"TCP",usage:"Windows File Sharing",security:"Internal Only"},
+143:{service:"IMAP",protocol:"TCP",usage:"Email Retrieval",security:"Use IMAPS"},
+161:{service:"SNMP",protocol:"UDP",usage:"Network Management",security:"Use SNMPv3"},
+162:{service:"SNMP Trap",protocol:"UDP",usage:"Network Alerts",security:"Monitor Carefully"},
+179:{service:"BGP",protocol:"TCP",usage:"Internet Routing",security:"ISP Backbone"},
+389:{service:"LDAP",protocol:"TCP/UDP",usage:"Directory Service",security:"Use LDAPS"},
+443:{service:"HTTPS",protocol:"TCP",usage:"Secure Web Browsing",security:"Encrypted"},
+445:{service:"SMB",protocol:"TCP",usage:"Windows File Sharing",security:"Restrict Internet Access"},
+465:{service:"SMTPS",protocol:"TCP",usage:"Secure Email Sending",security:"Encrypted"},
+514:{service:"Syslog",protocol:"UDP",usage:"System Logging",security:"Internal"},
+515:{service:"LPD",protocol:"TCP",usage:"Printer Service",security:"Legacy"},
+520:{service:"RIP",protocol:"UDP",usage:"Routing Protocol",security:"Legacy"},
+546:{service:"DHCPv6 Client",protocol:"UDP",usage:"IPv6 Addressing",security:"Trusted Networks"},
+547:{service:"DHCPv6 Server",protocol:"UDP",usage:"IPv6 Addressing",security:"Trusted Networks"},
+554:{service:"RTSP",protocol:"TCP/UDP",usage:"Media Streaming",security:"Depends on Deployment"},
+587:{service:"SMTP Submission",protocol:"TCP",usage:"Secure Mail Submission",security:"Recommended"},
+631:{service:"IPP",protocol:"TCP",usage:"Internet Printing",security:"Authenticated"},
+636:{service:"LDAPS",protocol:"TCP",usage:"Secure LDAP",security:"Encrypted"},
+989:{service:"FTPS Data",protocol:"TCP",usage:"Secure FTP Data",security:"Encrypted"},
+990:{service:"FTPS Control",protocol:"TCP",usage:"Secure FTP Control",security:"Encrypted"},
+993:{service:"IMAPS",protocol:"TCP",usage:"Secure Email Retrieval",security:"Encrypted"},
+995:{service:"POP3S",protocol:"TCP",usage:"Secure Email Retrieval",security:"Encrypted"},
+1194:{service:"OpenVPN",protocol:"UDP/TCP",usage:"VPN Tunnel",security:"Encrypted"},
+1433:{service:"Microsoft SQL Server",protocol:"TCP",usage:"Database",security:"Restrict Access"},
+1521:{service:"Oracle Database",protocol:"TCP",usage:"Database",security:"Restrict Access"},
+1701:{service:"L2TP",protocol:"UDP",usage:"VPN",security:"Often with IPsec"},
+1723:{service:"PPTP",protocol:"TCP",usage:"VPN",security:"Deprecated"},
+1812:{service:"RADIUS Authentication",protocol:"UDP",usage:"AAA Authentication",security:"Enterprise"},
+1813:{service:"RADIUS Accounting",protocol:"UDP",usage:"AAA Accounting",security:"Enterprise"},
+3306:{service:"MySQL",protocol:"TCP",usage:"Database",security:"Restrict Access"},
+3389:{service:"Remote Desktop",protocol:"TCP",usage:"Windows Remote Desktop",security:"Strong Authentication"},
+5060:{service:"SIP",protocol:"UDP/TCP",usage:"VoIP Signalling",security:"Use TLS when possible"},
+5061:{service:"SIP TLS",protocol:"TCP",usage:"Secure VoIP",security:"Encrypted"},
+5432:{service:"PostgreSQL",protocol:"TCP",usage:"Database",security:"Restrict Access"},
+5900:{service:"VNC",protocol:"TCP",usage:"Remote Desktop",security:"Use VPN"},
+8080:{service:"HTTP Alternate",protocol:"TCP",usage:"Web Proxy/Application",security:"Depends on Configuration"},
+8443:{service:"HTTPS Alternate",protocol:"TCP",usage:"Secure Web Services",security:"Encrypted"}
+};
+
+function checkPort(){
+
+const port=document.getElementById("port").value.trim();
+
+if(port===""){
+    alert("Please enter a port number.");
+    return;
+}
+
+if(port<1 || port>65535){
+    alert("Port number must be between 1 and 65535.");
+    return;
+}
+
+const data=ports[port];
+
+document.getElementById("result").style.display="block";
+document.getElementById("rPort").textContent=port;
+
+if(data){
+
+document.getElementById("rService").textContent=data.service;
+document.getElementById("rProtocol").textContent=data.protocol;
+document.getElementById("rUsage").textContent=data.usage;
+document.getElementById("rSecurity").textContent=data.security;
+
+}else{
+
+document.getElementById("rService").textContent="Unknown / Unassigned";
+document.getElementById("rProtocol").textContent="-";
+document.getElementById("rUsage").textContent="No common service registered.";
+document.getElementById("rSecurity").textContent="Verify application documentation.";
+
+}
+
+}
+
+function copyResult(){
+
+const result=document.getElementById("result");
+
+if(result.style.display==="none" || result.style.display===""){
+    alert("Please check a port first.");
+    return;
+}
+
+const text = 
+`Port Information Result
+
+Port: ${document.getElementById("rPort").textContent}
+
+Service: ${document.getElementById("rService").textContent}
+
+Protocol: ${document.getElementById("rProtocol").textContent}
+
+Usage: ${document.getElementById("rUsage").textContent}
+
+Security: ${document.getElementById("rSecurity").textContent}
+`;
+
+navigator.clipboard.writeText(text)
+.then(()=>{
+
+showPopup();
+
+});
+
+}
+
+
+function clearForm(){
+
+document.getElementById("port").value="";
+
+document.getElementById("result").style.display="none";
+
+document.getElementById("rPort").textContent="";
+document.getElementById("rService").textContent="";
+document.getElementById("rProtocol").textContent="";
+document.getElementById("rUsage").textContent="";
+document.getElementById("rSecurity").textContent="";
+
+}
+
+
+function showPopup(){
+
+const popup=document.getElementById("popup");
+
+popup.style.display="block";
+
+setTimeout(()=>{
+
+popup.style.display="none";
+
+},2000);
+
+}
+
+</script>
+
+
+</body>
+
+</html>

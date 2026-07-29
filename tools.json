@@ -146,8 +146,13 @@
   "category": "Network Tools",
   "description": "Lookup common TCP and UDP port information",
   "icon": "🔌"
+},
+  {
+  "name": "MAC Address Vendor Lookup",
+  "icon": "🖧",
+  "link": "tools/mac-address-lookup.html",
+  "category": "Network Tools",
+  "description": "Identify MAC address vendors, OUI information and device manufacturers."
 }
 
-
-  
 ]

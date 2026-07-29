@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>MAC Address Lookup | UDI Digital Hub</title>
+
+<meta name="description"
+content="Lookup MAC address vendor information and identify network device manufacturers.">
+
+
+<style>
+
+:root{
+
+--primary-red:#e63946;
+--primary-blue:#1d4ed8;
+--bg-light:#f5f7fb;
+--text-dark:#1f2937;
+--border:#dbe2ea;
+
+}
+
+
+*{
+
+margin:0;
+padding:0;
+box-sizing:border-box;
+
+}
+
+
+
+body{
+
+font-family:Arial,Helvetica,sans-serif;
+background:var(--bg-light);
+color:var(--text-dark);
+
+}
+
+
+
+header{
+
+background:linear-gradient(
+90deg,
+var(--primary-red),
+var(--primary-blue)
+);
+
+color:white;
+
+padding:18px;
+
+text-align:center;
+
+font-size:24px;
+
+font-weight:bold;
+
+}
+
+
+
+.container{
+
+max-width:700px;
+
+margin:35px auto;
+
+background:white;
+
+padding:25px;
+
+border-radius:12px;
+
+box-shadow:0 5px 18px rgba(0,0,0,.08);
+
+}
+
+
+
+h2{
+
+margin-bottom:20px;
+
+}
+
+
+
+label{
+
+font-weight:bold;
+
+display:block;
+
+margin-bottom:8px;
+
+}
+
+
+
+input{
+
+width:100%;
+
+padding:12px;
+
+font-size:16px;
+
+border:1px solid var(--border);
+
+border-radius:8px;
+
+margin-bottom:20px;
+
+}
+
+
+
+.button-group{
+
+display:flex;
+
+gap:10px;
+
+flex-wrap:wrap;
+
+}
+
+
+
+button{
+
+flex:1;
+
+padding:12px;
+
+border:none;
+
+border-radius:8px;
+
+font-size:16px;
+
+color:white;
+
+cursor:pointer;
+
+}
+
+
+
+#checkBtn{
+
+background:var(--primary-blue);
+
+}
+
+
+
+#copyBtn{
+
+background:#16a34a;
+
+}
+
+
+
+#clearBtn{
+
+background:var(--primary-red);
+
+}
+
+
+
+button:hover{
+
+opacity:.9;
+
+}
+
+
+
+.result{
+
+margin-top:25px;
+
+background:#f9fafb;
+
+border-left:5px solid var(--primary-blue);
+
+padding:18px;
+
+border-radius:8px;
+
+display:none;
+
+}
+
+
+
+.result p{
+
+margin:8px 0;
+
+}
+
+
+
+.footer{
+
+margin-top:30px;
+
+text-align:center;
+
+font-size:14px;
+
+color:#666;
+
+}
+
+
+
+#popup{
+
+position:fixed;
+
+right:25px;
+
+bottom:25px;
+
+background:#16a34a;
+
+color:white;
+
+padding:12px 18px;
+
+border-radius:8px;
+
+display:none;
+
+}
+
+
+
+@media(max-width:600px){
+
+.button-group{
+
+flex-direction:column;
+
+}
+
+}
+
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+UDI Digital Hub
+
+</header>
+
+
+
+<div class="container">
+
+
+<h2>
+MAC Address Vendor Lookup
+</h2>
+
+
+<label>
+Enter MAC Address
+</label>
+
+
+<input
+id="mac"
+type="text"
+placeholder="Example: 00:1A:2B:3C:4D:5E"
+>
+
+
+<div class="button-group">
+
+
+<button id="checkBtn" onclick="lookupMAC()">
+
+Check MAC
+
+</button>
+
+
+<button id="copyBtn" onclick="copyResult()">
+
+Copy Result
+
+</button>
+
+
+<button id="clearBtn" onclick="clearForm()">
+
+Clear
+
+</button>
+
+
+</div>
+
+
+<div class="result" id="result">
+
+
+<h3>
+MAC Details
+</h3>
+
+
+<p>
+<strong>MAC:</strong>
+<span id="rMac"></span>
+</p>
+
+
+<p>
+<strong>OUI:</strong>
+<span id="rOui"></span>
+</p>
+
+
+<p>
+<strong>Vendor:</strong>
+<span id="rVendor"></span>
+</p>
+
+
+<p>
+<strong>Address Type:</strong>
+<span id="rType"></span>
+</p>
+
+
+<p>
+<strong>Status:</strong>
+<span id="rStatus"></span>
+</p>
+
+
+</div>
+
+
+
+<div class="footer">
+
+UDI Digital Hub © 2026
+
+</div>
+
+
+
+</div>
+
+
+
+<div id="popup">
+
+Copied Successfully!
+
+</div>
+
+<script>
+
+
+const vendors = {
+
+
+"00:1A:2B":"Cisco Systems",
+
+"00:1B:63":"Apple Inc.",
+
+"00:1C:B3":"Apple Inc.",
+
+"00:50:56":"VMware",
+
+"00:15:5D":"Microsoft",
+
+"00:1E:C2":"Aruba Networks",
+
+"00:11:22":"Cimsys Inc.",
+
+"00:14:22":"Dell Inc.",
+
+"00:25:90":"Cisco Systems",
+
+"00:26:BB":"Apple Inc.",
+
+"08:00:27":"Oracle VirtualBox",
+
+"18:65:90":"Google",
+
+"3C:5A:B4":"Google",
+
+"44:38:39":"Raspberry Pi",
+
+"50:EB:71":"Huawei",
+
+"54:04:A6":"Intel",
+
+"58:EF:68":"Intel",
+
+"60:45:BD":"Huawei",
+
+"70:4F:57":"Netgear",
+
+"74:DA:38":"TP-Link",
+
+"80:86:5B":"Intel",
+
+"84:38:35":"Samsung",
+
+"88:36:6C":"Huawei",
+
+"AC:DE:48":"Apple Inc.",
+
+"B4:2E:99":"Huawei",
+
+"C8:3A:35":"Samsung",
+
+"D8:3A:DD":"Google",
+
+"E4:F0:42":"Netgear",
+
+"F4:F5:D8":"Google",
+
+"FC:FB:FB":"Google"
+
+
+};
+
+
+
+
+function lookupMAC(){
+
+
+let mac=document
+.getElementById("mac")
+.value
+.trim()
+.toUpperCase();
+
+
+
+if(mac===""){
+
+alert("Please enter a MAC address.");
+
+return;
+
+}
+
+
+
+
+// MAC validation
+
+let regex=/^([0-9A-F]{2}:){5}[0-9A-F]{2}$/;
+
+
+
+if(!regex.test(mac)){
+
+
+alert(
+"Invalid MAC address format.\nExample: 00:1A:2B:3C:4D:5E"
+);
+
+
+return;
+
+
+}
+
+
+
+
+let oui=mac.substring(0,8);
+
+
+
+let vendor=
+vendors[oui] || 
+"Unknown Vendor";
+
+
+
+
+let firstByte=parseInt(
+mac.substring(0,2),
+16
+);
+
+
+
+let type;
+
+
+
+if(firstByte & 1){
+
+type="Multicast";
+
+}
+
+else{
+
+type="Unicast";
+
+}
+
+
+
+
+document
+.getElementById("result")
+.style.display="block";
+
+
+
+document
+.getElementById("rMac")
+.textContent=mac;
+
+
+
+document
+.getElementById("rOui")
+.textContent=oui;
+
+
+
+document
+.getElementById("rVendor")
+.textContent=vendor;
+
+
+
+document
+.getElementById("rType")
+.textContent=type;
+
+
+
+document
+.getElementById("rStatus")
+.textContent="Valid MAC Address";
+
+
+
+}
+
+
+
+
+
+
+function copyResult(){
+
+
+
+const result=
+document.getElementById("result");
+
+
+
+if(result.style.display==="none" ||
+result.style.display===""){
+
+
+alert("Please lookup a MAC address first.");
+
+return;
+
+}
+
+
+
+
+const text=
+
+`MAC Address Lookup Result
+
+
+MAC:
+${document.getElementById("rMac").textContent}
+
+
+OUI:
+${document.getElementById("rOui").textContent}
+
+
+Vendor:
+${document.getElementById("rVendor").textContent}
+
+
+Address Type:
+${document.getElementById("rType").textContent}
+
+
+Status:
+${document.getElementById("rStatus").textContent}
+`;
+
+
+
+navigator.clipboard
+.writeText(text)
+.then(()=>{
+
+
+showPopup();
+
+
+});
+
+
+}
+
+
+
+
+
+
+function clearForm(){
+
+
+
+document
+.getElementById("mac")
+.value="";
+
+
+
+document
+.getElementById("result")
+.style.display="none";
+
+
+
+document
+.getElementById("rMac")
+.textContent="";
+
+
+document
+.getElementById("rOui")
+.textContent="";
+
+
+document
+.getElementById("rVendor")
+.textContent="";
+
+
+document
+.getElementById("rType")
+.textContent="";
+
+
+document
+.getElementById("rStatus")
+.textContent="";
+
+
+}
+
+
+
+
+
+
+function showPopup(){
+
+
+const popup=
+document.getElementById("popup");
+
+
+
+popup.style.display="block";
+
+
+
+setTimeout(()=>{
+
+
+popup.style.display="none";
+
+
+},2000);
+
+
+
+}
+
+
+</script>
+
+</body>
+
+</html>

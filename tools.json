@@ -146,6 +146,7 @@
   "category": "Network Tools",
   "description": "Lookup common TCP and UDP port information",
   "icon": "🔌"
+  "link": "tools/port-checker.html"
 }
   
 ]

@@ -139,6 +139,12 @@
   "category": "Telecom",
   "icon": "📡",
   "link": "tools/5g-nr-arfcn-calculator.html"
+},
+  {
+"name":"Port Checker",
+"file":"port-checker.html",
+"category":"Network Tools",
+"description":"Lookup common TCP and UDP port information"
 }
 
   

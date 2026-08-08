@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
 <meta charset="UTF-8">
@@ -7,204 +8,509 @@
 
 <title>About | UDI Digital Hub</title>
 
-<meta name="description" content="Learn about UDI Digital Hub, a free online platform providing networking, telecom, developer and utility tools.">
+<meta name="description"
+content="Learn about UDI Digital Hub, a free online platform providing networking, telecom, developer and utility tools.">
 
-<meta name="keywords" content="UDI Digital Hub, networking tools, telecom calculators, developer tools, free online tools">
+<meta name="keywords"
+content="UDI Digital Hub, networking tools, telecom calculators, developer tools, free online tools">
 
-<meta name="author" content="Uditha Vidanagamage">
+<meta name="author"
+content="Uditha Vidanagamage">
 
 <link rel="stylesheet" href="style.css">
 
+
 <style>
 
-.page-container{
-    max-width:1000px;
-    margin:40px auto;
-    padding:20px;
+/* =========================================================
+   ABOUT PAGE
+========================================================= */
+
+.page-container {
+
+    max-width: 1000px;
+
+    margin: 40px auto;
+
+    padding: 20px;
 }
 
-.about-card{
-    background:#ffffff;
-    border-radius:12px;
-    padding:30px;
-    box-shadow:0 5px 18px rgba(0,0,0,.08);
-    margin-bottom:25px;
+
+/* =========================================================
+   ABOUT CARDS
+========================================================= */
+
+.about-card {
+
+    background: var(--primary-white);
+
+    border-radius: 14px;
+
+    padding: 30px;
+
+    border: 1px solid var(--border-light);
+
+    box-shadow: var(--shadow-light);
+
+    margin-bottom: 25px;
 }
 
-.about-card h2{
-    color:#1d4ed8;
-    margin-bottom:15px;
+
+/* =========================================================
+   MAIN PAGE TITLE
+========================================================= */
+
+.about-card:first-child h2 {
+
+    color: var(--primary-red);
+
 }
 
-.about-card p{
-    line-height:1.8;
-    margin-bottom:15px;
+
+/* =========================================================
+   SECTION HEADINGS
+========================================================= */
+
+.about-card h2 {
+
+    color: var(--primary-blue);
+
+    margin-top: 0;
+
+    margin-bottom: 15px;
 }
 
-.about-card ul{
-    margin-left:20px;
-    line-height:1.8;
+
+/* =========================================================
+   TEXT
+========================================================= */
+
+.about-card p {
+
+    line-height: 1.8;
+
+    margin-bottom: 15px;
 }
 
-.highlight{
-    color:#e63946;
-    font-weight:bold;
+
+/* =========================================================
+   LIST
+========================================================= */
+
+.about-card ul {
+
+    margin-left: 20px;
+
+    line-height: 1.8;
+
 }
 
-.tech-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-    gap:15px;
-    margin-top:20px;
+
+/* =========================================================
+   HIGHLIGHT
+========================================================= */
+
+.highlight {
+
+    color: var(--primary-red);
+
+    font-weight: bold;
 }
 
-.tech-box{
-    background:#f5f7fb;
-    border-left:5px solid #1d4ed8;
-    padding:15px;
-    border-radius:8px;
+
+/* =========================================================
+   TECHNOLOGY GRID
+========================================================= */
+
+.tech-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fit, minmax(220px, 1fr));
+
+    gap: 15px;
+
+    margin-top: 20px;
 }
 
-.tech-box h3{
-    margin-bottom:10px;
+
+/* =========================================================
+   TECHNOLOGY BOX
+========================================================= */
+
+.tech-box {
+
+    background: var(--bg-light);
+
+    border-left:
+        5px solid var(--primary-blue);
+
+    padding: 15px;
+
+    border-radius: 8px;
+
+    transition: 0.3s ease;
+}
+
+.tech-box:hover {
+
+    transform: translateY(-3px);
+
+    box-shadow: var(--shadow-light);
+
+    border-left-color:
+        var(--primary-red);
+}
+
+
+.tech-box h3 {
+
+    color: var(--primary-blue);
+
+    margin-top: 0;
+
+    margin-bottom: 10px;
+}
+
+
+.tech-box p {
+
+    margin-bottom: 0;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+    .page-container {
+
+        margin: 20px auto;
+
+        padding: 15px;
+    }
+
+    .about-card {
+
+        padding: 22px;
+    }
+
 }
 
 </style>
 
 </head>
 
+
 <body>
 
+
+<!-- =======================================================
+     HEADER
+======================================================= -->
+
 <header class="header">
-<h1>UDI Digital Hub</h1>
-<p>Free Online Tools • Apps • Networking Knowledge</p>
+
+    <h1>UDI Digital Hub</h1>
+
+    <p>
+        Free Online Tools • Apps • Networking Knowledge
+    </p>
+
 </header>
 
+
+<!-- =======================================================
+     NAVIGATION
+======================================================= -->
+
 <nav class="nav">
-<a href="index.html">Home</a>
-<a href="tools/">Tools</a>
-<a href="apps/">Apps</a>
-<a href="notes/">Notes</a>
-<a href="about.html">About</a>
-<a href="contact.html">Contact</a>
+
+    <a href="index.html">Home</a>
+
+    <a href="tools/">Tools</a>
+
+    <a href="apps/">Apps</a>
+
+    <a href="notes/">Notes</a>
+
+    <a href="about.html">About</a>
+
+    <a href="contact.html">Contact</a>
+
 </nav>
 
-<div class="page-container">
 
-<div class="about-card">
+<!-- =======================================================
+     ABOUT CONTENT
+======================================================= -->
 
-<h2>About UDI Digital Hub</h2>
+<main class="page-container">
 
-<p>
-<strong>UDI Digital Hub</strong> is a free online platform created to provide useful, reliable and easy-to-use tools for students, IT professionals, software developers, network engineers and everyday internet users.
-</p>
 
-<p>
-Our goal is to make common technical calculations, networking utilities, telecom engineering tools and developer resources available directly in your browser without requiring software installation or registration.
-</p>
+    <!-- ABOUT -->
 
-<p>
-Every tool is designed with simplicity, speed and accuracy in mind while maintaining a clean and mobile-friendly user experience.
-</p>
+    <div class="about-card">
 
-</div>
+        <h2>About UDI Digital Hub</h2>
 
-<div class="about-card">
+        <p>
+            <strong>UDI Digital Hub</strong> is a free online platform
+            created to provide useful, reliable and easy-to-use tools
+            for students, IT professionals, software developers,
+            network engineers and everyday internet users.
+        </p>
 
-<h2>What You'll Find</h2>
+        <p>
+            Our goal is to make common technical calculations,
+            networking utilities, telecom engineering tools and
+            developer resources available directly in your browser
+            without requiring software installation or registration.
+        </p>
 
-<ul>
+        <p>
+            Every tool is designed with simplicity, speed and accuracy
+            in mind while maintaining a clean and mobile-friendly
+            user experience.
+        </p>
 
-<li>🌐 IP Address & Network Calculators</li>
+    </div>
 
-<li>📡 Telecom Engineering Calculators</li>
 
-<li>🔐 Security & Password Utilities</li>
+    <!-- WHAT YOU'LL FIND -->
 
-<li>👨‍💻 Developer Tools</li>
+    <div class="about-card">
 
-<li>📝 Text & Writing Utilities</li>
+        <h2>What You'll Find</h2>
 
-<li>📱 QR & General Utility Tools</li>
+        <ul>
 
-</ul>
+            <li>🌐 IP Address & Network Calculators</li>
 
-</div>
+            <li>📡 Telecom Engineering Calculators</li>
 
-<div class="about-card">
+            <li>🔐 Security & Password Utilities</li>
 
-<h2>Technology Used</h2>
+            <li>👨‍💻 Developer Tools</li>
 
-<div class="tech-grid">
+            <li>📝 Text & Writing Utilities</li>
 
-<div class="tech-box">
-<h3>Frontend</h3>
-<p>HTML5, CSS3 and JavaScript</p>
-</div>
+            <li>📱 QR & General Utility Tools</li>
 
-<div class="tech-box">
-<h3>Hosting</h3>
-<p>GitHub Pages</p>
-</div>
+        </ul>
 
-<div class="tech-box">
-<h3>Design</h3>
-<p>Responsive and Mobile Friendly</p>
-</div>
+    </div>
 
-<div class="tech-box">
-<h3>Performance</h3>
-<p>Fast loading with no installation required</p>
-</div>
 
-</div>
+    <!-- TECHNOLOGY -->
 
-</div>
+    <div class="about-card">
 
-<div class="about-card">
+        <h2>Technology Used</h2>
 
-<h2>Mission</h2>
+        <div class="tech-grid">
 
-<p>
-Our mission is to build a growing collection of free, practical and high-quality online tools that help users solve everyday technical problems quickly and efficiently.
-</p>
 
-<p>
-New tools and improvements are continuously added based on user feedback and emerging technologies.
-</p>
+            <div class="tech-box">
 
-</div>
+                <h3>Frontend</h3>
 
-<div class="about-card">
+                <p>
+                    HTML5, CSS3 and JavaScript
+                </p>
 
-<h2>About the Creator</h2>
+            </div>
 
-<p>
-UDI Digital Hub was created by <span class="highlight">Uditha Vidanagamage</span>, an Electronics and Telecommunication Engineer with experience in radio network optimization, networking and software development.
-</p>
 
-<p>
-The platform combines practical engineering knowledge with modern web technologies to create useful tools for professionals and learners around the world.
-</p>
+            <div class="tech-box">
 
-</div>
+                <h3>Hosting</h3>
 
-</div>
+                <p>
+                    GitHub Pages
+                </p>
+
+            </div>
+
+
+            <div class="tech-box">
+
+                <h3>Design</h3>
+
+                <p>
+                    Responsive and Mobile Friendly
+                </p>
+
+            </div>
+
+
+            <div class="tech-box">
+
+                <h3>Performance</h3>
+
+                <p>
+                    Fast loading with no installation required
+                </p>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- MISSION -->
+
+    <div class="about-card">
+
+        <h2>Mission</h2>
+
+        <p>
+            Our mission is to build a growing collection of free,
+            practical and high-quality online tools that help users
+            solve everyday technical problems quickly and efficiently.
+        </p>
+
+        <p>
+            New tools and improvements are continuously added based
+            on user feedback and emerging technologies.
+        </p>
+
+    </div>
+
+
+    <!-- CREATOR -->
+
+    <div class="about-card">
+
+        <h2>About the Creator</h2>
+
+        <p>
+            UDI Digital Hub was created by
+            <span class="highlight">
+                Uditha Vidanagamage
+            </span>,
+            an Electronics and Telecommunication Engineer with
+            experience in radio network optimization, networking
+            and software development.
+        </p>
+
+        <p>
+            The platform combines practical engineering knowledge
+            with modern web technologies to create useful tools
+            for professionals and learners around the world.
+        </p>
+
+    </div>
+
+
+</main>
+
+
+<!-- =======================================================
+     FOOTER
+======================================================= -->
 
 <footer class="footer">
 
-<p>
-© 2026 UDI Digital Hub. All Rights Reserved.
-</p>
 
-<p>
-<a href="about.html">About</a> |
-<a href="contact.html">Contact</a> |
-<a href="privacy-policy.html">Privacy Policy</a> |
-<a href="terms.html">Terms of Use</a>
-</p>
+    <div class="footer-container">
 
-    
+
+        <!-- BRAND -->
+
+        <div class="footer-brand">
+
+            <h3>UDI DIGITAL HUB</h3>
+
+            <p>
+                Free Online Tools • Apps • Networking Knowledge
+            </p>
+
+            <p>
+                Useful digital tools and technology resources
+                in one place.
+            </p>
+
+        </div>
+
+
+        <!-- QUICK LINKS -->
+
+        <div>
+
+            <h4>Quick Links</h4>
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="tools/">
+                Tools
+            </a>
+
+            <a href="apps/">
+                Apps
+            </a>
+
+            <a href="notes/">
+                Notes
+            </a>
+
+        </div>
+
+
+        <!-- COMPANY -->
+
+        <div>
+
+            <h4>Company</h4>
+
+            <a href="about.html">
+                About
+            </a>
+
+            <a href="contact.html">
+                Contact
+            </a>
+
+        </div>
+
+
+        <!-- LEGAL -->
+
+        <div>
+
+            <h4>Legal</h4>
+
+            <a href="privacy-policy.html">
+                Privacy Policy
+            </a>
+
+            <a href="terms.html">
+                Terms of Use
+            </a>
+
+        </div>
+
+
+    </div>
+
+
+    <div class="footer-bottom">
+
+        © 2026 UDI Digital Hub. All Rights Reserved.
+
+    </div>
+
+
 </footer>
+
+
 </body>
+
 </html>

@@ -1,32 +1,59 @@
-/* =========================
-   BRAND COLORS
-========================= */
-:root {
-  --primary-red: #e63946;
-  --primary-blue: #1d4ed8;
-  --primary-white: #ffffff;
+/* =========================================================
+   UDI DIGITAL HUB
+   GLOBAL BRAND DESIGN
+========================================================= */
 
-  --text-dark: #1f2937;
-  --bg-light: #f5f7fb;
+:root {
+  /* Official UDI Brand Colors */
+  --primary-red: #800000;
+  --primary-blue: #0A4D8C;
+  --primary-white: #FFFFFF;
+
+  /* Supporting Colors */
+  --text-dark: #333333;
+  --text-light: #666666;
+  --bg-light: #F5F7FA;
+  --border-light: #E2E6EA;
+
+  /* Effects */
+  --shadow-light: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-hover: 0 10px 25px rgba(0, 0, 0, 0.12);
 }
 
-/* =========================
+
+/* =========================================================
    GLOBAL
-========================= */
+========================================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
   background: var(--bg-light);
   color: var(--text-dark);
   line-height: 1.6;
 }
 
-/* =========================
+
+/* =========================================================
    HEADER
-========================= */
+========================================================= */
+
 .header {
-  background: linear-gradient(90deg, var(--primary-red), var(--primary-blue));
-  color: white;
+  background: linear-gradient(
+    90deg,
+    var(--primary-red),
+    var(--primary-blue)
+  );
+
+  color: var(--primary-white);
   text-align: center;
   padding: 25px;
 }
@@ -35,33 +62,44 @@ body {
   margin: 0;
 }
 
-/* =========================
+
+/* =========================================================
    NAVIGATION
-========================= */
+========================================================= */
+
 .nav {
-  background: white;
+  background: var(--primary-white);
+
   display: flex;
   justify-content: center;
+  align-items: center;
+
   gap: 25px;
   padding: 12px;
+
   border-bottom: 2px solid var(--primary-blue);
+
   flex-wrap: wrap;
 }
 
 .nav a {
   text-decoration: none;
   color: var(--primary-blue);
+
   font-weight: bold;
-  transition: 0.3s;
+
+  transition: 0.3s ease;
 }
 
 .nav a:hover {
   color: var(--primary-red);
 }
 
-/* =========================
+
+/* =========================================================
    HERO
-========================= */
+========================================================= */
+
 .hero {
   text-align: center;
   padding: 40px 20px;
@@ -69,16 +107,25 @@ body {
 
 .search-box {
   padding: 10px;
+
   width: 60%;
   max-width: 400px;
+
   border: 2px solid var(--primary-blue);
   border-radius: 8px;
+
   outline: none;
 }
 
-/* =========================
+.search-box:focus {
+  border-color: var(--primary-red);
+}
+
+
+/* =========================================================
    SECTIONS
-========================= */
+========================================================= */
+
 .section {
   padding: 30px;
   text-align: center;
@@ -88,106 +135,362 @@ body {
   color: var(--primary-blue);
 }
 
-/* =========================
+.section h3 {
+  color: var(--primary-red);
+}
+
+
+/* =========================================================
+   PAGE CONTENT
+   Used by About / Contact / Privacy / Terms pages
+========================================================= */
+
+.container {
+  max-width: 1100px;
+
+  margin: 40px auto;
+
+  padding: 0 20px;
+}
+
+.content-card {
+  background: var(--primary-white);
+
+  padding: 35px;
+
+  border-radius: 14px;
+
+  border: 1px solid var(--border-light);
+
+  box-shadow: var(--shadow-light);
+}
+
+.content-card h1,
+.content-card h2 {
+  color: var(--primary-blue);
+}
+
+.content-card h3 {
+  color: var(--primary-red);
+  margin-top: 30px;
+}
+
+.content-card p {
+  color: var(--text-dark);
+}
+
+.content-card a {
+  color: var(--primary-blue);
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.content-card a:hover {
+  color: var(--primary-red);
+  text-decoration: underline;
+}
+
+
+/* =========================================================
    GRID
-========================= */
+========================================================= */
+
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+
+  grid-template-columns:
+    repeat(auto-fit, minmax(180px, 1fr));
+
   gap: 15px;
+
   margin-top: 20px;
 }
 
-/* =========================
+
+/* =========================================================
    CARDS
-========================= */
+========================================================= */
+
 .card {
-  background: white;
+  background: var(--primary-white);
+
   padding: 20px;
+
   border-radius: 12px;
-  border: 2px solid #e5e7eb;
+
+  border: 2px solid var(--border-light);
+
   text-align: center;
+
   cursor: pointer;
-  transition: 0.3s;
+
+  transition: 0.3s ease;
+
   text-decoration: none;
+
   color: var(--text-dark);
+
   font-weight: bold;
 }
 
 .card:hover {
   transform: translateY(-5px);
+
   border-color: var(--primary-red);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+
+  box-shadow: var(--shadow-hover);
 }
 
-/* =========================
-   BUTTONS (GLOBAL FIX)
-========================= */
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
 button {
-  background: var(--primary-blue);
-  color: white;
+  background: var(--primary-red);
+
+  color: var(--primary-white);
+
   border: none;
+
   padding: 10px 15px;
+
   margin-top: 10px;
+
   border-radius: 8px;
+
   cursor: pointer;
+
   font-size: 16px;
+
   width: 100%;
-  transition: 0.3s;
+
+  transition: 0.3s ease;
 }
 
 button:hover {
-  background: var(--primary-red);
+  background: var(--primary-blue);
 }
 
 button:active {
   transform: scale(0.98);
 }
 
-/* Secondary button (Clear / Reset) */
+
+/* =========================================================
+   SECONDARY BUTTON
+========================================================= */
+
 .clearBtn {
-  background: #6b7280;
+  background: #666666;
 }
 
 .clearBtn:hover {
-  background: #4b5563;
+  background: #444444;
 }
 
-/* =========================
+
+/* =========================================================
    INPUT FIELDS
-========================= */
-input {
+========================================================= */
+
+input,
+textarea,
+select {
   width: 100%;
+
   padding: 10px;
+
   margin-top: 10px;
-  box-sizing: border-box;
-  border: 2px solid #e5e7eb;
+
+  border: 2px solid var(--border-light);
+
   border-radius: 8px;
+
   outline: none;
+
+  font-family: inherit;
+
+  box-sizing: border-box;
 }
 
-input:focus {
+input:focus,
+textarea:focus,
+select:focus {
   border-color: var(--primary-blue);
 }
 
-/* =========================
-   FOOTER
-========================= */
-.footer{
-    text-align:center;
-    padding:25px;
-    margin-top:40px;
-    background:#f5f7fb;
-    color:#555;
-    font-size:14px;
+
+/* =========================================================
+   UDI FOOTER
+========================================================= */
+
+.footer {
+  margin-top: 50px;
+
+  padding: 40px 30px 20px;
+
+  color: var(--primary-white);
+
+  background:
+    linear-gradient(
+      90deg,
+      #062B4D,
+      #0A4D8C 45%,
+      #800000
+    );
 }
 
-.footer a{
-    color:#1d4ed8;
-    text-decoration:none;
-    margin:0 5px;
+
+/* =========================================================
+   FOOTER CONTENT
+========================================================= */
+
+.footer-container {
+  max-width: 1200px;
+
+  margin: auto;
+
+  display: grid;
+
+  grid-template-columns:
+    1.5fr 1fr 1fr 1fr;
+
+  gap: 40px;
 }
 
-.footer a:hover{
-    text-decoration:underline;
+
+/* =========================================================
+   FOOTER BRAND
+========================================================= */
+
+.footer-brand h3 {
+  margin: 0 0 10px;
+
+  font-size: 22px;
+}
+
+.footer-brand p {
+  margin: 5px 0;
+
+  color: #E5E7EB;
+
+  font-size: 14px;
+}
+
+
+/* =========================================================
+   FOOTER HEADINGS
+========================================================= */
+
+.footer h4 {
+  margin-top: 0;
+
+  color: var(--primary-white);
+
+  font-size: 16px;
+}
+
+
+/* =========================================================
+   FOOTER LINKS
+========================================================= */
+
+.footer a {
+  display: block;
+
+  color: var(--primary-white);
+
+  text-decoration: none;
+
+  margin: 8px 0;
+
+  font-size: 14px;
+
+  transition: 0.3s ease;
+}
+
+.footer a:hover {
+  color: #FFD6D6;
+
+  transform: translateX(3px);
+}
+
+
+/* =========================================================
+   FOOTER BOTTOM
+========================================================= */
+
+.footer-bottom {
+  max-width: 1200px;
+
+  margin: 30px auto 0;
+
+  padding-top: 15px;
+
+  border-top:
+    1px solid rgba(255, 255, 255, 0.25);
+
+  text-align: center;
+
+  color: #E5E7EB;
+
+  font-size: 14px;
+}
+
+
+/* =========================================================
+   SIMPLE FOOTER
+   Keeps compatibility with existing footer HTML
+========================================================= */
+
+.footer:not(:has(.footer-container)) {
+  text-align: center;
+}
+
+
+/* =========================================================
+   RESPONSIVE DESIGN
+========================================================= */
+
+@media (max-width: 800px) {
+
+  .footer-container {
+    grid-template-columns: 1fr 1fr;
+  }
+
+}
+
+
+@media (max-width: 500px) {
+
+  .nav {
+    gap: 15px;
+  }
+
+  .hero {
+    padding: 30px 15px;
+  }
+
+  .search-box {
+    width: 90%;
+  }
+
+  .section {
+    padding: 20px 15px;
+  }
+
+  .content-card {
+    padding: 22px;
+  }
+
+  .footer {
+    padding: 30px 20px 15px;
+  }
+
+  .footer-container {
+    grid-template-columns: 1fr;
+    gap: 25px;
+  }
+
 }

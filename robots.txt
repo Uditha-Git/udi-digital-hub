@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://uditha-git.github.io/udi-digital-hub/sitemap.xml

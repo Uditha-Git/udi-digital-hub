@@ -9,7 +9,7 @@
 <title>Tools | UDI Digital Hub</title>
 
 <meta name="description"
-content="Free online networking, telecom, developer, security and utility tools from UDI Digital Hub.">
+content="Explore free networking, telecom, developer, security, calculator and utility tools from UDI Digital Hub.">
 
 <meta name="keywords"
 content="UDI Digital Hub tools, networking tools, telecom tools, developer tools, online calculators">
@@ -33,7 +33,7 @@ content="UDI Digital Hub tools, networking tools, telecom tools, developer tools
 
 
 /* =========================================================
-   PAGE INTRO
+   INTRO
 ========================================================= */
 
 .tools-intro {
@@ -52,11 +52,72 @@ content="UDI Digital Hub tools, networking tools, telecom tools, developer tools
 
 .tools-intro p {
 
-    color: var(--text-light);
-
     max-width: 700px;
 
     margin: auto;
+
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+.tool-search {
+
+    display: block;
+
+    width: 100%;
+
+    max-width: 500px;
+
+    margin: 0 auto 30px auto;
+
+    padding: 12px 15px;
+
+    box-sizing: border-box;
+
+    border: 2px solid var(--primary-blue);
+
+    border-radius: 8px;
+
+    outline: none;
+
+    font-size: 16px;
+}
+
+.tool-search:focus {
+
+    border-color: var(--primary-red);
+}
+
+
+/* =========================================================
+   CATEGORY FILTER
+========================================================= */
+
+.category-filter {
+
+    text-align: center;
+
+    margin-bottom: 30px;
+}
+
+.category-filter button {
+
+    width: auto;
+
+    margin: 5px;
+
+    padding: 8px 14px;
+
+    background: var(--primary-blue);
+}
+
+.category-filter button:hover {
+
+    background: var(--primary-red);
 }
 
 
@@ -98,6 +159,8 @@ content="UDI Digital Hub tools, networking tools, telecom tools, developer tools
     box-shadow: var(--shadow-light);
 
     transition: 0.3s ease;
+
+    display: block;
 }
 
 .tool-card:hover {
@@ -109,12 +172,14 @@ content="UDI Digital Hub tools, networking tools, telecom tools, developer tools
     box-shadow: var(--shadow-hover);
 }
 
+
 .tool-icon {
 
-    font-size: 35px;
+    font-size: 38px;
 
     margin-bottom: 10px;
 }
+
 
 .tool-card h3 {
 
@@ -123,13 +188,46 @@ content="UDI Digital Hub tools, networking tools, telecom tools, developer tools
     margin: 10px 0;
 }
 
+
 .tool-card p {
 
     font-size: 14px;
 
-    color: var(--text-light);
-
     line-height: 1.6;
+
+    margin-bottom: 10px;
+}
+
+
+.tool-category {
+
+    display: inline-block;
+
+    font-size: 12px;
+
+    font-weight: bold;
+
+    color: var(--primary-red);
+
+    background: var(--bg-light);
+
+    padding: 4px 9px;
+
+    border-radius: 20px;
+}
+
+
+/* =========================================================
+   NO RESULTS
+========================================================= */
+
+.no-results {
+
+    text-align: center;
+
+    padding: 30px;
+
+    display: none;
 }
 
 
@@ -144,6 +242,11 @@ content="UDI Digital Hub tools, networking tools, telecom tools, developer tools
         margin: 20px auto;
 
         padding: 15px;
+    }
+
+    .tools-grid {
+
+        grid-template-columns: 1fr;
     }
 
 }
@@ -177,29 +280,17 @@ content="UDI Digital Hub tools, networking tools, telecom tools, developer tools
 
 <nav class="nav">
 
-    <a href="../index.html">
-        Home
-    </a>
+    <a href="../index.html">Home</a>
 
-    <a href="index.html">
-        Tools
-    </a>
+    <a href="index.html">Tools</a>
 
-    <a href="../apps/">
-        Apps
-    </a>
+    <a href="../apps/">Apps</a>
 
-    <a href="../notes/">
-        Notes
-    </a>
+    <a href="../notes/">Notes</a>
 
-    <a href="../about.html">
-        About
-    </a>
+    <a href="../about.html">About</a>
 
-    <a href="../contact.html">
-        Contact
-    </a>
+    <a href="../contact.html">Contact</a>
 
 </nav>
 
@@ -216,84 +307,49 @@ content="UDI Digital Hub tools, networking tools, telecom tools, developer tools
         <h2>UDI Digital Hub Tools</h2>
 
         <p>
-            Explore our collection of free online tools for
-            networking, telecom engineering, security,
-            development and everyday digital tasks.
+            Explore our collection of free online tools
+            for networking, telecom, development, security
+            and everyday digital tasks.
         </p>
 
     </div>
 
 
-    <div class="tools-grid">
+    <!-- SEARCH -->
+
+    <input
+        type="text"
+        id="toolSearch"
+        class="tool-search"
+        placeholder="Search tools..."
+        aria-label="Search tools">
 
 
-        <a class="tool-card"
-           href="password-generator.html">
+    <!-- CATEGORY FILTER -->
 
-            <div class="tool-icon">
-                🔐
-            </div>
-
-            <h3>Password Generator</h3>
-
-            <p>
-                Generate strong and secure passwords
-                instantly.
-            </p>
-
-        </a>
+    <div
+        id="categoryFilter"
+        class="category-filter">
+    </div>
 
 
-        <a class="tool-card"
-           href="password-strength-checker.html">
+    <!-- TOOL GRID -->
 
-            <div class="tool-icon">
-                🛡️
-            </div>
-
-            <h3>Password Strength Checker</h3>
-
-            <p>
-                Check the strength and security
-                of a password.
-            </p>
-
-        </a>
+    <div
+        id="toolsGrid"
+        class="tools-grid">
+    </div>
 
 
-        <a class="tool-card"
-           href="uuid-generator.html">
+    <div
+        id="noResults"
+        class="no-results">
 
-            <div class="tool-icon">
-                🆔
-            </div>
+        <h3>No tools found</h3>
 
-            <h3>UUID Generator</h3>
-
-            <p>
-                Generate unique UUID identifiers
-                quickly.
-            </p>
-
-        </a>
-
-
-        <a class="tool-card"
-           href="qr-generator.html">
-
-            <div class="tool-icon">
-                📱
-            </div>
-
-            <h3>QR Code Generator</h3>
-
-            <p>
-                Create QR codes for text,
-                links and other information.
-            </p>
-
-        </a>
-
+        <p>
+            Try another search term or category.
+        </p>
 
     </div>
 
@@ -391,6 +447,288 @@ content="UDI Digital Hub tools, networking tools, telecom tools, developer tools
 
 
 </footer>
+
+
+<!-- =======================================================
+     LOAD TOOLS
+======================================================= -->
+
+<script>
+
+let allTools = [];
+
+let selectedCategory = "All";
+
+
+/* =========================================================
+   LOAD JSON
+========================================================= */
+
+fetch("../tools.json")
+
+    .then(response => {
+
+        if (!response.ok) {
+
+            throw new Error("Unable to load tools.json");
+
+        }
+
+        return response.json();
+
+    })
+
+    .then(tools => {
+
+        /*
+         * Remove duplicate tools based on their link.
+         */
+
+        const uniqueTools = [];
+
+        const usedLinks = new Set();
+
+        tools.forEach(tool => {
+
+            if (!usedLinks.has(tool.link)) {
+
+                usedLinks.add(tool.link);
+
+                uniqueTools.push(tool);
+
+            }
+
+        });
+
+        allTools = uniqueTools;
+
+        createCategoryButtons();
+
+        displayTools(allTools);
+
+    })
+
+    .catch(error => {
+
+        console.error(error);
+
+        document.getElementById("toolsGrid").innerHTML =
+
+            "<p>Unable to load tools. Please try again later.</p>";
+
+    });
+
+
+/* =========================================================
+   CREATE CATEGORY BUTTONS
+========================================================= */
+
+function createCategoryButtons() {
+
+    const filter =
+        document.getElementById("categoryFilter");
+
+    const categories = new Set();
+
+    allTools.forEach(tool => {
+
+        if (tool.category) {
+
+            categories.add(tool.category);
+
+        }
+
+    });
+
+
+    filter.innerHTML = "";
+
+
+    const allButton =
+        document.createElement("button");
+
+    allButton.textContent = "All";
+
+    allButton.onclick = function() {
+
+        selectedCategory = "All";
+
+        displayTools(allTools);
+
+    };
+
+    filter.appendChild(allButton);
+
+
+    categories.forEach(category => {
+
+        const button =
+            document.createElement("button");
+
+        button.textContent = category;
+
+        button.onclick = function() {
+
+            selectedCategory = category;
+
+            const filtered = allTools.filter(tool =>
+
+                tool.category === category
+
+            );
+
+            displayTools(filtered);
+
+        };
+
+        filter.appendChild(button);
+
+    });
+
+}
+
+
+/* =========================================================
+   DISPLAY TOOLS
+========================================================= */
+
+function displayTools(tools) {
+
+    const grid =
+        document.getElementById("toolsGrid");
+
+    const search =
+        document.getElementById("toolSearch")
+            .value
+            .toLowerCase()
+            .trim();
+
+
+    let filteredTools = tools.filter(tool => {
+
+        const name =
+            (tool.name || "").toLowerCase();
+
+        const description =
+            (tool.description || "").toLowerCase();
+
+        const category =
+            (tool.category || "").toLowerCase();
+
+        return (
+
+            name.includes(search) ||
+
+            description.includes(search) ||
+
+            category.includes(search)
+
+        );
+
+    });
+
+
+    grid.innerHTML = "";
+
+
+    if (filteredTools.length === 0) {
+
+        document.getElementById("noResults").style.display =
+            "block";
+
+        return;
+
+    }
+
+
+    document.getElementById("noResults").style.display =
+        "none";
+
+
+    filteredTools.forEach(tool => {
+
+        const card =
+            document.createElement("a");
+
+        card.className = "tool-card";
+
+        /*
+         * tools.json already contains paths like:
+         * tools/password-generator.html
+         *
+         * Because this page is inside /tools/,
+         * remove "tools/" from the beginning.
+         */
+
+        let link = tool.link || "#";
+
+        if (link.startsWith("tools/")) {
+
+            link = link.substring(6);
+
+        }
+
+
+        card.href = link;
+
+
+        card.innerHTML = `
+
+            <div class="tool-icon">
+                ${tool.icon || "🛠️"}
+            </div>
+
+            <h3>
+                ${tool.name || "Tool"}
+            </h3>
+
+            <p>
+                ${tool.description ||
+                "Useful online tool from UDI Digital Hub."}
+            </p>
+
+            <span class="tool-category">
+                ${tool.category || "Utility"}
+            </span>
+
+        `;
+
+
+        grid.appendChild(card);
+
+    });
+
+}
+
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+document
+    .getElementById("toolSearch")
+    .addEventListener("input", function() {
+
+        let toolsToDisplay = allTools;
+
+
+        if (selectedCategory !== "All") {
+
+            toolsToDisplay =
+                allTools.filter(tool =>
+
+                    tool.category === selectedCategory
+
+                );
+
+        }
+
+
+        displayTools(toolsToDisplay);
+
+    });
+
+</script>
 
 
 </body>

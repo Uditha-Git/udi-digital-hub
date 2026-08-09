@@ -1,398 +1,144 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Tools | UDI Digital Hub</title>
+<title>UDI Digital Hub</title>
 
-<meta name="description"
-content="Free online networking, telecom, developer, security and utility tools from UDI Digital Hub.">
-
-<meta name="keywords"
-content="UDI Digital Hub tools, networking tools, telecom tools, developer tools, online calculators">
-
-<link rel="stylesheet" href="../style.css">
-
-<style>
-
-/* =========================================================
-   TOOLS PAGE
-========================================================= */
-
-.tools-container {
-
-    max-width: 1100px;
-
-    margin: 40px auto;
-
-    padding: 20px;
-}
-
-
-/* =========================================================
-   PAGE INTRO
-========================================================= */
-
-.tools-intro {
-
-    text-align: center;
-
-    margin-bottom: 35px;
-}
-
-.tools-intro h2 {
-
-    color: var(--primary-red);
-
-    margin-bottom: 10px;
-}
-
-.tools-intro p {
-
-    color: var(--text-light);
-
-    max-width: 700px;
-
-    margin: auto;
-}
-
-
-/* =========================================================
-   TOOL GRID
-========================================================= */
-
-.tools-grid {
-
-    display: grid;
-
-    grid-template-columns:
-        repeat(auto-fit, minmax(220px, 1fr));
-
-    gap: 20px;
-}
-
-
-/* =========================================================
-   TOOL CARD
-========================================================= */
-
-.tool-card {
-
-    background: var(--primary-white);
-
-    border: 1px solid var(--border-light);
-
-    border-radius: 14px;
-
-    padding: 25px;
-
-    text-align: center;
-
-    text-decoration: none;
-
-    color: var(--text-dark);
-
-    box-shadow: var(--shadow-light);
-
-    transition: 0.3s ease;
-}
-
-.tool-card:hover {
-
-    transform: translateY(-5px);
-
-    border-color: var(--primary-red);
-
-    box-shadow: var(--shadow-hover);
-}
-
-.tool-icon {
-
-    font-size: 35px;
-
-    margin-bottom: 10px;
-}
-
-.tool-card h3 {
-
-    color: var(--primary-blue);
-
-    margin: 10px 0;
-}
-
-.tool-card p {
-
-    font-size: 14px;
-
-    color: var(--text-light);
-
-    line-height: 1.6;
-}
-
-
-/* =========================================================
-   MOBILE
-========================================================= */
-
-@media (max-width: 600px) {
-
-    .tools-container {
-
-        margin: 20px auto;
-
-        padding: 15px;
-    }
-
-}
-
-</style>
-
+<link rel="stylesheet" href="style.css">
 </head>
-
 
 <body>
 
-
-<!-- =======================================================
-     HEADER
-======================================================= -->
-
+<!-- HEADER -->
 <header class="header">
-
     <h1>UDI Digital Hub</h1>
-
-    <p>
-        Free Online Tools • Apps • Networking Knowledge
-    </p>
-
+    <p>Free Online Tools • Apps • Networking Knowledge</p>
 </header>
 
-
-<!-- =======================================================
-     NAVIGATION
-======================================================= -->
-
+<!-- NAVIGATION -->
 <nav class="nav">
-
-    <a href="../index.html">
-        Home
-    </a>
-
-    <a href="index.html">
-        Tools
-    </a>
-
-    <a href="../apps/">
-        Apps
-    </a>
-
-    <a href="../notes/">
-        Notes
-    </a>
-
-    <a href="../about.html">
-        About
-    </a>
-
-    <a href="../contact.html">
-        Contact
-    </a>
-
+    <a href="./index.html">Home</a>
+    <a href="./tools/">Tools</a>
+    <a href="./apps/">Apps</a>
+    <a href="./notes/">Notes</a>
+    <a href="./about.html">About</a>
+    <a href="./contact.html">Contact</a>
 </nav>
 
+<!-- HERO -->
+<section class="hero">
+    <h2>Everything you need in one place</h2>
+    <p>Fast • Free • Simple tools for everyday use</p>
 
-<!-- =======================================================
-     TOOLS CONTENT
-======================================================= -->
+    <input
+        type="text"
+        id="searchBox"
+        class="search-box"
+        placeholder="Search tools..."
+    >
+</section>
 
-<main class="tools-container">
+<!-- CATEGORIES -->
+<section class="section">
+    <h2>Popular Categories</h2>
 
-
-    <div class="tools-intro">
-
-        <h2>UDI Digital Hub Tools</h2>
-
-        <p>
-            Explore our collection of free online tools for
-            networking, telecom engineering, security,
-            development and everyday digital tasks.
-        </p>
-
+    <div class="grid">
+        <div class="card">🧮 Calculators</div>
+        <div class="card">🌐 Network Tools</div>
+        <div class="card">🖼 Image Tools</div>
+        <div class="card">📄 PDF Tools</div>
+        <div class="card">🔐 Security Tools</div>
+        <div class="card">📱 Apps</div>
     </div>
+</section>
 
+<!-- DYNAMIC TOOLS -->
+<section class="section">
+    <h2>Featured Tools</h2>
 
-    <div class="tools-grid">
-
-
-        <a class="tool-card"
-           href="password-generator.html">
-
-            <div class="tool-icon">
-                🔐
-            </div>
-
-            <h3>Password Generator</h3>
-
-            <p>
-                Generate strong and secure passwords
-                instantly.
-            </p>
-
-        </a>
-
-
-        <a class="tool-card"
-           href="password-strength-checker.html">
-
-            <div class="tool-icon">
-                🛡️
-            </div>
-
-            <h3>Password Strength Checker</h3>
-
-            <p>
-                Check the strength and security
-                of a password.
-            </p>
-
-        </a>
-
-
-        <a class="tool-card"
-           href="uuid-generator.html">
-
-            <div class="tool-icon">
-                🆔
-            </div>
-
-            <h3>UUID Generator</h3>
-
-            <p>
-                Generate unique UUID identifiers
-                quickly.
-            </p>
-
-        </a>
-
-
-        <a class="tool-card"
-           href="qr-generator.html">
-
-            <div class="tool-icon">
-                📱
-            </div>
-
-            <h3>QR Code Generator</h3>
-
-            <p>
-                Create QR codes for text,
-                links and other information.
-            </p>
-
-        </a>
-
-
+    <div id="toolsGrid" class="grid">
+        <!-- Loaded automatically from tools.json -->
     </div>
+</section>
 
-
-</main>
-
-
-<!-- =======================================================
-     FOOTER
-======================================================= -->
-
+<!-- FOOTER -->
 <footer class="footer">
-
-
-    <div class="footer-container">
-
-
-        <div class="footer-brand">
-
-            <h3>UDI DIGITAL HUB</h3>
-
-            <p>
-                Free Online Tools • Apps • Networking Knowledge
-            </p>
-
-            <p>
-                Useful digital tools and technology resources
-                in one place.
-            </p>
-
-        </div>
-
-
-        <div>
-
-            <h4>Quick Links</h4>
-
-            <a href="../index.html">
-                Home
-            </a>
-
-            <a href="index.html">
-                Tools
-            </a>
-
-            <a href="../apps/">
-                Apps
-            </a>
-
-            <a href="../notes/">
-                Notes
-            </a>
-
-        </div>
-
-
-        <div>
-
-            <h4>Company</h4>
-
-            <a href="../about.html">
-                About
-            </a>
-
-            <a href="../contact.html">
-                Contact
-            </a>
-
-        </div>
-
-
-        <div>
-
-            <h4>Legal</h4>
-
-            <a href="../privacy-policy.html">
-                Privacy Policy
-            </a>
-
-            <a href="../terms.html">
-                Terms of Use
-            </a>
-
-        </div>
-
-
+    <p>© 2026 UDI Digital Hub | Built with ❤️</p>
+       <div class="footer-links">
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="privacy-policy.html">Privacy Policy</a>
+        <a href="terms.html">Terms & Conditions</a>
     </div>
-
-
-    <div class="footer-bottom">
-
-        © 2026 UDI Digital Hub. All Rights Reserved.
-
-    </div>
-
 
 </footer>
 
+<!-- JAVASCRIPT -->
+<script>
+
+let tools = [];
+
+const toolsGrid = document.getElementById("toolsGrid");
+const searchBox = document.getElementById("searchBox");
+
+fetch("./tools.json")
+.then(response => response.json())
+.then(data => {
+
+    tools = data;
+    renderTools(tools);
+
+})
+.catch(error => {
+
+    toolsGrid.innerHTML =
+    "<p>Unable to load tools.</p>";
+
+    console.error(error);
+
+});
+
+function renderTools(toolList){
+
+    toolsGrid.innerHTML = "";
+
+    toolList.forEach(tool => {
+
+        const card = document.createElement("a");
+
+        card.className = "card";
+        card.href = tool.link;
+
+        card.innerHTML = `
+            <div style="font-size:40px">${tool.icon}</div>
+            <h3>${tool.name}</h3>
+            <small>${tool.category}</small>
+        `;
+
+        toolsGrid.appendChild(card);
+
+    });
+
+}
+
+searchBox.addEventListener("input", function(){
+
+    const keyword = this.value.toLowerCase();
+
+    const filteredTools = tools.filter(tool =>
+
+        tool.name.toLowerCase().includes(keyword) ||
+        tool.category.toLowerCase().includes(keyword)
+
+    );
+
+    renderTools(filteredTools);
+
+});
+
+</script>
 
 </body>
-
 </html>

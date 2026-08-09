@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Notes | UDI Digital Hub</title>
+
+<meta name="description"
+content="Networking, telecom, 4G LTE, 5G, Linux and technology notes from UDI Digital Hub.">
+
+<meta name="keywords"
+content="UDI Digital Hub notes, networking notes, telecom notes, LTE notes, 5G notes, Linux notes">
+
+<meta name="author"
+content="Uditha Vidanagamage">
+
+<link rel="stylesheet" href="../style.css">
+
+<style>
+
+/* =========================================================
+   NOTES PAGE
+========================================================= */
+
+.notes-container {
+
+    max-width: 1100px;
+
+    margin: 40px auto;
+
+    padding: 20px;
+}
+
+
+/* =========================================================
+   INTRO
+========================================================= */
+
+.notes-intro {
+
+    text-align: center;
+
+    margin-bottom: 40px;
+}
+
+.notes-intro h2 {
+
+    color: var(--primary-red);
+
+    margin-bottom: 10px;
+}
+
+.notes-intro p {
+
+    max-width: 750px;
+
+    margin: auto;
+
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   NOTES GRID
+========================================================= */
+
+.notes-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fit, minmax(240px, 1fr));
+
+    gap: 20px;
+}
+
+
+/* =========================================================
+   NOTE CARD
+========================================================= */
+
+.note-card {
+
+    background: var(--primary-white);
+
+    border: 1px solid var(--border-light);
+
+    border-radius: 14px;
+
+    padding: 25px;
+
+    text-align: center;
+
+    box-shadow: var(--shadow-light);
+
+    transition: 0.3s ease;
+}
+
+.note-card:hover {
+
+    transform: translateY(-5px);
+
+    border-color: var(--primary-red);
+
+    box-shadow: var(--shadow-hover);
+}
+
+
+.note-icon {
+
+    font-size: 42px;
+
+    margin-bottom: 10px;
+}
+
+
+.note-card h3 {
+
+    color: var(--primary-blue);
+
+    margin: 10px 0;
+}
+
+
+.note-card p {
+
+    font-size: 14px;
+
+    line-height: 1.7;
+
+    margin-bottom: 15px;
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.note-status {
+
+    display: inline-block;
+
+    padding: 5px 12px;
+
+    border-radius: 20px;
+
+    background: var(--bg-light);
+
+    color: var(--primary-red);
+
+    font-size: 13px;
+
+    font-weight: bold;
+}
+
+
+/* =========================================================
+   TOPICS
+========================================================= */
+
+.topic-section {
+
+    margin-top: 45px;
+
+    text-align: center;
+}
+
+.topic-section h2 {
+
+    color: var(--primary-blue);
+
+    margin-bottom: 10px;
+}
+
+.topic-section p {
+
+    line-height: 1.7;
+
+    max-width: 750px;
+
+    margin: auto;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+    .notes-container {
+
+        margin: 20px auto;
+
+        padding: 15px;
+    }
+
+    .notes-grid {
+
+        grid-template-columns: 1fr;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =======================================================
+     HEADER
+======================================================= -->
+
+<header class="header">
+
+    <h1>UDI Digital Hub</h1>
+
+    <p>
+        Free Online Tools • Apps • Networking Knowledge
+    </p>
+
+</header>
+
+
+<!-- =======================================================
+     NAVIGATION
+======================================================= -->
+
+<nav class="nav">
+
+    <a href="../index.html">
+        Home
+    </a>
+
+    <a href="../tools/">
+        Tools
+    </a>
+
+    <a href="../apps/">
+        Apps
+    </a>
+
+    <a href="index.html">
+        Notes
+    </a>
+
+    <a href="../about.html">
+        About
+    </a>
+
+    <a href="../contact.html">
+        Contact
+    </a>
+
+</nav>
+
+
+<!-- =======================================================
+     NOTES CONTENT
+======================================================= -->
+
+<main class="notes-container">
+
+
+    <div class="notes-intro">
+
+        <h2>
+            UDI Digital Hub Notes
+        </h2>
+
+        <p>
+            Practical technology notes covering networking,
+            telecom engineering, 4G LTE, 5G, Linux,
+            cloud technologies and software development.
+        </p>
+
+    </div>
+
+
+    <!-- ===================================================
+         NOTE CATEGORIES
+    ==================================================== -->
+
+    <div class="notes-grid">
+
+
+        <!-- NETWORKING -->
+
+        <div class="note-card">
+
+            <div class="note-icon">
+                🌐
+            </div>
+
+            <h3>
+                Networking
+            </h3>
+
+            <p>
+                Learn about IP addressing, subnetting,
+                routing, switching, protocols and
+                network fundamentals.
+            </p>
+
+            <span class="note-status">
+                Coming Soon
+            </span>
+
+        </div>
+
+
+        <!-- 4G LTE -->
+
+        <div class="note-card">
+
+            <div class="note-icon">
+                📡
+            </div>
+
+            <h3>
+                4G LTE
+            </h3>
+
+            <p>
+                LTE architecture, radio parameters,
+                KPIs, mobility, optimization and
+                practical RNO concepts.
+            </p>
+
+            <span class="note-status">
+                Coming Soon
+            </span>
+
+        </div>
+
+
+        <!-- 5G -->
+
+        <div class="note-card">
+
+            <div class="note-icon">
+                📶
+            </div>
+
+            <h3>
+                5G
+            </h3>
+
+            <p>
+                Explore 5G NR, NSA, SA, SSB,
+                NR-ARFCN, massive MIMO and
+                5G network concepts.
+            </p>
+
+            <span class="note-status">
+                Coming Soon
+            </span>
+
+        </div>
+
+
+        <!-- LINUX -->
+
+        <div class="note-card">
+
+            <div class="note-icon">
+                🐧
+            </div>
+
+            <h3>
+                Linux
+            </h3>
+
+            <p>
+                Linux commands, file management,
+                Vim, processes, networking and
+                system administration basics.
+            </p>
+
+            <span class="note-status">
+                Coming Soon
+            </span>
+
+        </div>
+
+
+        <!-- CLOUD -->
+
+        <div class="note-card">
+
+            <div class="note-icon">
+                ☁️
+            </div>
+
+            <h3>
+                Cloud & DevOps
+            </h3>
+
+            <p>
+                Learn Linux administration, automation,
+                Ansible, containers, cloud concepts
+                and DevOps fundamentals.
+            </p>
+
+            <span class="note-status">
+                Coming Soon
+            </span>
+
+        </div>
+
+
+        <!-- DEVELOPMENT -->
+
+        <div class="note-card">
+
+            <div class="note-icon">
+                👨‍💻
+            </div>
+
+            <h3>
+                Development
+            </h3>
+
+            <p>
+                Programming, Python, web development,
+                APIs, Git and practical software
+                development concepts.
+            </p>
+
+            <span class="note-status">
+                Coming Soon
+            </span>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- ===================================================
+         FUTURE CONTENT
+    ==================================================== -->
+
+    <section class="topic-section">
+
+        <h2>
+            More Knowledge Coming Soon
+        </h2>
+
+        <p>
+            UDI Digital Hub will gradually add practical
+            technical articles, tutorials, troubleshooting
+            guides and engineering notes for students,
+            professionals and technology enthusiasts.
+        </p>
+
+    </section>
+
+
+</main>
+
+
+<!-- =======================================================
+     FOOTER
+======================================================= -->
+
+<footer class="footer">
+
+
+    <div class="footer-container">
+
+
+        <div class="footer-brand">
+
+            <h3>UDI DIGITAL HUB</h3>
+
+            <p>
+                Free Online Tools • Apps • Networking Knowledge
+            </p>
+
+            <p>
+                Useful digital tools and technology resources
+                in one place.
+            </p>
+
+        </div>
+
+
+        <div>
+
+            <h4>Quick Links</h4>
+
+            <a href="../index.html">
+                Home
+            </a>
+
+            <a href="../tools/">
+                Tools
+            </a>
+
+            <a href="../apps/">
+                Apps
+            </a>
+
+            <a href="index.html">
+                Notes
+            </a>
+
+        </div>
+
+
+        <div>
+
+            <h4>Company</h4>
+
+            <a href="../about.html">
+                About
+            </a>
+
+            <a href="../contact.html">
+                Contact
+            </a>
+
+        </div>
+
+
+        <div>
+
+            <h4>Legal</h4>
+
+            <a href="../privacy-policy.html">
+                Privacy Policy
+            </a>
+
+            <a href="../terms.html">
+                Terms of Use
+            </a>
+
+        </div>
+
+
+    </div>
+
+
+    <div class="footer-bottom">
+
+        © 2026 UDI Digital Hub. All Rights Reserved.
+
+    </div>
+
+
+</footer>
+
+
+</body>
+
+</html>
